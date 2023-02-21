@@ -1,0 +1,515 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Document;
+use App\Models\FixedAssets;
+use App\Models\Room;
+use App\Models\Site;
+use App\Models\Vessel;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon as SupportCarbon;
+use Illuminate\Support\Facades\Http;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
+
+class APIErpController extends Controller
+{
+    //
+    public function cek_api()
+    {
+        $inv = 'https://prod-23.southeastasia.logic.azure.com:443/workflows/d648c07e19444d92932448be4cfbee84/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rq_uNUJTpWypp7ZdZVdBqTajKk5lECXBNlgAJT2-B3g';
+        $client = new Client();
+        $response = $client->request('GET', $inv);
+        $statusCode = $response->getStatusCode();
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+
+        dd($data);
+
+        // $asset = FixedAssets::all();
+        // foreach ($asset as $key => $value) {
+        //     $v[] = $value->fixed_assets_number;
+        // }
+        // $filtered = $collectdata->whereNotIn('AssetId', $v);
+        // dd($filtered->all());
+    }
+
+
+    // ===============================================================================================
+    // ===============================================================================================
+    // ===============================================================================================
+
+    // Fixed Assets ================================================================================
+    public function fixed_assets_stg_index()
+    {
+        return view('fixed_assets.view_staging');
+    }
+
+
+
+    public function fixed_assets_stg_json()
+    {
+        $api_fixed_assets = 'https://prod-19.southeastasia.logic.azure.com:443/workflows/dc06527840cd42e5930a2f8ffd5b001d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6UQg7E24Ln9yqEoCODwhPqNVEFNVP6dWQoiWN6c-jI4';
+        $client = new Client();
+        $response = $client->request('GET', $api_fixed_assets);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+
+        $asset = FixedAssets::all();
+        if($asset->isEmpty())
+        {
+            $filtered = $data;
+        }else{
+            foreach ($asset as $key => $value) {
+                $v[] = $value->fixed_assets_number;
+            }
+            $filtered = $collectdata->whereNotIn('AssetId', $v);
+        }
+
+
+        return DataTables::of($filtered)
+        // ->rawColumns([])
+        ->make(true);
+    }
+
+    public function fixed_assets_stg_save()
+    {
+        // Validasi Table Site Kosong
+        $site_valid = Site::all();
+        if($site_valid->isEmpty())
+        {
+            return redirect('fixed_assets_stg_index')->with(['error_site_kosong' => 'Data Site masih KOSONG, Harap isi pada Form Site !']);
+        }
+        // END Validasi Table Site Kosong
+
+
+        $api_fixed_assets = 'https://prod-19.southeastasia.logic.azure.com:443/workflows/dc06527840cd42e5930a2f8ffd5b001d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6UQg7E24Ln9yqEoCODwhPqNVEFNVP6dWQoiWN6c-jI4';
+        $client = new Client();
+        $response = $client->request('GET', $api_fixed_assets);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+
+        $asset = FixedAssets::all();
+        if($asset->isEmpty())
+        {
+            $filtered = $data;
+        }else{
+            foreach ($asset as $key => $value) {
+                $v[] = $value->fixed_assets_number;
+            }
+            $filtered = $collectdata->whereNotIn('AssetId', $v);
+        }
+
+        foreach ($filtered as $value) {
+            $qrcode = Str::random(20);
+            $vessId = $value['KREVesselId'];
+
+            // $site_gnrl = Site::where('id','')->first();
+            // if($value['KREVesselId'] == '' || $value['KREVesselId'] == null)
+            // {
+            //     $inputVessel = $site_gnrl->id;
+            // }
+
+            // $siteValue = Site::where('site_code', $vessId)->first();
+            // if($value['KREVesselId'] != '' || $value['KREVesselId'] != null)
+            // {
+            //     $inputVessel = $siteValue->id;
+            // }
+
+            FixedAssets::create([
+                'fixed_assets_number'   => $value['AssetId'],
+                'fixed_assets_name'     => $value['Name'],
+                'fixed_assets_group'    => $value['AssetGroup'],
+                'main_fixed_assets'     => $value['MainAssetId'],
+                'information3'          => $value['MaintenanceInfo3'],
+                'vessel_id'             => $value['KREVesselId'],
+                'acquisition_date'      => Carbon::parse($value['AcquisitionDate']),
+                // 'net_book_value'        => $value['net_book_value'],
+                'status_asset'          => 'general',
+                // 'last_update_stock_take_date' => '',
+                // 'pic'                   => $value['pic'],
+                // 'remarks_fixed_assets'  => $value['remarks_fixed_assets'],
+                'qr_code'               => $qrcode,
+                // 'last_modified_name' => '',
+                'site_id'               => 1,
+
+            ]);
+
+        }
+
+        return redirect('fixed_assets')->with(['success' => 'Data Fixed Asset Berhasil Di Generate from ERP !']);
+
+    }
+
+
+
+
+
+
+    // Filling Document ================================================================================
+    public function doc_stg_index()
+    {
+        return view('document.view_staging');
+    }
+
+    public function doc_stg_json()
+    {
+        //
+        $api_doc = 'https://prod-10.southeastasia.logic.azure.com:443/workflows/f72beb54ca9d40c2bb2746c5cb7f4da7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=zQPlwyEMDTO3AgRq21BNEtjNTUybKSo08_WxF47ZrZU';
+        $client = new Client();
+        $response = $client->request('GET', $api_doc);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+
+        // dd($collectdata);
+
+        $doc = Document::all();
+        if($doc->isEmpty())
+        {
+            $filtered = $collectdata;
+        }else{
+            foreach ($doc as $key => $value) {
+                $v[] = $value->voucher;
+            }
+            $filtered = $collectdata->whereNotIn('Voucher', $v);
+        }
+
+
+        return DataTables::of($filtered)
+        // ->addColumn('tgl_posting', function($data){
+        //     return $data->TransDate->format('d M Y H:i:s');
+        // })
+        ->make(true);
+    }
+
+    public function doc_stg_save()
+    {
+        $api_doc = 'https://prod-10.southeastasia.logic.azure.com:443/workflows/f72beb54ca9d40c2bb2746c5cb7f4da7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=zQPlwyEMDTO3AgRq21BNEtjNTUybKSo08_WxF47ZrZU';
+        $client = new Client();
+        $response = $client->request('GET', $api_doc);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+
+        $doc = Document::all();
+        if($doc->isEmpty())
+        {
+            $filtered = $data;
+        }else{
+            foreach ($doc as $key => $value) {
+                $v[] = $value->Voucher;
+            }
+            $filtered = $collectdata->whereNotIn('Voucher', $v);
+
+        }
+
+        foreach ($filtered as $value) {
+
+
+            Document::create([
+                'tgl_posting'           => Carbon::parse($value['TransDate']),
+                'voucher'               => $value['Voucher'],
+                'last_settle_voucher'   => $value['LastSettleVoucher'],
+                'last_settle_date'      => Carbon::parse($value['LastSettleDate']),
+                'description'           => $value['Txt'],
+                'nominal'               => $value['AmountCur'],
+                'kode_vendor'           => $value['AccountNum'],
+                'nama_vendor'           => $value['VendorName'],
+
+            ]);
+        }
+        return redirect('documents')->with(['success' => 'Data Document Berhasil Di Generate from ERP !']);
+    }
+
+
+    // =======================================================================================
+    // Employee ================================================================================
+    public function employees_stg_index()
+    {
+        return view('employee.view_staging');
+    }
+
+    public function employees_stg_json()
+    {
+        //
+        $api_emp = 'https://prod-14.southeastasia.logic.azure.com:443/workflows/fe8a1201c18d439f9d6730697b58ddf7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xGvURR69AcshnEafSrk7PvciEzi30HdoabCvrajTd7U';
+        $client = new Client();
+        $response = $client->request('GET', $api_emp);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+        $query = $collectdata->all();
+        // dd($collectdata);
+
+        // $doc = Document::all();
+        // if($doc->isEmpty())
+        // {
+        //     $filtered = $collectdata;
+        // }else{
+        //     foreach ($doc as $key => $value) {
+        //         $v[] = $value->voucher;
+        //     }
+        //     $filtered = $collectdata->whereNotIn('Voucher', $v);
+        // }
+
+
+        return DataTables::of($query)
+        ->make(true);
+    }
+
+    public function employees_stg_save()
+    {
+        //
+    }
+
+
+    // =======================================================================================
+    // Customer ================================================================================
+    public function customers_stg_index()
+    {
+        return view('customer.view_staging');
+    }
+
+    public function customers_stg_json()
+    {
+        //
+        $api_cust = 'https://prod-16.southeastasia.logic.azure.com:443/workflows/8d188355816249488951f83cb8acd90e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QSL1ISgrZMmJPjGWlGoF2Kh-rlveAGgwH7RCu1219TA';
+        $client = new Client();
+        $response = $client->request('GET', $api_cust);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+        $query = $collectdata->all();
+        // dd($collectdata);
+
+        // $doc = Document::all();
+        // if($doc->isEmpty())
+        // {
+        //     $filtered = $collectdata;
+        // }else{
+        //     foreach ($doc as $key => $value) {
+        //         $v[] = $value->voucher;
+        //     }
+        //     $filtered = $collectdata->whereNotIn('Voucher', $v);
+        // }
+
+
+        return DataTables::of($query)
+        ->make(true);
+    }
+
+    public function customers_stg_save()
+    {
+        //
+    }
+
+
+    // =======================================================================================
+    // Vendor ================================================================================
+    public function vendors_stg_index()
+    {
+        return view('vendor.view_staging');
+    }
+
+    public function vendors_stg_json()
+    {
+        //
+        $api_vend = 'https://prod-06.southeastasia.logic.azure.com:443/workflows/4d4b85f077664ffa9a8d1206dbacad4e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=NYpQ-_Q6h9e3R_ZRbue7s9PwFPDaLFsknmXHCyOdblg';
+        $client = new Client();
+        $response = $client->request('GET', $api_vend);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+        $query = $collectdata->all();
+        // dd($collectdata);
+
+        // $doc = Document::all();
+        // if($doc->isEmpty())
+        // {
+        //     $filtered = $collectdata;
+        // }else{
+        //     foreach ($doc as $key => $value) {
+        //         $v[] = $value->voucher;
+        //     }
+        //     $filtered = $collectdata->whereNotIn('Voucher', $v);
+        // }
+
+
+        return DataTables::of($collectdata)
+        ->make(true);
+    }
+
+    public function vendors_stg_save()
+    {
+        //
+    }
+
+
+    // =======================================================================================
+    // Site ================================================================================
+    public function sites_stg_index()
+    {
+        return view('site.view_staging');
+    }
+
+    public function sites_stg_json()
+    {
+        //
+        $api_site = 'https://prod-23.southeastasia.logic.azure.com:443/workflows/d648c07e19444d92932448be4cfbee84/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rq_uNUJTpWypp7ZdZVdBqTajKk5lECXBNlgAJT2-B3g';
+        $client = new Client();
+        $response = $client->request('GET', $api_site);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+        $query = $collectdata->all();
+        // dd($collectdata);
+
+        $site = Site::all();
+        if($site->isEmpty())
+        {
+            $filtered = $collectdata;
+        }else{
+            foreach ($site as $key => $value) {
+                $v[] = $value->id;
+            }
+            $filtered = $collectdata->whereNotIn('SiteId', $v);
+        }
+
+
+        return DataTables::of($collectdata)
+        ->make(true);
+    }
+
+    public function sites_stg_save()
+    {
+        // Validasi Table Room Kosong
+        $room_valid = Room::all();
+        if($room_valid->isEmpty())
+        {
+            return redirect('sites_stg_index')->with(['error_room_kosong' => 'Data ROOM masih KOSONG, Harap isi pada Form ROOM !']);
+        }
+        // END Validasi Table Room Kosong
+
+        //
+        $api_site = 'https://prod-23.southeastasia.logic.azure.com:443/workflows/d648c07e19444d92932448be4cfbee84/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rq_uNUJTpWypp7ZdZVdBqTajKk5lECXBNlgAJT2-B3g';
+        $client = new Client();
+        $response = $client->request('GET', $api_site);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+
+        $site = Site::all();
+        if($site->isEmpty())
+        {
+            $filtered = $data;
+        }else{
+            foreach ($site as $key => $value) {
+                $v[] = $value->site_code;
+            }
+            $filtered = $collectdata->whereNotIn('SiteId', $v);
+        }
+
+        foreach ($filtered as $value) {
+
+            // $vessId = $value['VesselId'];
+
+            // $vessel = Vessel::where('vess_id', $vessId)->get();
+            // if($vessId != null)
+            // {
+            //     $vessel_parm_id = $vessel->id;
+            // }
+
+
+            // dd($vessel_parm_id);
+
+            Site::create([
+                'site_code'             => $value['SiteId'],
+                'site_name'             => $value['Name'],
+                'remarks_site'          => '',
+                // 'vessel_id '            => $vessel_parm_id,
+            ]);
+        }
+        return redirect('sites')->with(['success' => 'Data Site Berhasil Di Generate from ERP !']);
+
+    }
+
+    // =======================================================================================
+    // Vessel ================================================================================
+    public function vessels_stg_index()
+    {
+        return view('vessel.view_staging');
+    }
+
+    public function vessels_stg_json()
+    {
+        //
+        $api_vessel = 'https://prod-28.southeastasia.logic.azure.com:443/workflows/c67e6de598a040cab1d14c57855986f6/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=qbpMoMidRY8WUWAf5yfmkIRDXQ4FVBgj0AkxLa5hjfs';
+        $client = new Client();
+        $response = $client->request('GET', $api_vessel);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+        $query = $collectdata->all();
+
+        $vess = Vessel::all();
+        if($vess->isEmpty())
+        {
+            $filtered = $collectdata;
+        }else{
+            foreach ($vess as $key => $value) {
+                $v[] = $value->vess_id;
+            }
+            $filtered = $collectdata->whereNotIn('VessID', $v);
+        }
+
+
+        return DataTables::of($filtered)
+        ->make(true);
+    }
+
+    public function vessels_stg_save()
+    {
+        //
+        $api_vessel = 'https://prod-28.southeastasia.logic.azure.com:443/workflows/c67e6de598a040cab1d14c57855986f6/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=qbpMoMidRY8WUWAf5yfmkIRDXQ4FVBgj0AkxLa5hjfs';
+        $client = new Client();
+        $response = $client->request('GET', $api_vessel);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+
+        $vess = Vessel::all();
+        if($vess->isEmpty())
+        {
+            $filtered = $data;
+        }else{
+            foreach ($vess as $key => $value) {
+                $v[] = $value->vess_id;
+            }
+            $filtered = $collectdata->whereNotIn('VessID', $v);
+
+        }
+
+        foreach ($filtered as $value) {
+
+
+            Vessel::create([
+                'vess_id'               => $value['VessID'],
+                'vess_name'             => $value['VessName'],
+                'vess_type'             => $value['VessType'],
+                'vess_class'            => $value['VessClassID'],
+                'vess_remarks'          => '',
+
+            ]);
+        }
+        return redirect('vessels')->with(['success' => 'Data Vessel Berhasil Di Generate from ERP !']);
+    }
+
+}
