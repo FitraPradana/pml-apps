@@ -6,6 +6,7 @@ use App\Imports\UserImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+// use Maatwebsite\Excel\Excel::Xls
 
 class LoginController extends Controller
 {
@@ -78,9 +79,9 @@ class LoginController extends Controller
     public function import_user_auto()
     {
         $path = public_path('document/User Import.xlsx');
-
-        $import = new UserImport();
+        $import = (new UserImport);
         $import->import($path);
+        // $import = (new UserImport)->import('document/User Import.xlsx', null, \Maatwebsite\Excel\Excel::XLSX);
 
         if($import->failures()->isNotEmpty()) {
             return back()->withFailures($import->failures());
