@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FixedAssets;
+use App\Models\Location;
 use App\Models\Site;
 use App\Models\StockTakeTransaction;
 use App\Models\User;
@@ -20,11 +21,11 @@ class ScanController extends Controller
         return view('scan.scanner');
     }
 
-    public function get_scan_qrcode(Request $request, )
+    public function get_scan_qrcode(Request $request,)
     {
         $asset = FixedAssets::where("qr_code", $request->qr_code)->first();
 
-        if($asset == null) {
+        if ($asset == null) {
             return response()->json([
                 "status_error" => "Data Asset tidak ditemukan"
             ]);
@@ -37,27 +38,31 @@ class ScanController extends Controller
         ]);
     }
 
-    public function show_edit($qr)
+    public function show_edit($id)
     {
         $user = User::all();
         $site = Site::all();
-        $asset = FixedAssets::where("qr_code", $qr)->first();
+        $location = Location::all();
+        $asset = FixedAssets::where("id", $id)->first();
         $stock_take = StockTakeTransaction::all();
-        return view('scan.update_scan_asset', compact('asset','user','site','stock_take'));
+        return view('scan.update_scan_asset', compact('asset', 'user', 'site', 'stock_take', 'location'));
     }
 
     public function update_scan_asset(Request $request)
     {
         //validate form
-        $this->validate($request, [
-            'status_asset'                  => 'required',
-            'site_id'                       => 'required',
-            'remarks_fixed_assets'          => 'required',
-            'last_img_condition'            => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ],
-        [
-            'last_img_condition.required'            => 'Wajib upload foto terbaru kondisi Asset saat ini !!'
-        ]);
+        $this->validate(
+            $request,
+            [
+                'status_asset'                  => 'required',
+                'location_id'                   => 'required',
+                'remarks_fixed_assets'          => 'required',
+                'last_img_condition'            => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ],
+            [
+                'last_img_condition.required'            => 'Wajib upload foto terbaru kondisi Asset saat ini !!'
+            ]
+        );
 
         // Img Condition Stock Take Transaction =============================
         // if($request->hasFile('last_img_condition')){
@@ -84,7 +89,7 @@ class ScanController extends Controller
             'fixed_asset_id'                => $request->fixed_asset_id,
             'tgl_stock_take'                => today(),
             'status_asset'                  => $request->status_asset,
-            'site_id'                       => $request->site_id,
+            'location_id'                       => $request->location_id,
             'remarks_stock_take'            => $request->remarks_fixed_assets,
             'last_update_name'              => Auth::user()->username,
             'last_img_condition_stock_take' => $request->file('last_img_condition')->store('stock_take_transaction'),
@@ -104,11 +109,10 @@ class ScanController extends Controller
         ];
         FixedAssets::where('qr_code', $request->qr_code)->update($dataFixedAsset);
 
-        if($dataFixedAsset['status_asset'] == 'good')
-        {
+        if ($dataFixedAsset['status_asset'] == 'good') {
             // $result = (new SendMailController)->ba_status(['id' => $LastInsertId_stock_take]);
 
-            $data["email"] = ["fitra.jaya@pml.co.id","pradanafitrah45@gmail.com"];
+            $data["email"] = ["fitra.jaya@pml.co.id", "pradanafitrah45@gmail.com"];
             $data["title"] = "Admin Asset Management PML";
             $data["body"] = "Status Asset berhasil di Update";
             $data["today"] = today()->format('d-M-y');
@@ -116,16 +120,16 @@ class ScanController extends Controller
 
             $pdf = PDF::loadView('emails.ba_status.pdf', $data);
 
-            Mail::send('emails.ba_status.body', $data, function($message)use($data, $pdf) {
+            Mail::send('emails.ba_status.body', $data, function ($message) use ($data, $pdf) {
                 $message->to($data["email"], $data["email"])
-                        ->subject($data["title"])
-                        ->attachData($pdf->output(), "BA Status Asset.pdf");
+                    ->subject($data["title"])
+                    ->attachData($pdf->output(), "BA Status Asset.pdf");
             });
 
             return redirect('fixed_assets')->with(['success' => 'Status Asset berhasil di Update !']);
         } else {
 
-            $data["email"] = ["fitra.jaya@pml.co.id","pradanafitrah45@gmail.com"];
+            $data["email"] = ["fitra.jaya@pml.co.id", "pradanafitrah45@gmail.com"];
             $data["title"] = "Admin Asset Management PML";
             $data["body"] = "Status Asset berhasil di Update";
             $data["today"] = today()->format('d-M-y');
@@ -133,10 +137,10 @@ class ScanController extends Controller
 
             $pdf = PDF::loadView('emails.ba_status.pdf', $data);
 
-            Mail::send('emails.ba_status.body', $data, function($message)use($data, $pdf) {
+            Mail::send('emails.ba_status.body', $data, function ($message) use ($data, $pdf) {
                 $message->to($data["email"], $data["email"])
-                        ->subject($data["title"])
-                        ->attachData($pdf->output(), "BA Status Asset.pdf");
+                    ->subject($data["title"])
+                    ->attachData($pdf->output(), "BA Status Asset.pdf");
             });
             return redirect('fixed_assets')->with(['success' => 'Status Asset berhasil di Update !']);
         }

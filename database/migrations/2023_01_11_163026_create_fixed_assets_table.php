@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('information3')->nullable();
             $table->string('vessel_id')->nullable();
             $table->dateTime('acquisition_date')->nullable();
-            $table->decimal('net_book_value', 15,3)->nullable();
+            $table->decimal('net_book_value', 15, 3)->nullable();
             $table->string('status_asset')->nullable();
             $table->dateTime('last_update_stock_take_date')->nullable();
             $table->string('pic')->nullable();

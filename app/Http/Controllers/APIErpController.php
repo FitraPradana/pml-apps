@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\FixedAssets;
+use App\Models\Location;
 use App\Models\Room;
 use App\Models\Site;
 use App\Models\Vessel;
@@ -62,31 +63,34 @@ class APIErpController extends Controller
         $collectdata = collect($data);
 
         $asset = FixedAssets::all();
-        if($asset->isEmpty())
-        {
+        if ($asset->isEmpty()) {
             $filtered = $data;
-        }else{
+        } else {
             foreach ($asset as $key => $value) {
                 $v[] = $value->fixed_assets_number;
             }
             $filtered = $collectdata->whereNotIn('AssetId', $v);
         }
-
-
         return DataTables::of($filtered)
-        // ->rawColumns([])
-        ->make(true);
+            // ->rawColumns([])
+            ->make(true);
     }
 
     public function fixed_assets_stg_save()
     {
         // Validasi Table Site Kosong
         $site_valid = Site::all();
-        if($site_valid->isEmpty())
-        {
+        if ($site_valid->isEmpty()) {
             return redirect('fixed_assets_stg_index')->with(['error_site_kosong' => 'Data Site masih KOSONG, Harap isi pada Form Site !']);
         }
         // END Validasi Table Site Kosong
+
+        // Validasi Table Location Kosong
+        $location_valid = Location::all();
+        if ($location_valid->isEmpty()) {
+            return redirect('fixed_assets_stg_index')->with(['error_location_kosong' => 'Data Location masih KOSONG, Harap isi pada Form Site !']);
+        }
+        // END Validasi Table Location Kosong
 
 
         $api_fixed_assets = 'https://prod-19.southeastasia.logic.azure.com:443/workflows/dc06527840cd42e5930a2f8ffd5b001d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6UQg7E24Ln9yqEoCODwhPqNVEFNVP6dWQoiWN6c-jI4';
@@ -97,10 +101,9 @@ class APIErpController extends Controller
         $collectdata = collect($data);
 
         $asset = FixedAssets::all();
-        if($asset->isEmpty())
-        {
+        if ($asset->isEmpty()) {
             $filtered = $data;
-        }else{
+        } else {
             foreach ($asset as $key => $value) {
                 $v[] = $value->fixed_assets_number;
             }
@@ -136,16 +139,14 @@ class APIErpController extends Controller
                 // 'last_update_stock_take_date' => '',
                 // 'pic'                   => $value['pic'],
                 // 'remarks_fixed_assets'  => $value['remarks_fixed_assets'],
-                'qr_code'               => $qrcode,
+                'qr_code'               => url('scan_edit_form', $qrcode),
+                // 'qr_code'               => $qrcode,
                 // 'last_modified_name' => '',
                 'site_id'               => 1,
-
             ]);
-
         }
 
         return redirect('fixed_assets')->with(['success' => 'Data Fixed Asset Berhasil Di Generate from ERP !']);
-
     }
 
 
@@ -172,10 +173,9 @@ class APIErpController extends Controller
         // dd($collectdata);
 
         $doc = Document::all();
-        if($doc->isEmpty())
-        {
+        if ($doc->isEmpty()) {
             $filtered = $collectdata;
-        }else{
+        } else {
             foreach ($doc as $key => $value) {
                 $v[] = $value->voucher;
             }
@@ -184,10 +184,10 @@ class APIErpController extends Controller
 
 
         return DataTables::of($filtered)
-        // ->addColumn('tgl_posting', function($data){
-        //     return $data->TransDate->format('d M Y H:i:s');
-        // })
-        ->make(true);
+            // ->addColumn('tgl_posting', function($data){
+            //     return $data->TransDate->format('d M Y H:i:s');
+            // })
+            ->make(true);
     }
 
     public function doc_stg_save()
@@ -200,15 +200,13 @@ class APIErpController extends Controller
         $collectdata = collect($data);
 
         $doc = Document::all();
-        if($doc->isEmpty())
-        {
+        if ($doc->isEmpty()) {
             $filtered = $data;
-        }else{
+        } else {
             foreach ($doc as $key => $value) {
                 $v[] = $value->Voucher;
             }
             $filtered = $collectdata->whereNotIn('Voucher', $v);
-
         }
 
         foreach ($filtered as $value) {
@@ -262,7 +260,7 @@ class APIErpController extends Controller
 
 
         return DataTables::of($query)
-        ->make(true);
+            ->make(true);
     }
 
     public function employees_stg_save()
@@ -303,7 +301,7 @@ class APIErpController extends Controller
 
 
         return DataTables::of($query)
-        ->make(true);
+            ->make(true);
     }
 
     public function customers_stg_save()
@@ -344,7 +342,7 @@ class APIErpController extends Controller
 
 
         return DataTables::of($collectdata)
-        ->make(true);
+            ->make(true);
     }
 
     public function vendors_stg_save()
@@ -373,10 +371,9 @@ class APIErpController extends Controller
         // dd($collectdata);
 
         $site = Site::all();
-        if($site->isEmpty())
-        {
+        if ($site->isEmpty()) {
             $filtered = $collectdata;
-        }else{
+        } else {
             foreach ($site as $key => $value) {
                 $v[] = $value->id;
             }
@@ -385,15 +382,14 @@ class APIErpController extends Controller
 
 
         return DataTables::of($collectdata)
-        ->make(true);
+            ->make(true);
     }
 
     public function sites_stg_save()
     {
         // Validasi Table Room Kosong
         $room_valid = Room::all();
-        if($room_valid->isEmpty())
-        {
+        if ($room_valid->isEmpty()) {
             return redirect('sites_stg_index')->with(['error_room_kosong' => 'Data ROOM masih KOSONG, Harap isi pada Form ROOM !']);
         }
         // END Validasi Table Room Kosong
@@ -407,10 +403,9 @@ class APIErpController extends Controller
         $collectdata = collect($data);
 
         $site = Site::all();
-        if($site->isEmpty())
-        {
+        if ($site->isEmpty()) {
             $filtered = $data;
-        }else{
+        } else {
             foreach ($site as $key => $value) {
                 $v[] = $value->site_code;
             }
@@ -438,7 +433,6 @@ class APIErpController extends Controller
             ]);
         }
         return redirect('sites')->with(['success' => 'Data Site Berhasil Di Generate from ERP !']);
-
     }
 
     // =======================================================================================
@@ -460,10 +454,9 @@ class APIErpController extends Controller
         $query = $collectdata->all();
 
         $vess = Vessel::all();
-        if($vess->isEmpty())
-        {
+        if ($vess->isEmpty()) {
             $filtered = $collectdata;
-        }else{
+        } else {
             foreach ($vess as $key => $value) {
                 $v[] = $value->vess_id;
             }
@@ -472,7 +465,7 @@ class APIErpController extends Controller
 
 
         return DataTables::of($filtered)
-        ->make(true);
+            ->make(true);
     }
 
     public function vessels_stg_save()
@@ -486,15 +479,13 @@ class APIErpController extends Controller
         $collectdata = collect($data);
 
         $vess = Vessel::all();
-        if($vess->isEmpty())
-        {
+        if ($vess->isEmpty()) {
             $filtered = $data;
-        }else{
+        } else {
             foreach ($vess as $key => $value) {
                 $v[] = $value->vess_id;
             }
             $filtered = $collectdata->whereNotIn('VessID', $v);
-
         }
 
         foreach ($filtered as $value) {
@@ -511,5 +502,4 @@ class APIErpController extends Controller
         }
         return redirect('vessels')->with(['success' => 'Data Vessel Berhasil Di Generate from ERP !']);
     }
-
 }

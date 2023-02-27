@@ -41,19 +41,19 @@ Route::get('/', function () {
 // });
 
 // LOGIN
-Route::controller(LoginController::class)->group(function(){
+Route::controller(LoginController::class)->group(function () {
     Route::get('login', 'index')->name('login');
     Route::post('/login/proses', 'proses');
-    Route::get('logout','logout')->name('logout');
+    Route::get('logout', 'logout')->name('logout');
 });
 
 // MIDDLEWARE
-Route::group(['middleware' => ['auth']], function(){
-    Route::group(['middleware' => ['cekUserLogin:admin']], function(){
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['cekUserLogin:admin']], function () {
         // DASHBOARD
         Route::get('home_admin', [DashboardController::class, 'home_admin']);
     });
-    Route::group(['middleware' => ['cekUserLogin:staff']], function(){
+    Route::group(['middleware' => ['cekUserLogin:staff']], function () {
         // DASHBOARD
         Route::get('home_staff', [DashboardController::class, 'home_staff']);
     });
@@ -112,8 +112,8 @@ Route::put('scanner_update/{id}', [BarcodeController::class, 'update'])->name('s
 
 // SCANNER
 Route::get('scan_form', [ScanController::class, 'index'])->middleware('auth');
-Route::get('scan_edit_form/{qr}', [ScanController::class, 'show_edit'])->name('scan.edit')->middleware('auth');
-Route::post('get_scan_qrcode', [ScanController::class, 'get_scan_qrcode']);
+Route::get('scan_edit_form/{id}', [ScanController::class, 'show_edit'])->name('scan.edit')->middleware('auth');
+Route::post('get_scan_qrcode', [ScanController::class, 'get_scan_qrcode'])->middleware('auth');
 Route::put('update_scan_asset', [ScanController::class, 'update_scan_asset'])->name('update_scan_asset.update')->middleware('auth');
 
 // ROOM
@@ -168,6 +168,8 @@ Route::get('vessels_stg_save', [APIErpController::class, 'vessels_stg_save'])->m
 // Document
 Route::get('documents', [DocumentController::class, 'index'])->middleware('auth');
 Route::get('document/json', [DocumentController::class, 'json'])->middleware('auth');
+Route::post('document_import', [DocumentController::class, 'import'])->name('document.import')->middleware('auth');
+
 
 // VESSEL
 Route::get('vessels', [VesselController::class, 'index'])->middleware('auth');
@@ -177,6 +179,7 @@ Route::get('vessel/json', [VesselController::class, 'json'])->middleware('auth')
 // LOCATION
 Route::get('locations', [LocationController::class, 'index'])->middleware('auth');
 Route::get('location/json', [LocationController::class, 'json'])->middleware('auth');
+Route::post('location/store', [LocationController::class, 'store'])->name('location.store')->middleware('auth');
 
 
 // Email

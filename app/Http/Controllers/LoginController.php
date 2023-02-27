@@ -12,19 +12,18 @@ class LoginController extends Controller
 {
     public function index()
     {
-        if($user = Auth::user()){
-            if($user->roles == 'admin'){
+        if ($user = Auth::user()) {
+            if ($user->roles == 'admin') {
                 return redirect()->intended('home_admin');
-            }elseif($user->roles == 'staff'){
+            } elseif ($user->roles == 'staff') {
                 return redirect()->intended('home_staff');
-            }elseif($user->roles == 'crew'){
+            } elseif ($user->roles == 'crew') {
                 return redirect()->intended('home_crew');
             }
         }
 
         $getuser = User::all();
-        if($getuser->isEmpty())
-        {
+        if ($getuser->isEmpty()) {
             $this->import_user_auto();
         }
 
@@ -44,16 +43,16 @@ class LoginController extends Controller
             ]
         );
 
-        $kredensial = $request->only('email','password');
+        $kredensial = $request->only('email', 'password');
 
-        if(Auth::attempt($kredensial)){
+        if (Auth::attempt($kredensial)) {
             $request->session()->regenerate();
             $user = Auth::user();
-            if($user->roles == 'admin'){
+            if ($user->roles == 'admin') {
                 return redirect()->intended('home_admin');
-            }elseif($user->roles == 'staff'){
+            } elseif ($user->roles == 'staff') {
                 return redirect()->intended('home_staff');
-            }elseif($user->roles == 'crew'){
+            } elseif ($user->roles == 'crew') {
                 return redirect()->intended('home_crew');
             }
 
@@ -83,7 +82,7 @@ class LoginController extends Controller
         $import->import($path);
         // $import = (new UserImport)->import('document/User Import.xlsx', null, \Maatwebsite\Excel\Excel::XLSX);
 
-        if($import->failures()->isNotEmpty()) {
+        if ($import->failures()->isNotEmpty()) {
             return back()->withFailures($import->failures());
         }
 

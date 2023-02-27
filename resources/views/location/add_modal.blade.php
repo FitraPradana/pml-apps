@@ -9,8 +9,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{-- <form action="{{ route('location.store') }}" method="POST" enctype="multipart/form-data"> --}}
-                    <form action="">
+                <form action="{{ route('location.store') }}" method="POST" enctype="multipart/form-data">
+                    {{-- <form action=""> --}}
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
@@ -18,7 +18,8 @@
                                 <label>Site</label>
                                 <select class="select" id="site_id" name="site_id" required>
                                     @foreach ($site as $value)
-                                        <option value="{{ $value->id }}">{{ $value->site_code }} - {{ $value->site_name }}</option>
+                                        <option value="{{ $value->id }}">{{ $value->site_code }} -
+                                            {{ $value->site_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -37,8 +38,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label>Location Code</label>
+                                <input class="form-control" type="text" name="location_code" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label>Location Name</label>
-                                <input class="form-control" type="text" name="site_name" required>
+                                <input class="form-control" type="text" name="location_name" required>
                             </div>
                         </div>
                     </div>

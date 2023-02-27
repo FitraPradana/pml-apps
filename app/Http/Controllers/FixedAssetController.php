@@ -38,49 +38,49 @@ class FixedAssetController extends Controller
 
         // return DataTables::of(FixedAssets::all())
         return DataTables::of($asset)
-        ->editColumn('status_asset', function($edit_status){
-            if($edit_status->status_asset == 'general'){
-                return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-secondary"></i> General</a>';
-            }elseif($edit_status->status_asset == 'good') {
-                return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> GOOD</a>';
-            }elseif($edit_status->status_asset == 'need') {
-                return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Need Repair / Need Replacement</a>';
-            }elseif($edit_status->status_asset == 'dont_exist') {
-                return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Dont Exist</a>';
-            }
-        })
-        ->editColumn('last_img_condition_stock_take', function($data){
-            if($data->last_img_condition_stock_take){
-                return '
-                    <a href="'. asset('storage/'. $data->last_img_condition_stock_take) .'"> '. asset('storage/'. $data->last_img_condition_stock_take) .' </a>
+            ->editColumn('status_asset', function ($edit_status) {
+                if ($edit_status->status_asset == 'general') {
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-secondary"></i> General</a>';
+                } elseif ($edit_status->status_asset == 'good') {
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> GOOD</a>';
+                } elseif ($edit_status->status_asset == 'need') {
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Need Repair / Need Replacement</a>';
+                } elseif ($edit_status->status_asset == 'dont_exist') {
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Dont Exist</a>';
+                }
+            })
+            ->editColumn('last_img_condition_stock_take', function ($data) {
+                if ($data->last_img_condition_stock_take) {
+                    return '
+                    <a href="' . asset('storage/' . $data->last_img_condition_stock_take) . '"> ' . asset('storage/' . $data->last_img_condition_stock_take) . ' </a>
                 ';
-            } else {
-                return '';
-            }
-        })
-        ->addColumn('site_id', function($data){
-            return $data->site->site_name;
-        })
-        ->addColumn('net_book_value', function($data){
-            return rupiah($data->net_book_value);
-        })
-        ->addColumn('created_at', function($data){
-            return $data->created_at->format('d M Y H:i:s');
-        })
-        ->addColumn('updated_at', function($data){
-            return $data->updated_at->format('d M Y H:i:s');
-        })
-        ->addColumn('action', function($data){
-            return '
+                } else {
+                    return '';
+                }
+            })
+            ->addColumn('site_id', function ($data) {
+                return $data->site->site_name;
+            })
+            ->addColumn('net_book_value', function ($data) {
+                return rupiah($data->net_book_value);
+            })
+            ->addColumn('created_at', function ($data) {
+                return $data->created_at->format('d M Y H:i:s');
+            })
+            ->addColumn('updated_at', function ($data) {
+                return $data->updated_at->format('d M Y H:i:s');
+            })
+            ->addColumn('action', function ($data) {
+                return '
                 <div class="form group" align="center">
                     <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">Barcode</a>
-                    <a href="'.route('fixed_assets.edit', $data->id).'" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
-                    <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteAsset"><i class="fa fa-trash"></i></a>
+                    <a href="' . route('fixed_assets.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
+                    <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteAsset"><i class="fa fa-trash"></i></a>
                 </div>
                 ';
-        })
-        ->rawColumns(['action','status_asset','qr_code','last_img_condition_stock_take','net_book_value'])
-        ->make(true);
+            })
+            ->rawColumns(['action', 'status_asset', 'qr_code', 'last_img_condition_stock_take', 'net_book_value'])
+            ->make(true);
     }
 
     /**
@@ -122,12 +122,12 @@ class FixedAssetController extends Controller
      * @param  \App\Models\FixedAssets  $fixedAssets
      * @return \Illuminate\Http\Response
      */
-    public function edit(FixedAssets $fixedAssets,$id)
+    public function edit(FixedAssets $fixedAssets, $id)
     {
         $user = User::all();
         $asset = FixedAssets::find($id);
         $site = Site::all();
-        return view('fixed_assets.edit_form', compact('asset','user','site'));
+        return view('fixed_assets.edit_form', compact('asset', 'user', 'site'));
     }
 
     /**
@@ -179,13 +179,13 @@ class FixedAssetController extends Controller
         $asset = FixedAssets::find($id);
         $pathFoto = $asset->last_img_condition;
 
-        if($pathFoto != null || $pathFoto != ''){
+        if ($pathFoto != null || $pathFoto != '') {
             Storage::delete($pathFoto);
         }
 
         $asset = FixedAssets::find($id)->delete();
 
-        return response()->json(['success'=>'Product deleted successfully.', $asset]);
+        return response()->json(['success' => 'Product deleted successfully.', $asset]);
     }
 
     public function import_nbv(Request $request)
@@ -205,7 +205,7 @@ class FixedAssetController extends Controller
         $import = new FixedAssetsImport;
         $import->import($file);
 
-        if($import->failures()->isNotEmpty()) {
+        if ($import->failures()->isNotEmpty()) {
             return back()->withFailures($import->failures());
         }
 
@@ -222,6 +222,6 @@ class FixedAssetController extends Controller
         $data = FixedAssets::findOrFail($id);
         $code = $data->qr_code;
         $qrcode = QrCode::size(400)->generate($data->qr_code);
-        return view('barcode.generate',compact('qrcode','code','data'));
+        return view('barcode.generate', compact('qrcode', 'code', 'data'));
     }
 }

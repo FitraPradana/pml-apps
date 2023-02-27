@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->dateTime('tgl_posting');
             $table->string('voucher');
-            $table->string('last_settle_voucher');
-            $table->dateTime('last_settle_date');
-            $table->string('description');
+            $table->string('last_settle_voucher')->nullable();
+            $table->dateTime('last_settle_date')->nullable();
+            $table->string('description')->nullable();
             $table->bigInteger('nominal');
             $table->string('kode_vendor');
-            $table->string('nama_vendor');
+            $table->string('nama_vendor')->nullable();
             $table->string('jenis_doc')->nullable();
             $table->string('pic')->nullable();
             $table->dateTime('tgl_terima_doc')->nullable();
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->text('ket_doc')->nullable();
             $table->timestamps();
 
-            $table->foreignId('location_id')->nullable()->constrained();
+            // $table->foreignId('location_id')->nullable()->constrained();
 
         });
     }

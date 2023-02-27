@@ -30,27 +30,27 @@ class UserController extends Controller
 
         // return Datatables::of(User::all())
         return Datatables::of($user)
-        ->editColumn('name', function($edit_name){
-            return '
+            ->editColumn('name', function ($edit_name) {
+                return '
                 <h2 class="table-avatar">
                     <a href="" class="avatar"><img src="assets/img/people.png" alt=""></a>
-                    <a href="">'. $edit_name->full_name .' <span> '. $edit_name->personnel_number .'</span></a>
+                    <a href="">' . $edit_name->full_name . ' <span> ' . $edit_name->personnel_number . '</span></a>
                 </h2>
             ';
-        })
-        ->addColumn('created_at', function($data){
-            return $data->created_at->format('d M Y H:i:s');
-        })
-        ->addColumn('action', function($data){
-            return '
+            })
+            ->addColumn('created_at', function ($data) {
+                return $data->created_at->format('d M Y H:i:s');
+            })
+            ->addColumn('action', function ($data) {
+                return '
                 <div class="form group" align="center">
                     <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
                     <button type="button" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
-        })
-        ->rawColumns(['action','name'])
-        ->make(true);
+            })
+            ->rawColumns(['action', 'name'])
+            ->make(true);
     }
 
     /**
@@ -126,7 +126,7 @@ class UserController extends Controller
         $import = new UserImport();
         $import->import($file);
 
-        if($import->failures()->isNotEmpty()) {
+        if ($import->failures()->isNotEmpty()) {
             return back()->withFailures($import->failures());
         }
 
