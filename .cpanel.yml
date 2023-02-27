@@ -1,9 +1,9 @@
 ---
 deployment:
   tasks:
-    # - export DEPLOYPATH=/home/u1578665/public_html/
-    # - export DEPLOYPATH=/home/u1578665/
-    # - composer install
-    # - /bin/cp -R * $DEPLOYPATH
-    # - /bin/cp -a * $DEPLOYPATH
-    # - /bin/cp -r ./public/* $DEPLOYPATH/public_html/
+    - export DEPLOYPATH=/home/u1578665/public_html/
+    - export DEPLOYPATH=/home/u1578665/
+    - composer install
+    - /bin/cp -R * $DEPLOYPATH
+    - /bin/cp -a * $DEPLOYPATH
+    - /bin/cp -r ./public/* $DEPLOYPATH/public_html/
