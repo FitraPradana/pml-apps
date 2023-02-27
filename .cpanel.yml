@@ -2,7 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/u1578665/public_html/patria-maritime-lines.website
-    - /bin/cp .env.example .env $DEPLOYPATH
+    - /bin/cp .env.example testedit.ph $DEPLOYPATH
     - /bin/cp -R * $DEPLOYPATH
     - /bin/cp -a * $DEPLOYPATH
     # - /bin/cp -r ./public/* $DEPLOYPATH/public_html/patria-maritime-lines.website
