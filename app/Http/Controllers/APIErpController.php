@@ -396,6 +396,13 @@ class APIErpController extends Controller
         }
         // END Validasi Table Room Kosong
 
+        // Validasi Table Vessel Kosong
+        $vessel_valid = Vessel::all();
+        if ($vessel_valid->isEmpty()) {
+            return redirect('sites_stg_index')->with(['error_vessel_kosong' => 'Data Vessel masih KOSONG, Harap isi pada Form ROOM !']);
+        }
+        // END Validasi Table Vessel Kosong
+
         //
         $api_site = 'https://prod-23.southeastasia.logic.azure.com:443/workflows/d648c07e19444d92932448be4cfbee84/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rq_uNUJTpWypp7ZdZVdBqTajKk5lECXBNlgAJT2-B3g';
         $client = new Client();
@@ -416,13 +423,17 @@ class APIErpController extends Controller
 
         foreach ($filtered as $value) {
 
-            // $vessId = $value['VesselId'];
+            $vessId = $value['VesselId'];
 
-            // $vessel = Vessel::where('vess_id', $vessId)->get();
-            // if($vessId != null)
-            // {
-            //     $vessel_parm_id = $vessel->id;
-            // }
+            $vessel = Vessel::where('vess_id', $vessId)->get();
+            if ($vessId != null) {
+                $vessel_parm_id = $vessel->id;
+            }
+
+            $vessel_gnrl = Vessel::where('vess_id', 'GNRL')->get();
+            if ($vessId == null) {
+                $vessel_parm_id = $vessel_gnrl->id;
+            }
 
 
             // dd($vessel_parm_id);
@@ -431,7 +442,7 @@ class APIErpController extends Controller
                 'site_code'             => $value['SiteId'],
                 'site_name'             => $value['Name'],
                 'remarks_site'          => '',
-                // 'vessel_id '            => $vessel_parm_id,
+                'vessel_id '            => $vessel_parm_id,
             ]);
         }
         return redirect('sites')->with(['success' => 'Data Site Berhasil Di Generate from ERP !']);

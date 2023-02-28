@@ -17,7 +17,7 @@ class Site extends Model
         'remarks_site',
         'created_at',
         'updated_at',
-        // 'vessel_id',
+        'vessel_id',
     ];
 
 
@@ -26,10 +26,8 @@ class Site extends Model
         return $this->belongsTo(Room::class);
     }
 
-    // public function vessel()
-    // {
-    //     return $this->belongsTo(Vessel::class);
-    // }
-
-
+    public function vessel()
+    {
+        return $this->belongsTo(Vessel::class);
+    }
 }

@@ -20,8 +20,7 @@ return new class extends Migration
             $table->text('remarks_site')->nullable();
             $table->timestamps();
 
-            // $table->foreignId('vessel_id')->nullable()->constrained();
-
+            $table->foreignId('vessel_id')->constrained();
         });
     }
 
