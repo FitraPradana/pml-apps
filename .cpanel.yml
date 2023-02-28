@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/u1578665/
+    - export DEPLOYPATH=/home/u1578665/pml-apps
     # - /bin/cp .env.example testedit.ph $DEPLOYPATH
     - /bin/cp -R * $DEPLOYPATH
     - /bin/cp -a * $DEPLOYPATH
