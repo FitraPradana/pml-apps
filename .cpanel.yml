@@ -7,4 +7,4 @@ deployment:
     - /bin/cp -a * $DEPLOYPATH
     - /bin/cp -R ./public/* $DEPLOYPATH/public_html/patria-maritime-lines.website
     # - export DEPLOYPATH=/home/u1578665/
-    # - composer install
+    - composer update
