@@ -18,7 +18,7 @@ class StockTakeTransaction extends Model
         'remarks_stock_take',
         'last_img_condition_stock_take',
         'fixed_asset_id',
-        'site_id',
+        'location_id',
         'last_update_name',
     ];
 
@@ -31,5 +31,4 @@ class StockTakeTransaction extends Model
     {
         return $this->belongsTo(FixedAssets::class);
     }
-
 }

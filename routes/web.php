@@ -57,6 +57,10 @@ Route::group(['middleware' => ['auth']], function () {
         // DASHBOARD
         Route::get('home_staff', [DashboardController::class, 'home_staff']);
     });
+    Route::group(['middleware' => ['cekUserLogin:crew']], function () {
+        // DASHBOARD
+        Route::get('home_crew', [DashboardController::class, 'home_crew']);
+    });
 });
 
 // DASHBOARD
@@ -64,7 +68,6 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('home_owner', [DashboardController::class, 'home_owner']);
 Route::get('home_manager', [DashboardController::class, 'home_manager']);
 // Route::get('home_staff', [DashboardController::class, 'home_staff']);
-Route::get('home_crew', [DashboardController::class, 'home_crew']);
 
 
 // USER

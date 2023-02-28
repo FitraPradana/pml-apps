@@ -62,7 +62,7 @@
                     @endif
                     @if (session()->has('error_location_kosong'))
                         <div class="alert alert-danger" role="alert">
-                            {{ session('error_location_kosong') }} <a href="{{ url('locations') }}"> Form Location Staging
+                            {{ session('error_location_kosong') }} <a href="{{ url('locations') }}"> Form Location
                                 >>> </a>
                         </div>
                     @endif

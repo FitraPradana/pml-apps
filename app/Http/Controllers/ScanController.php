@@ -9,6 +9,7 @@ use App\Models\StockTakeTransaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use Mail;
@@ -89,7 +90,7 @@ class ScanController extends Controller
             'fixed_asset_id'                => $request->fixed_asset_id,
             'tgl_stock_take'                => today(),
             'status_asset'                  => $request->status_asset,
-            'location_id'                       => $request->location_id,
+            'location_id'                   => $request->location_id,
             'remarks_stock_take'            => $request->remarks_fixed_assets,
             'last_update_name'              => Auth::user()->username,
             'last_img_condition_stock_take' => $request->file('last_img_condition')->store('stock_take_transaction'),
@@ -102,7 +103,7 @@ class ScanController extends Controller
         $dataFixedAsset = [
             'remarks_fixed_assets'          => $request->remarks_fixed_assets,
             'status_asset'                  => $request->status_asset,
-            'site_id'                       => $request->site_id,
+            'location_id'                   => $request->location_id,
             'last_update_stock_take_date'   => today(),
             'last_modified_name'            => Auth::user()->username,
             'last_img_condition_stock_take' => $request->file('last_img_condition')->store('stock_take_transaction'),
@@ -116,8 +117,14 @@ class ScanController extends Controller
             $data["title"] = "Admin Asset Management PML";
             $data["body"] = "Status Asset berhasil di Update";
             $data["today"] = today()->format('d-M-y');
-            $data["stock_take"] = StockTakeTransaction::with('site')->where('id', $LastInsertId_stock_take)->first();
-
+            // $data["stock_take"] = StockTakeTransaction::with('site')->where('id', $LastInsertId_stock_take)->first();
+            $data["stock_take"] =
+                DB::table('stock_take_transactions')
+                ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id ', '=', 'fixed_assets.id')
+                ->leftJoin('locations', 'stock_take_transactions.location_id ', '=', 'locations.id')
+                ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.fixed_assets_name', 'fixed_assets.acquisition_date', 'locations.location_name')
+                ->where('stock_take_transactions.id', $LastInsertId_stock_take)
+                ->first();
             $pdf = PDF::loadView('emails.ba_status.pdf', $data);
 
             Mail::send('emails.ba_status.body', $data, function ($message) use ($data, $pdf) {
@@ -133,7 +140,14 @@ class ScanController extends Controller
             $data["title"] = "Admin Asset Management PML";
             $data["body"] = "Status Asset berhasil di Update";
             $data["today"] = today()->format('d-M-y');
-            $data["stock_take"] = StockTakeTransaction::with('site')->where('id', $LastInsertId_stock_take)->first();
+            // $data["stock_take"] = StockTakeTransaction::with('site')->where('id', $LastInsertId_stock_take)->first();
+            $data["stock_take"] =
+                DB::table('stock_take_transactions')
+                ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id', '=', 'fixed_assets.id')
+                ->leftJoin('locations', 'stock_take_transactions.location_id', '=', 'locations.id')
+                ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.fixed_assets_name', 'fixed_assets.acquisition_date', 'locations.location_name')
+                ->where('stock_take_transactions.id', $LastInsertId_stock_take)
+                ->first();
 
             $pdf = PDF::loadView('emails.ba_status.pdf', $data);
 

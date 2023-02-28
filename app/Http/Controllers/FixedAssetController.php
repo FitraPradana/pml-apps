@@ -12,6 +12,7 @@ use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -33,9 +34,11 @@ class FixedAssetController extends Controller
 
     public function json()
     {
-        // $asset = FixedAssets::leftJoin('users', 'fixed_assets.pic', '=', 'users.id')
-        // ->get();
-        $asset = FixedAssets::with('site')->orderBy('updated_at', 'desc')->get();
+        // $asset = FixedAssets::with('site')->orderBy('updated_at', 'desc')->get();
+        $asset = DB::table('fixed_assets')
+            ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
+            ->select('fixed_assets.*', 'locations.location_name')
+            ->get();
 
         // return DataTables::of(FixedAssets::all())
         return DataTables::of($asset)
@@ -60,16 +63,19 @@ class FixedAssetController extends Controller
                 }
             })
             ->addColumn('location_id', function ($data) {
-                return $data->location->location_name;
+                return $data->location_name;
             })
             ->addColumn('net_book_value', function ($data) {
                 return rupiah($data->net_book_value);
             })
+            ->addColumn('acquisition_date', function ($data) {
+                return Carbon::parse($data->acquisition_date)->format('d M Y');
+            })
             ->addColumn('created_at', function ($data) {
-                return $data->created_at->format('d M Y H:i:s');
+                return Carbon::parse($data->created_at)->format('d M Y H:i:s');
             })
             ->addColumn('updated_at', function ($data) {
-                return $data->updated_at->format('d M Y H:i:s');
+                return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
             })
             ->addColumn('action', function ($data) {
                 return '
@@ -149,7 +155,7 @@ class FixedAssetController extends Controller
             // 'acquisition_date'              => 'required',
             'net_book_value'                => 'required',
             'status_asset'                  => 'required',
-            'site_id'                       => 'required',
+            'location_id'                   => 'required',
             'remarks_fixed_assets'          => 'required',
         ]);
 
@@ -160,7 +166,7 @@ class FixedAssetController extends Controller
             'net_book_value'                => $request->net_book_value,
             'status_asset'                  => $request->status_asset,
             'last_update_stock_take_date'   => Today(),
-            'site_id'                       => $request->site_id,
+            'location_id'                   => $request->location_id,
             'remarks_fixed_assets'          => $request->remarks_fixed_assets,
             'last_modified_name'            => Auth::user()->username,
         ]);

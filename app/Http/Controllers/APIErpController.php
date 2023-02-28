@@ -88,7 +88,7 @@ class APIErpController extends Controller
         // Validasi Table Location Kosong
         $location_valid = Location::all();
         if ($location_valid->isEmpty()) {
-            return redirect('fixed_assets_stg_index')->with(['error_location_kosong' => 'Data Location masih KOSONG, Harap isi pada Form Site !']);
+            return redirect('fixed_assets_stg_index')->with(['error_location_kosong' => 'Data Location masih KOSONG, Harap isi pada Form Location !']);
         }
         // END Validasi Table Location Kosong
 
@@ -144,7 +144,7 @@ class APIErpController extends Controller
                 'qr_code'               => url('scan_edit_form', $qrcode),
                 // 'qr_code'               => $qrcode,
                 // 'last_modified_name' => '',
-                'location_id'               => $location_id_gnrl->id,
+                // 'location_id'               => $location_id_gnrl->id,
             ]);
         }
 
@@ -383,7 +383,7 @@ class APIErpController extends Controller
         }
 
 
-        return DataTables::of($collectdata)
+        return DataTables::of($filtered)
             ->make(true);
     }
 
@@ -421,29 +421,31 @@ class APIErpController extends Controller
             $filtered = $collectdata->whereNotIn('SiteId', $v);
         }
 
-        foreach ($filtered as $value) {
 
+
+        foreach ($filtered as $value) {
             $vessId = $value['VesselId'];
 
-            $vessel = Vessel::where('vess_id', $vessId)->get();
-            if ($vessId != null) {
-                $vessel_parm_id = $vessel->id;
+            if ($vessId) {
+                $vessel_parm = Vessel::where('vess_id', $value['VesselId'])->first();
+                Site::create([
+                    'site_code'             => $value['SiteId'],
+                    'site_name'             => $value['Name'],
+                    'remarks_site'          => '',
+                    'vessel_id'            => $vessel_parm->id,
+                ]);
             }
 
-            $vessel_gnrl = Vessel::where('vess_id', 'GNRL')->get();
             if ($vessId == null) {
-                $vessel_parm_id = $vessel_gnrl->id;
+                $vessel_parm_gnrl = Vessel::where('vess_id', 'GNRL')->first();
+                Site::create([
+                    'site_code'             => $value['SiteId'],
+                    'site_name'             => $value['Name'],
+                    'remarks_site'          => '',
+                    // 'vessel_id'            => '',
+                    // 'vessel_id'            => $vessel_parm_gnrl->id,
+                ]);
             }
-
-
-            // dd($vessel_parm_id);
-
-            Site::create([
-                'site_code'             => $value['SiteId'],
-                'site_name'             => $value['Name'],
-                'remarks_site'          => '',
-                'vessel_id '            => $vessel_parm_id,
-            ]);
         }
         return redirect('sites')->with(['success' => 'Data Site Berhasil Di Generate from ERP !']);
     }
