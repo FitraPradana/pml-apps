@@ -5,6 +5,6 @@ deployment:
     # - /bin/cp .env.example testedit.ph $DEPLOYPATH
     - /bin/cp -R * $DEPLOYPATH
     - /bin/cp -a * $DEPLOYPATH
-    # - /bin/cp -r ./public/* $DEPLOYPATH/public_html/patria-maritime-lines.website
+    - /bin/cp -R ./public/* $DEPLOYPATH
     # - export DEPLOYPATH=/home/u1578665/
     # - composer install
