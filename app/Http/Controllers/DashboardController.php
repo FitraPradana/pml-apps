@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Employee;
 use App\Models\FixedAssets;
+use App\Models\Location;
+use App\Models\Room;
+use App\Models\Site;
 use App\Models\User;
+use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +27,15 @@ class DashboardController extends Controller
         $sumAsset = FixedAssets::count('id');
         $sumDocument = Document::count('id');
         $sumUser = User::count('id');
-        return view('dashboard.home_admin', compact('sumAsset', 'sumDocument', 'sumUser'));
+        $sumEmployee = Employee::count('emp_id');
+        $sumVessel = Vessel::count('id');
+        $sumSite = Site::count('id');
+        $sumRoom = Room::count('id');
+        $sumLocation = Location::count('id');
+        return view(
+            'dashboard.home_admin',
+            compact('sumAsset', 'sumDocument', 'sumUser', 'sumEmployee', 'sumVessel', 'sumSite', 'sumRoom', 'sumLocation')
+        );
     }
 
     public function home_staff()

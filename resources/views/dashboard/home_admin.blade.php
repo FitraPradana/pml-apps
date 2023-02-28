@@ -27,7 +27,7 @@
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                            <span class="dash-widget-icon"><i class="la la-user-plus"></i></span>
                             <div class="dash-widget-info">
                                 <h3>{{ $sumUser }}</h3>
                                 <span>Users</span>
@@ -50,7 +50,7 @@
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="la la-object-ungroup"></i></span>
+                            <span class="dash-widget-icon"><i class="la la-file-text"></i></span>
                             <div class="dash-widget-info">
                                 <h3>{{ $sumDocument }}</h3>
                                 <span>Documents</span>
@@ -61,10 +61,54 @@
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="la la-object-ungroup"></i></span>
+                            <span class="dash-widget-icon"><i class="la la-user"></i></span>
                             <div class="dash-widget-info">
-                                <h3>112</h3>
-                                <span>User</span>
+                                <h3>{{ $sumEmployee }}</h3>
+                                <span>Employees</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="las la-ship"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumVessel }}</h3>
+                                <span>Vessels</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="las la-anchor"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumSite }}</h3>
+                                <span>Sites</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="las la-hotel"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumRoom }}</h3>
+                                <span>Rooms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="las la-map-marked"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumLocation }}</h3>
+                                <span>Locations</span>
                             </div>
                         </div>
                     </div>
@@ -95,7 +139,7 @@
                 </div>
             </div> --}}
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-12">
                     <div class="card-group m-b-30">
                         <div class="card">
@@ -175,10 +219,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Statistics Widget -->
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
                     <div class="card flex-fill dash-statistics">
                         <div class="card-body">
@@ -318,10 +362,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- /Statistics Widget -->
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-6 d-flex">
                     <div class="card card-table flex-fill">
                         <div class="card-header">
@@ -436,9 +480,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-6 d-flex">
                     <div class="card card-table flex-fill">
                         <div class="card-header">
@@ -815,7 +859,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
         <!-- /Page Content -->
