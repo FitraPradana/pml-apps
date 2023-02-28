@@ -8,6 +8,7 @@ use App\Imports\FixedAssetsImport;
 use App\Models\FixedAssets;
 use App\Models\Site;
 use App\Models\User;
+use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,8 +59,8 @@ class FixedAssetController extends Controller
                     return '';
                 }
             })
-            ->addColumn('site_id', function ($data) {
-                return $data->site->site_name;
+            ->addColumn('location_id', function ($data) {
+                return $data->location->location_name;
             })
             ->addColumn('net_book_value', function ($data) {
                 return rupiah($data->net_book_value);
@@ -127,7 +128,8 @@ class FixedAssetController extends Controller
         $user = User::all();
         $asset = FixedAssets::find($id);
         $site = Site::all();
-        return view('fixed_assets.edit_form', compact('asset', 'user', 'site'));
+        $location = Location::all();
+        return view('fixed_assets.edit_form', compact('asset', 'user', 'site', 'location'));
     }
 
     /**

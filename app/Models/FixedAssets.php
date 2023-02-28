@@ -30,10 +30,16 @@ class FixedAssets extends Model
         'last_modified_name',
         'last_img_condition_stock_take',
         'site_id',
+        'location_id',
     ];
 
     public function site()
     {
         return $this->belongsTo(Site::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
     }
 }

@@ -35,7 +35,8 @@ return new class extends Migration
             // $table->string('site_id')->nullable();
             // $table->foreign('site_id')->references('id')->on('sites');
 
-            $table->foreignId('site_id')->nullable()->constrained();
+            $table->foreignId('location_id')->constrained();
+            // $table->foreignId('site_id')->nullable()->constrained();
 
             $table->timestamps();
         });

@@ -93,6 +93,7 @@ class APIErpController extends Controller
         // END Validasi Table Location Kosong
 
 
+
         $api_fixed_assets = 'https://prod-19.southeastasia.logic.azure.com:443/workflows/dc06527840cd42e5930a2f8ffd5b001d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6UQg7E24Ln9yqEoCODwhPqNVEFNVP6dWQoiWN6c-jI4';
         $client = new Client();
         $response = $client->request('GET', $api_fixed_assets);
@@ -113,6 +114,7 @@ class APIErpController extends Controller
         foreach ($filtered as $value) {
             $qrcode = Str::random(20);
             $vessId = $value['KREVesselId'];
+            $location_id_gnrl = Location::where('location_code', 'GNRL')->first();
 
             // $site_gnrl = Site::where('id','')->first();
             // if($value['KREVesselId'] == '' || $value['KREVesselId'] == null)
@@ -142,7 +144,7 @@ class APIErpController extends Controller
                 'qr_code'               => url('scan_edit_form', $qrcode),
                 // 'qr_code'               => $qrcode,
                 // 'last_modified_name' => '',
-                'site_id'               => 1,
+                'location_id'               => $location_id_gnrl->id,
             ]);
         }
 
