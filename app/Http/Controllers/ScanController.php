@@ -120,8 +120,8 @@ class ScanController extends Controller
             // $data["stock_take"] = StockTakeTransaction::with('site')->where('id', $LastInsertId_stock_take)->first();
             $data["stock_take"] =
                 DB::table('stock_take_transactions')
-                ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id ', '=', 'fixed_assets.id')
-                ->leftJoin('locations', 'stock_take_transactions.location_id ', '=', 'locations.id')
+                ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id', '=', 'fixed_assets.id')
+                ->leftJoin('locations', 'stock_take_transactions.location_id', '=', 'locations.id')
                 ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.fixed_assets_name', 'fixed_assets.acquisition_date', 'locations.location_name')
                 ->where('stock_take_transactions.id', $LastInsertId_stock_take)
                 ->first();
