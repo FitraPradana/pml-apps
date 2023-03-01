@@ -110,7 +110,7 @@
                             tittle: "Mantap....",
                             text: 'Data Asset telah ditemukan !'
                         });
-                        window.location.href = 'scan_edit_form/' + response.id;
+                        window.location.href = response.qr_code;
                     }
                 },
             });

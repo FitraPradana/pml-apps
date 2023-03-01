@@ -85,7 +85,7 @@ Route::resource('fixed_assets', FixedAssetController::class)->middleware('auth')
 Route::get('/fixed_asset/json', [FixedAssetController::class, 'json'])->middleware('auth');
 Route::post('fixed_asset_import', [FixedAssetController::class, 'import'])->name('fixed_asset.import')->middleware('auth');
 Route::get('fixed_asset_export', [FixedAssetController::class, 'export'])->name('fixed_asset.export')->middleware('auth');
-Route::get('generate/{id}', [FixedAssetController::class, 'generate'])->name('generate.qr_code')->middleware('auth');
+Route::get('generate/{fix_asset}', [FixedAssetController::class, 'generate'])->name('generate.qr_code')->middleware('auth');
 Route::put('fa_import_nbv', [FixedAssetController::class, 'import_nbv'])->name('fa_nbv.import')->middleware('auth');
 
 // =========================================================================================

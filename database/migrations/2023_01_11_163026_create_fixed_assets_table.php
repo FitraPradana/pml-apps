@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('fixed_assets', function (Blueprint $table) {
             $table->id();
-            $table->string('fixed_assets_number');
+            $table->string('fixed_assets_number')->unique();
             $table->string('fixed_assets_name');
             $table->string('fixed_assets_group');
             $table->string('main_fixed_assets')->nullable();
