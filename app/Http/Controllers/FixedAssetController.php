@@ -47,8 +47,10 @@ class FixedAssetController extends Controller
                     return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-secondary"></i> General</a>';
                 } elseif ($edit_status->status_asset == 'good') {
                     return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> GOOD</a>';
-                } elseif ($edit_status->status_asset == 'need') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Need Repair / Need Replacement</a>';
+                } elseif ($edit_status->status_asset == 'need_replacement') {
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Need Replacement</a>';
+                } elseif ($edit_status->status_asset == 'need_repair') {
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Need Repair</a>';
                 } elseif ($edit_status->status_asset == 'dont_exist') {
                     return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Dont Exist</a>';
                 }

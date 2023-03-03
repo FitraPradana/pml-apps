@@ -111,7 +111,9 @@
                                         name="status_asset" required>
                                         <option value="general" @selected(old('general', $asset->status_asset) == 'general')>General</option>
                                         <option value="good" @selected(old('good', $asset->status_asset) == 'good')>GOOD</option>
-                                        <option value="need" @selected(old('need', $asset->status_asset) == 'need')>Need Repair / Need Replacement
+                                        <option value="need_replacement" @selected(old('need_replacement', $asset->status_asset) == 'need_replacement')>Need Replacement
+                                        </option>
+                                        <option value="need_repair" @selected(old('need_repair', $asset->status_asset) == 'need_repair')>Need Repair
                                         </option>
                                         <option value="dont_exist" @selected(old('dont_exist', $asset->status_asset) == 'dont_exist')>Dont Exist</option>
                                     </select>

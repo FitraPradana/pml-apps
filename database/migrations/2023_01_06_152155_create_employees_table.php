@@ -14,14 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            // $table->id();
-            $table->string('emp_id', 50)->primary();
+            $table->uuid('id')->primary();
+            // $table->string('emp_id', 50)->primary();
             $table->string('emp_name');
             $table->string('emp_email');
             $table->string('emp_phone');
             $table->string('emp_remarks');
 
-            $table->foreignId('department_id')->nullable()->constrained();
+            // $table->foreignId('department_id')->nullable()->constrained();
+
+            $table->string('department_id')->nullable();
+            $table->foreign('department_id')->references('id')->on('departments');
 
             $table->timestamps();
         });

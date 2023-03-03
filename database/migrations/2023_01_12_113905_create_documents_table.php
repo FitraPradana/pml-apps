@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->dateTime('tgl_posting');
             $table->string('voucher');
             $table->string('last_settle_voucher')->nullable();

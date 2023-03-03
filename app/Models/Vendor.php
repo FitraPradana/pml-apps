@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Location extends Model
+class Vendor extends Model
 {
     use HasFactory;
 
@@ -24,25 +24,15 @@ class Location extends Model
         });
     }
 
-    protected $table = "locations";
+    protected $table = "vendors";
     protected $primaryKey = "id";
     protected $fillable = [
-        'location_code',
-        'location_name',
-        'location_remarks',
-        'site_id',
-        'room_id',
+        'accountnum',
+        'vend_name',
+        'vend_address',
+        'vend_phone',
+        'vend_remarks',
         'created_at',
         'updated_at',
     ];
-
-    public function room()
-    {
-        return $this->belongsTo(Room::class);
-    }
-
-    public function site()
-    {
-        return $this->belongsTo(Site::class);
-    }
 }

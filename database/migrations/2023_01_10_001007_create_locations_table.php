@@ -14,16 +14,21 @@ return new class extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('location_code');
             $table->string('location_name');
             $table->text('location_remarks')->nullable();
 
-            // $table->string('site_id')->nullable();
-            // $table->foreign('site_id')->references('id')->on('sites');
-            $table->foreignId('site_id')->constrained();
+            // $table->foreignId('site_id')->constrained();
 
-            $table->foreignId('room_id')->constrained();
+            // $table->foreignId('room_id')->constrained();
+
+
+            $table->string('site_id');
+            $table->foreign('site_id')->references('id')->on('sites');
+
+            $table->string('room_id');
+            $table->foreign('room_id')->references('id')->on('rooms');
 
             $table->timestamps();
         });

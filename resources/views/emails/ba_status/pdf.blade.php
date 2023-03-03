@@ -92,9 +92,12 @@
                                                 <td>
                                                     @if ($stock_take->status_asset == 'dont_exist')
                                                         <span class="badge badge-danger"> DONT EXIST</span>
-                                                    @elseif ($stock_take->status_asset == 'need')
-                                                        <span class="badge badge-warning"> Need Repair / Need
+                                                    @elseif ($stock_take->status_asset == 'need_replacement')
+                                                        <span class="badge badge-warning"> Need
                                                             Replacement</span>
+                                                    @elseif ($stock_take->status_asset == 'need_repair')
+                                                        <span class="badge badge-warning"> Need
+                                                            Repair</span>
                                                     @elseif ($stock_take->status_asset == 'good')
                                                         <span class="badge badge-success"> GOOD</span>
                                                     @elseif ($stock_take->status_asset == 'general')

@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('vendors', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('dept_code');
-            $table->string('dept_name');
-            $table->string('remarks_dept')->nullable();
+            $table->string('accountnum')->unique();
+            $table->string('vend_name');
+            $table->string('vend_address')->nullable();
+            $table->string('vend_phone')->nullable();
+            $table->string('vend_remarks')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('vendors');
     }
 };

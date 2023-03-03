@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vessels', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('vess_id');
             $table->string('vess_name');
             $table->string('vess_type');

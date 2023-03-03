@@ -14,19 +14,21 @@ return new class extends Migration
     public function up()
     {
         Schema::create('stock_take_transactions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->dateTime('tgl_stock_take');
             $table->string('status_asset');
             $table->text('remarks_stock_take');
             $table->string('last_img_condition_stock_take');
             $table->string('last_update_name');
 
-            $table->foreignId('fixed_asset_id')->constrained();
+            // $table->foreignId('fixed_asset_id')->constrained();
 
-            // $table->string('site_id')->nullable();
-            // $table->foreign('site_id')->references('id')->on('sites');
+            $table->string('fixed_asset_id');
+            $table->foreign('fixed_asset_id')->references('id')->on('fixed_assets');
 
-            $table->foreignId('location_id')->nullable()->constrained();
+            $table->string('location_id')->nullable();
+            $table->foreign('location_id')->references('id')->on('locations');
+
 
             $table->timestamps();
         });

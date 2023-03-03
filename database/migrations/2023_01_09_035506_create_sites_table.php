@@ -14,13 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('sites', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('site_code');
             $table->string('site_name');
             $table->text('remarks_site')->nullable();
             $table->timestamps();
 
-            $table->foreignId('vessel_id')->nullable()->constrained();
+            // $table->foreignId('vessel_id')->nullable()->constrained();
+
+            $table->string('vessel_id')->nullable();
+            $table->foreign('vessel_id')->references('id')->on('vessels');
         });
     }
 

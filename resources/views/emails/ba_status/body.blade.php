@@ -1,1 +1,1 @@
-Asset " {{ $stock_take->fixed_assets_number }} " Has been update Successfull !!!
+Asset " {{ $stock_take->fixed_assets_number }} " has been update Successfull !!!

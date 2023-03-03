@@ -191,6 +191,9 @@
                     <ul style="display: none;">
                         <li><a class="{{ request()->is('documents') ? 'active' : '' }}"
                                 href="{{ url('documents') }}"> Document </a></li>
+                        <li><a class="" href="#"> Pengajuan Pinjaman </a></li>
+                        <li><a class="" href="#"> Peminjaman </a></li>
+                        <li><a class="" href="#"> Pengembalian </a></li>
 
                     </ul>
                 </li>
