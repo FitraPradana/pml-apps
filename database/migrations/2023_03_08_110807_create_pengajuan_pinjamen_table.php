@@ -20,7 +20,7 @@ return new class extends Migration
             // $table->date('plan_tgl_pinjaman');
             // $table->date('plan_tgl_pengembalian');
             $table->text('ket_pengajuan_pinjaman')->nullable();
-            $table->enum('approval_status', ['open', 'approved', 'completed'])->default('open');
+            $table->enum('approval_status', ['open', 'approved', 'completed', 'rejected'])->default('open');
             $table->string('approval_name')->nullable();
             $table->timestamps();
 

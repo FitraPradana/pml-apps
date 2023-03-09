@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailPengajuanPinjaman;
+use App\Models\DetailPinjaman;
 use App\Models\Document;
 use App\Models\PengajuanPinjaman;
+use App\Models\Pinjaman;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,23 +15,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PengajuanPinjamanController extends Controller
 {
-
-    public function kode_otomatis()
-    {
-        // Kode Detail Pengajuan Pinjaman
-        $thn = Carbon::now()->format('y');
-        $cek = DetailPengajuanPinjaman::count();
-        if ($cek == 0) {
-            $urut = 1001;
-            $kode_detail_pengajuan_pinjaman = 'DETPENGPINJ/' . $thn . '/' . $urut;
-        } else {
-            $ambil = DetailPengajuanPinjaman::all()->last();
-            $urut = (int)substr($ambil->kode_detail_pengajuan_pinjaman, -4) + 1;
-            $kode_detail_pengajuan_pinjaman = 'DETPENGPINJ/' . $thn . '/' . $urut;
-        }
-
-        return $kode_detail_pengajuan_pinjaman;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -37,26 +22,9 @@ class PengajuanPinjamanController extends Controller
      */
     public function index()
     {
-        $now = Carbon::now()->format('ymd');
-        $thn = Carbon::now()->format('y');
-        $cek = PengajuanPinjaman::count();
-        if ($cek == 0) {
-            $urut = 1001;
-            $nomer = 'PENGPINJ/' . $thn . '/' . $urut;
-        } else {
-            $ambil = PengajuanPinjaman::all()->last();
-            $urut = (int)substr($ambil->kode_pengajuan_pinjaman, -4) + 1;
-            $nomer = 'PENGPINJ/' . $thn . '/' . $urut;
-        }
-
-
-        // dd($nomer);
-
-
-        //
         $document = Document::where('status_doc', 'TERSEDIA')->get();
 
-        return view('pengajuan_pinjaman.view', compact('document', 'nomer'));
+        return view('pengajuan_pinjaman.view', compact('document'));
     }
 
     public function json()
@@ -65,16 +33,33 @@ class PengajuanPinjamanController extends Controller
         $query = DB::table('pengajuan_pinjaman')
             ->join('users', 'pengajuan_pinjaman.user_id', '=', 'users.id')
             ->select('pengajuan_pinjaman.*', 'users.username')
+            ->where('approval_status', '!=', 'approved')
             ->orderByDesc('pengajuan_pinjaman.updated_at')
             ->get();
         return DataTables::of($query)
             ->addColumn('action', function ($data) {
-                return '
-                    <div class="form group" align="center">
-                    <a href="' . route('document.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
-                    <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteDoc"><i class="fa fa-trash"></i></a>
+                if ($data->approval_status == 'open') {
+
+                    return '
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="' . route('pengajuan_pinjaman.approve', $data->id) . '" style="color: blue;">APPROVE</a>
+                                <a class="dropdown-item" href="' . route('pengajuan_pinjaman.reject', $data->id) . '" style="color: red;">REJECT</a>
+                            </div>
                     </div>
-                ';
+
+                    ';
+                }
+            })
+            ->editColumn('approval_status', function ($edit_status) {
+                if ($edit_status->approval_status == 'open') {
+                    return '<span class="badge bg-inverse-warning">open</span>';
+                } elseif ($edit_status->approval_status == 'approved') {
+                    return '<span class="badge bg-inverse-success">approved</span>';
+                } elseif ($edit_status->approval_status == 'rejected') {
+                    return '<span class="badge bg-inverse-danger">rejected</span>';
+                }
             })
             ->addColumn('user_id', function ($data) {
                 return $data->username;
@@ -85,7 +70,10 @@ class PengajuanPinjamanController extends Controller
             ->addColumn('updated_at', function ($data) {
                 return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
             })
-            ->rawColumns(['action'])
+            ->addColumn('tgl_pengajuan_pinjaman', function ($data) {
+                return Carbon::parse($data->tgl_pengajuan_pinjaman)->format('d M Y');
+            })
+            ->rawColumns(['action', 'approval_status'])
             ->make(true);
     }
 
@@ -111,21 +99,17 @@ class PengajuanPinjamanController extends Controller
 
         //Save Tbl Pengajuan Pinjaman
         $PengPinjSave = PengajuanPinjaman::create([
-            // 'kode_pengajuan_pinjaman'   => $request->kode_pengajuan_pinjaman,
             'tgl_pengajuan_pinjaman'    => Carbon::now(),
             'ket_pengajuan_pinjaman'    => $request->ket_pengajuan_pinjaman,
-            'approval_status'           => 'open',
+            // 'approval_status'           => 'open',
             'user_id'                   => Auth::user()->id,
         ]);
         $lastInsertid_PengPinj = PengajuanPinjaman::where('kode_pengajuan_pinjaman', $PengPinjSave->kode_pengajuan_pinjaman)->first();
-
-
 
         //Save Tbl Detail Pengajuan Pinjaman
         foreach ($request->document_id as $key => $document_ids) {
             # code...
             $DetPengPinjSave = DetailPengajuanPinjaman::create([
-                // 'kode_detail_pengajuan_pinjaman' => $kode_detail_pengajuan_pinjaman,
                 'pengajuan_pinjaman_id' => $lastInsertid_PengPinj->id,
                 'document_id' => $document_ids,
             ]);
@@ -180,5 +164,74 @@ class PengajuanPinjamanController extends Controller
     public function destroy(PengajuanPinjaman $pengajuanPinjaman)
     {
         //
+    }
+
+    public function approve($id)
+    {
+        //
+        DB::beginTransaction();
+        //Save Tbl Pengajuan Pinjaman
+        $PengPinjUpdate = PengajuanPinjaman::find($id);
+        // dd($PengPinjUpdate['kode_pengajuan_pinjaman']);
+        $PengPinjUpdate->update([
+            'approval_status'                => 'approved',
+            'approval_name'                  => Auth::user()->username,
+        ]);
+
+
+        //Save Tbl Pinjaman//
+        $tgl_pinj_approve = Carbon::now();
+        // add 14 days to the current time
+        $due_tgl_pengembalian = date('Y-m-d', strtotime('+14 days', strtotime($tgl_pinj_approve)));
+        $PinjSave = Pinjaman::create([
+            'tgl_pinjaman'              => $tgl_pinj_approve,
+            'tgl_pengembalian'          => $due_tgl_pengembalian,
+            'ket_pinjaman'              => '',
+            'status_pinjam'             => 'DIPINJAM',
+            'kode_ref_perpanjangan'     => $PengPinjUpdate['kode_pengajuan_pinjaman'],
+            'pengajuan_pinjaman_id'     => $PengPinjUpdate['id'],
+            'user_id'                   => Auth::user()->id,
+        ]);
+        $lastInsertid_Pinj = $PinjSave->id;
+
+
+        //Save Tbl Detail Pinjaman
+        $pengPinjDetail = DetailPengajuanPinjaman::where('pengajuan_pinjaman_id', $PengPinjUpdate['id'])->get();
+        foreach ($pengPinjDetail as $key => $val) {
+            # code...
+            $DetPinjSave = DetailPinjaman::create([
+                'pinjaman_id' => $lastInsertid_Pinj,
+                'document_id' => $val->document_id,
+            ]);
+
+            $doc[] = $val->document_id;
+        }
+
+        //UPDATE Status Document "DIPINJAM"
+        Document::whereIn("id", $doc)
+            ->update([
+                'status_doc' => 'DIPINJAM',
+            ]);
+
+        DB::commit();
+
+        // echo 'Berhasil di Approve';
+        return redirect('pengajuan_pinjamans')->with(['success' => 'Has been ' . $PengPinjUpdate['kode_pengajuan_pinjaman'] . ' Approved  successfull !']);
+    }
+
+    public function reject($id)
+    {
+        DB::beginTransaction();
+        //Update Tbl Pengajuan Pinjaman
+        $PengPinjUpdate = PengajuanPinjaman::find($id);
+        $PengPinjUpdate->update([
+            'approval_status'                => 'rejected',
+            'approval_name'                  => Auth::user()->username,
+        ]);
+
+        DB::commit();
+
+
+        return redirect('pengajuan_pinjamans')->with(['error' => 'Has been ' . $PengPinjUpdate['kode_pengajuan_pinjaman'] . ' Rejected !']);
     }
 }

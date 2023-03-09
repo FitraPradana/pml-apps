@@ -69,7 +69,7 @@
                                         @error('status_doc')
                                     is-invalid
                                 @enderror
-                                        name="status_doc" required>
+                                        name="status_doc" disabled required>
                                         <option value="GENERAL" @selected(old('GENERAL', $doc->status_doc) == 'GENERAL')>General</option>
                                         <option value="TERSEDIA" @selected(old('TERSEDIA', $doc->status_doc) == 'TERSEDIA')>Tersedia</option>
                                         <option value="BELUM_TERSEDIA" @selected(old('BELUM_TERSEDIA', $doc->status_doc) == 'BELUM_TERSEDIA')>Belum Tersedia

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengembalian;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class PengembalianController extends Controller
 {
@@ -15,7 +18,40 @@ class PengembalianController extends Controller
     public function index()
     {
         //
+        return view('pengembalian.view');
     }
+
+
+    public function json()
+    {
+        //
+        $query = DB::table('pengembalians')
+            ->join('pinjaman', 'pengembalians.pinjaman_id', '=', 'pinjaman.id')
+            ->join('users', 'pengembalians.user_id', '=', 'users.id')
+            ->select('pengembalians.*', 'users.username', 'pinjaman.kode_pinjaman')
+            // ->where('approval_status', '!=', 'approved')
+            ->orderByDesc('pengembalians.updated_at')
+            ->get();
+        return DataTables::of($query)
+            ->addColumn('user_id', function ($data) {
+                return $data->username;
+            })
+            ->addColumn('pinjaman_id', function ($data) {
+                return $data->kode_pinjaman;
+            })
+            ->addColumn('created_at', function ($data) {
+                return Carbon::parse($data->created_at)->format('d M Y H:i:s');
+            })
+            ->addColumn('updated_at', function ($data) {
+                return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
+            })
+            ->addColumn('tgl_pengembalian', function ($data) {
+                return Carbon::parse($data->tgl_pengembalian)->format('d M Y');
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
 
     /**
      * Show the form for creating a new resource.

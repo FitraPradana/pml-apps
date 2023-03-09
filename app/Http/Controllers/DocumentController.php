@@ -30,25 +30,27 @@ class DocumentController extends Controller
         $doc = DB::table('documents')
             ->join('vendors', 'documents.vendor_id', '=', 'vendors.id')
             ->select('documents.*', 'vendors.vend_name')
-            ->orderByDesc('documents.tgl_posting')
+            ->orderByDesc('documents.updated_at')
             ->get();
         return DataTables::of($doc)
             ->addColumn('action', function ($data) {
                 return '
                 <div class="form group" align="center">
                 <a href="' . route('document.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
-                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteDoc"><i class="fa fa-trash"></i></a>
                 </div>
                 ';
+                // <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteDoc"><i class="fa fa-trash"></i></a>
                 // <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">Barcode</a>
             })
             ->editColumn('status_doc', function ($edit_status) {
                 if ($edit_status->status_doc == 'GENERAL') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-secondary"></i> General</a>';
+                    return '<span class="badge bg-inverse-secondary">GENERAL</span>';
                 } elseif ($edit_status->status_doc == 'TERSEDIA') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> TERSEDIA</a>';
+                    return '<span class="badge bg-inverse-success">TERSEDIA</span>';
                 } elseif ($edit_status->status_doc == 'BELUM_TERSEDIA') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Belum Tersedia</a>';
+                    return '<span class="badge bg-inverse-danger">BELUM TERSEDIA</span>';
+                } elseif ($edit_status->status_doc == 'DIPINJAM') {
+                    return '<span class="badge bg-inverse-warning">DIPINJAM</span>';
                 }
             })
             ->addColumn('vendor_id', function ($data) {

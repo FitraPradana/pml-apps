@@ -214,10 +214,14 @@ Route::put('update_doc_status', [DocumentController::class, 'update_doc_status']
 //Pengajuan Pinjaman
 Route::resource('pengajuan_pinjamans', PengajuanPinjamanController::class)->middleware('auth');
 Route::get('/pengajuan_pinjaman/json', [PengajuanPinjamanController::class, 'json'])->middleware('auth');
+Route::get('/pengajuan_pinjaman/approve/{id}', [PengajuanPinjamanController::class, 'approve'])->name('pengajuan_pinjaman.approve')->middleware('auth');
+Route::get('/pengajuan_pinjaman/reject/{id}', [PengajuanPinjamanController::class, 'reject'])->name('pengajuan_pinjaman.reject')->middleware('auth');
 
 //Pinjaman
 Route::resource('pinjamans', PinjamanController::class)->middleware('auth');
 Route::get('/pinjaman/json', [PinjamanController::class, 'json'])->middleware('auth');
+Route::get('/pinjaman/perpanjang/{id}', [PinjamanController::class, 'perpanjang'])->name('pinjaman.perpanjang')->middleware('auth');
+Route::get('/pinjaman/kembalikan/{id}', [PinjamanController::class, 'kembalikan'])->name('pinjaman.kembalikan')->middleware('auth');
 
 //Pengembalian
 Route::resource('pengembalians', PengembalianController::class)->middleware('auth');

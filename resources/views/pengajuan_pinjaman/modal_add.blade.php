@@ -12,18 +12,18 @@
                 <form action="{{ route('pengajuan_pinjamans.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <div class="form-group">
                                 <label>Kode Pengajuan</label>
                                 <input class="form-control" name="kode_pengajuan_pinjaman" style="text-align: center;"
                                     value="{{ $nomer }}" type="text" readonly>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Document</label>
-                                <select multiple data-allow-clear="1" class="form-control select" style="width: 100%;"
-                                    name="document_id[]" required>
+                                <select class="selectDoc" style="width: 100%;" name="document_id[]" multiple="multiple"
+                                    required>
                                     @foreach ($document as $val)
                                         <option value="{{ $val->id }}">{{ $val->voucher }} || {{ $val->invoice }}
                                         </option>

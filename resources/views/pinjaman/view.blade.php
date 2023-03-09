@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Data Pengajuan Pinjaman')
+@section('title', 'Data Pinjaman')
 
 @section('content')
 
@@ -24,19 +24,19 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3 class="page-title">Pengajuan Pinjaman</h3>
+                        <h3 class="page-title">Pinjaman</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Transaction</a></li>
                             <li class="breadcrumb-item active">Filling Document</li>
-                            <li class="breadcrumb-item active">Pengajuan Pinjaman</li>
+                            <li class="breadcrumb-item active">Pinjaman</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
 
-                        <div class="btn-group">
+                        {{-- <div class="btn-group">
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_pengajuan"><i
-                                    class="fa fa-plus"></i> Add Pengajuan</a>
-                        </div>
+                                    class="fa fa-plus"></i> Add Pinjaman</a>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -62,14 +62,15 @@
                                     <th>#</th>
                                     <th>No</th>
                                     {{-- <th>ID</th> --}}
-                                    <th>Kode Pengajuan</th>
-                                    <th>Tgl Pengajuan</th>
+                                    <th>Kode Pinjaman</th>
+                                    <th>Tgl Pinjaman</th>
+                                    <th>Due Pengembalian</th>
+                                    <th>Status</th>
+                                    <th>Kode Referensi Pinjaman</th>
                                     <th>Keterangan</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
-                                    <th>Approval Status</th>
-                                    <th>Approval Name</th>
-                                    <th>User</th>
+                                    <th>Nama Peminjam</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,7 +84,7 @@
 
 
         <!-- Add Pengajuan Pinjaman Modal -->
-        @include('pengajuan_pinjaman.modal_add')
+        {{-- @include('Pinjaman.modal_add') --}}
         <!-- /Add Pengajuan Pinjaman Modal -->
 
     </div>
@@ -117,7 +118,7 @@
                 processing: true,
                 serverSide: true,
                 destroy: true,
-                ajax: "{{ url('pengajuan_pinjaman/json') }}",
+                ajax: "{{ url('pinjaman/json') }}",
                 columns: [{
                         data: 'action',
                         name: 'action',
@@ -134,16 +135,28 @@
                     //     name: 'id'
                     // },
                     {
-                        data: 'kode_pengajuan_pinjaman',
-                        name: 'kode_pengajuan_pinjaman'
+                        data: 'kode_pinjaman',
+                        name: 'kode_pinjaman'
                     },
                     {
-                        data: 'tgl_pengajuan_pinjaman',
-                        name: 'tgl_pengajuan_pinjaman'
+                        data: 'tgl_pinjaman',
+                        name: 'tgl_pinjaman'
                     },
                     {
-                        data: 'ket_pengajuan_pinjaman',
-                        name: 'ket_pengajuan_pinjaman'
+                        data: 'tgl_pengembalian',
+                        name: 'tgl_pengembalian'
+                    },
+                    {
+                        data: 'status_pinjam',
+                        name: 'status_pinjam'
+                    },
+                    {
+                        data: 'kode_ref_perpanjangan',
+                        name: 'kode_ref_perpanjangan'
+                    },
+                    {
+                        data: 'ket_pinjaman',
+                        name: 'ket_pinjaman'
                     },
                     {
                         data: 'created_at',
@@ -152,14 +165,6 @@
                     {
                         data: 'updated_at',
                         name: 'updated_at'
-                    },
-                    {
-                        data: 'approval_status',
-                        name: 'approval_status'
-                    },
-                    {
-                        data: 'approval_name',
-                        name: 'approval_name'
                     },
                     {
                         data: 'user_id',
@@ -173,28 +178,28 @@
             Delete Product Code
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.deleteDoc', function() {
+            // $('body').on('click', '.deleteDoc', function() {
 
-                var pengpinj_id = $(this).data("id");
-                var result = confirm("Are you sure to delete?");
-                if (result) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "document/destroy/" + pengpinj_id,
-                        success: function(data) {
-                            table.draw();
-                            Swal.fire(
-                                'Data Berhasil di Hapus!',
-                                'You clicked the button!',
-                                'success'
-                            )
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
-            });
+            //     var pengpinj_id = $(this).data("id");
+            //     var result = confirm("Are you sure to delete?");
+            //     if (result) {
+            //         $.ajax({
+            //             type: "DELETE",
+            //             url: "document/destroy/" + pengpinj_id,
+            //             success: function(data) {
+            //                 table.draw();
+            //                 Swal.fire(
+            //                     'Data Berhasil di Hapus!',
+            //                     'You clicked the button!',
+            //                     'success'
+            //                 )
+            //             },
+            //             error: function(data) {
+            //                 console.log('Error:', data);
+            //             }
+            //         });
+            //     }
+            // });
             // End Delete Product Code
         });
     </script>
