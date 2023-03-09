@@ -1,11 +1,9 @@
 <?php
 
 if (!function_exists('rupiah')) {
-    function rupiah($angka){
+    function rupiah($angka)
+    {
 
-        return "Rp " . number_format($angka, 3, '.' , ',');
-
+        return "" . number_format($angka, 3, '.', ',');
     }
 }
-
-

@@ -10,12 +10,16 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\APIErpController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PengajuanPinjamanController;
+use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomVesselController;
 use App\Http\Controllers\ScanController;
 use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StockTakeController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VesselController;
 use App\Models\RoomVessel;
 use Illuminate\Support\Facades\Auth;
@@ -168,10 +172,6 @@ Route::get('vessels_stg_json', [APIErpController::class, 'vessels_stg_json'])->m
 Route::get('vessels_stg_save', [APIErpController::class, 'vessels_stg_save'])->middleware('auth');
 
 
-// Document
-Route::get('documents', [DocumentController::class, 'index'])->middleware('auth');
-Route::get('document/json', [DocumentController::class, 'json'])->middleware('auth');
-Route::post('document_import', [DocumentController::class, 'import'])->name('document.import')->middleware('auth');
 
 
 // VESSEL
@@ -184,8 +184,41 @@ Route::get('locations', [LocationController::class, 'index'])->middleware('auth'
 Route::get('location/json', [LocationController::class, 'json'])->middleware('auth');
 Route::post('location/store', [LocationController::class, 'store'])->name('location.store')->middleware('auth');
 
+//Vendor
+Route::get('vendors', [VendorController::class, 'index'])->middleware('auth');
+Route::get('vendor/json', [VendorController::class, 'json'])->middleware('auth');
+
+
+
+
 
 // Email
 Route::get('test_index', [SendMailController::class, 'test_index'])->name('test_index.viewemail')->middleware('auth');
 Route::get('test_send_email', [SendMailController::class, 'ba_status'])->name('test_send_email.sendmail')->middleware('auth');
 Route::get('ba_status/{id}', [SendMailController::class, 'ba_status'])->name('ba_status.sendmail')->middleware('auth');
+
+
+
+
+
+
+// Document
+Route::get('documents', [DocumentController::class, 'index'])->middleware('auth');
+Route::get('document/edit/{id}', [DocumentController::class, 'edit'])->name('document.edit')->middleware('auth');
+Route::put('document/update/{id}', [DocumentController::class, 'update'])->name('document.update')->middleware('auth');
+Route::delete('document/destroy/{id}', [DocumentController::class, 'destroy'])->name('document.destroy')->middleware('auth');
+Route::get('document/json', [DocumentController::class, 'json'])->middleware('auth');
+Route::post('document_import', [DocumentController::class, 'import'])->name('document.import')->middleware('auth');
+Route::put('update_doc_status', [DocumentController::class, 'update_doc_status'])->name('update_doc_status.import')->middleware('auth');
+
+//Pengajuan Pinjaman
+Route::resource('pengajuan_pinjamans', PengajuanPinjamanController::class)->middleware('auth');
+Route::get('/pengajuan_pinjaman/json', [PengajuanPinjamanController::class, 'json'])->middleware('auth');
+
+//Pinjaman
+Route::resource('pinjamans', PinjamanController::class)->middleware('auth');
+Route::get('/pinjaman/json', [PinjamanController::class, 'json'])->middleware('auth');
+
+//Pengembalian
+Route::resource('pengembalians', PengembalianController::class)->middleware('auth');
+Route::get('/pengembalian/json', [PengembalianController::class, 'json'])->middleware('auth');

@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->dateTime('tgl_posting');
+            $table->date('tgl_posting')->nullable();
+            $table->string('status_doc');
             $table->string('voucher');
+            $table->string('invoice')->nullable();
             $table->string('last_settle_voucher')->nullable();
-            $table->dateTime('last_settle_date')->nullable();
+            $table->date('last_settle_date')->nullable();
             $table->string('description')->nullable();
-            $table->bigInteger('nominal');
-            $table->string('kode_vendor');
-            $table->string('nama_vendor')->nullable();
+            $table->decimal('nominal', 15, 3);
             $table->string('jenis_doc')->nullable();
             $table->string('pic')->nullable();
-            $table->dateTime('tgl_terima_doc')->nullable();
+            $table->date('tgl_terima_doc')->nullable();
             $table->string('lemari')->nullable();
             $table->string('lorong')->nullable();
             $table->string('baris')->nullable();
@@ -38,6 +38,8 @@ return new class extends Migration
 
             // $table->foreignId('location_id')->nullable()->constrained();
 
+            $table->string('vendor_id')->nullable();
+            $table->foreign('vendor_id')->references('id')->on('vendors');
         });
     }
 
@@ -48,6 +50,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        // Schema::dropIfExists('documents');
     }
 };

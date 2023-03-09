@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendors', function (Blueprint $table) {
+        Schema::create('detail_pinjaman', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('accountnum')->unique();
-            $table->string('search_name')->nullable();
-            $table->string('vend_name');
-            $table->string('vend_address')->nullable();
-            $table->string('vend_phone')->nullable();
-            $table->string('vend_remarks')->nullable();
+            $table->string('kode_detail_pinjaman')->unique();
             $table->timestamps();
+
+            $table->string('pinjaman_id');
+            $table->foreign('pinjaman_id')->references('id')->on('pinjaman');
+
+            $table->string('document_id');
+            $table->foreign('document_id')->references('id')->on('documents');
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendors');
+        Schema::dropIfExists('detail_pinjaman');
     }
 };

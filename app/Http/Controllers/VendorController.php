@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vendor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class VendorController extends Controller
 {
@@ -15,6 +17,30 @@ class VendorController extends Controller
     public function index()
     {
         //
+        return view('vendor.view');
+    }
+
+    public function json()
+    {
+        //
+        $vendor = Vendor::orderBy('updated_at', 'desc')->get();
+
+        return DataTables::of($vendor)
+            ->addColumn('action', function ($data) {
+                return '
+                <div class="form group" align="center">
+
+                ';
+                // <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+            })
+            ->addColumn('created_at', function ($data) {
+                return Carbon::parse($data->created_at)->format('d M Y H:i:s');
+            })
+            ->addColumn('updated_at', function ($data) {
+                return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

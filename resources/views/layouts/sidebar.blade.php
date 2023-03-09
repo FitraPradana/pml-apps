@@ -129,12 +129,14 @@
                         <li><a class="" href=""> Customer </a></li>
                     </ul>
                 </li> --}}
-                {{-- <li class="submenu">
-                    <a href="#"><i class="las la-user-friends"></i> <span> Vendor </span> <span class="menu-arrow"></span></a>
+                <li class="submenu">
+                    <a href="#"><i class="las la-user-friends"></i> <span> Vendor </span> <span
+                            class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a class="" href=""> Vendor </a></li>
+                        <li><a class="{{ request()->is('vendors') ? 'active' : '' }}" href="{{ url('vendors') }}">
+                                Vendor </a></li>
                     </ul>
-                </li> --}}
+                </li>
                 <li class="submenu">
                     <a href="#"><i class="las la-ship"></i> <span> Vessel </span> <span
                             class="menu-arrow"></span></a>
@@ -165,7 +167,8 @@
                     <a href="#"><i class="las la-map-marked"></i> <span> Location </span> <span
                             class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a class="{{ request()->is('locations') ? 'active' : '' }}" href="{{ url('locations') }}">
+                        <li><a class="{{ request()->is('locations') ? 'active' : '' }}"
+                                href="{{ url('locations') }}">
                                 Location </a></li>
 
                     </ul>
@@ -191,9 +194,12 @@
                     <ul style="display: none;">
                         <li><a class="{{ request()->is('documents') ? 'active' : '' }}"
                                 href="{{ url('documents') }}"> Document </a></li>
-                        <li><a class="" href="#"> Pengajuan Pinjaman </a></li>
-                        <li><a class="" href="#"> Peminjaman </a></li>
-                        <li><a class="" href="#"> Pengembalian </a></li>
+                        <li><a class="{{ request()->is('pengajuan_pinjamans') ? 'active' : '' }}"
+                                href="{{ url('pengajuan_pinjamans') }}"> Pengajuan Pinjaman </a></li>
+                        <li><a class="{{ request()->is('pinjamans') ? 'active' : '' }}"
+                                href="{{ url('pinjamans') }}"> Peminjaman </a></li>
+                        <li><a class="{{ request()->is('pengembalians') ? 'active' : '' }}"
+                                href="{{ url('pengembalians') }}"> Pengembalian </a></li>
 
                     </ul>
                 </li>

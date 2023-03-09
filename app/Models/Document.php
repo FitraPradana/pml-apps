@@ -29,14 +29,15 @@ class Document extends Model
     protected $primaryKey = "id";
     protected $fillable = [
         'voucher',
+        'invoice',
+        'status_doc',
         'last_settle_voucher',
         'last_settle_date',
         'jenis_doc',
         'description',
         'tgl_posting',
         'nominal',
-        'kode_vendor',
-        'nama_vendor',
+        'vendor_id',
         'pic',
         'tgl_terima_doc',
         'lemari',
@@ -48,4 +49,9 @@ class Document extends Model
         'kelengkapan_doc',
         'ket_doc',
     ];
+
+    // public function vendor()
+    // {
+    //     return $this->belongsTo(Vendor::class);
+    // }
 }

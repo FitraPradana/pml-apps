@@ -7,6 +7,7 @@ use App\Models\FixedAssets;
 use App\Models\Location;
 use App\Models\Room;
 use App\Models\Site;
+use App\Models\Vendor;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -22,7 +23,7 @@ class APIErpController extends Controller
     //
     public function cek_api()
     {
-        $inv = 'https://prod-23.southeastasia.logic.azure.com:443/workflows/d648c07e19444d92932448be4cfbee84/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rq_uNUJTpWypp7ZdZVdBqTajKk5lECXBNlgAJT2-B3g';
+        $inv = 'https://prod-10.southeastasia.logic.azure.com:443/workflows/f72beb54ca9d40c2bb2746c5cb7f4da7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=zQPlwyEMDTO3AgRq21BNEtjNTUybKSo08_WxF47ZrZU';
         $client = new Client();
         $response = $client->request('GET', $inv);
         $statusCode = $response->getStatusCode();
@@ -194,6 +195,8 @@ class APIErpController extends Controller
 
     public function doc_stg_save()
     {
+
+
         $api_doc = 'https://prod-10.southeastasia.logic.azure.com:443/workflows/f72beb54ca9d40c2bb2746c5cb7f4da7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=zQPlwyEMDTO3AgRq21BNEtjNTUybKSo08_WxF47ZrZU';
         $client = new Client();
         $response = $client->request('GET', $api_doc);
@@ -213,6 +216,7 @@ class APIErpController extends Controller
 
         foreach ($filtered as $value) {
 
+            $vend = Vendor::where('accountnum', $value['AccountNum'])->first();
 
             Document::create([
                 'tgl_posting'           => Carbon::parse($value['TransDate']),
@@ -221,8 +225,7 @@ class APIErpController extends Controller
                 'last_settle_date'      => Carbon::parse($value['LastSettleDate']),
                 'description'           => $value['Txt'],
                 'nominal'               => $value['AmountCur'],
-                'kode_vendor'           => $value['AccountNum'],
-                'nama_vendor'           => $value['VendorName'],
+                'vendor_id'             => $vend->id,
 
             ]);
         }
@@ -331,25 +334,56 @@ class APIErpController extends Controller
         $query = $collectdata->all();
         // dd($collectdata);
 
-        // $doc = Document::all();
-        // if($doc->isEmpty())
-        // {
-        //     $filtered = $collectdata;
-        // }else{
-        //     foreach ($doc as $key => $value) {
-        //         $v[] = $value->voucher;
-        //     }
-        //     $filtered = $collectdata->whereNotIn('Voucher', $v);
-        // }
+        $vend = Vendor::all();
+        if ($vend->isEmpty()) {
+            $filtered = $collectdata;
+        } else {
+            foreach ($vend as $key => $value) {
+                $v[] = $value->accountnum;
+            }
+            $filtered = $collectdata->whereNotIn('VendorAccountNumber', $v);
+        }
 
 
-        return DataTables::of($collectdata)
+        return DataTables::of($filtered)
             ->make(true);
     }
 
     public function vendors_stg_save()
     {
         //
+
+        $api_vend = 'https://prod-06.southeastasia.logic.azure.com:443/workflows/4d4b85f077664ffa9a8d1206dbacad4e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=NYpQ-_Q6h9e3R_ZRbue7s9PwFPDaLFsknmXHCyOdblg';
+        $client = new Client();
+        $response = $client->request('GET', $api_vend);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+        $query = $collectdata->all();
+
+        $vend = Vendor::all();
+        if ($vend->isEmpty()) {
+            $filtered = $collectdata;
+        } else {
+            foreach ($vend as $key => $value) {
+                $v[] = $value->accountnum;
+            }
+            $filtered = $collectdata->whereNotIn('VendorAccountNumber', $v);
+        }
+
+
+        foreach ($filtered as $value) {
+
+            Vendor::create([
+                'accountnum'            => $value['VendorAccountNumber'],
+                'search_name'           => $value['VendorSearchName'],
+                'vend_name'             => $value['VendorName'],
+                'vend_address'          => $value['FormattedPrimaryAddress'],
+                'vend_phone'            => $value['PrimaryPhoneNumber'],
+                'vend_remarks'          => '',
+            ]);
+        }
+        return redirect('vendors')->with(['success' => 'Data Vendor Berhasil Di Generate from ERP !']);
     }
 
 

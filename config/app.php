@@ -193,6 +193,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Alfa6661\AutoNumber\AutoNumberServiceProvider::class,
 
 
         /*

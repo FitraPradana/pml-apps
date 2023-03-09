@@ -28,6 +28,7 @@ class Vendor extends Model
     protected $primaryKey = "id";
     protected $fillable = [
         'accountnum',
+        'search_name',
         'vend_name',
         'vend_address',
         'vend_phone',

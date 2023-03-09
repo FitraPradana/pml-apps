@@ -41,9 +41,12 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#import_document">Import Document</a>
-                                {{-- <a class="dropdown-item" href="#">Template Update NBV</a> --}}
+                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                    data-target="#update_document_status">Update Document Status / Compare Ekky</a>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -70,19 +73,40 @@
                             ) is Duplicate
                         </div>
                     @endif
+                    @if (session()->has('error_vendor_kosong'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error_vendor_kosong') }} <a href="{{ url('vendors_stg_index') }}"> Form Staging
+                                Vendor >>>
+                            </a>
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table id="datatables" class="table table-striped table-nowrap custom-table mb-0 datatable">
                             <thead>
                                 <tr>
+                                    <th>Action</th>
                                     <th>#</th>
+                                    <th>Status</th>
                                     <th>Tanggal Posting</th>
                                     <th>Voucher</th>
+                                    <th>Invoice</th>
                                     <th>Last Settle Voucher</th>
                                     <th>Last Settle Date</th>
                                     <th>Description</th>
                                     <th>Nominal</th>
-                                    <th>Kode Vendor</th>
-                                    <th>Nama Vendor</th>
+                                    <th>Vendor</th>
+                                    <th>Created Date</th>
+                                    <th>Updated Date</th>
+                                    <th>PIC</th>
+                                    <th>Tgl Terima Document</th>
+                                    <th>Lemari</th>
+                                    <th>Lorong</th>
+                                    <th>Baris</th>
+                                    <th>Box</th>
+                                    <th>No Folder</th>
+                                    <th>Upload Document</th>
+                                    <th>Kelengkapan Document</th>
+                                    <th>Keterangan Document</th>
                                     {{-- <th>Net Book Value</th> --}}
                                 </tr>
                             </thead>
@@ -98,6 +122,10 @@
         <!-- Import Document Modal -->
         @include('document.modal_import_document')
         <!-- /Import Document Modal -->
+
+        <!-- Update Document Modal -->
+        @include('document.modal_import_update_document_status')
+        <!-- /Update Document Modal -->
 
     </div>
     <!-- /Page Wrapper -->
@@ -116,15 +144,33 @@
                 width: '250'
             });
 
-            $('#datatables').DataTable({
+            // GLOBAL SETUP
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            var table = $('#datatables').DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
                 ajax: "{{ url('document/json') }}",
                 columns: [{
+                        data: 'action',
+                        name: 'action',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
+                    },
+                    {
+                        data: 'status_doc',
+                        name: 'status_doc'
                     },
                     {
                         data: 'tgl_posting',
@@ -133,6 +179,10 @@
                     {
                         data: 'voucher',
                         name: 'voucher'
+                    },
+                    {
+                        data: 'invoice',
+                        name: 'invoice'
                     },
                     {
                         data: 'last_settle_voucher',
@@ -151,15 +201,88 @@
                         name: 'nominal'
                     },
                     {
-                        data: 'kode_vendor',
-                        name: 'kode_vendor'
+                        data: 'vendor_id',
+                        name: 'vendor_id'
                     },
                     {
-                        data: 'nama_vendor',
-                        name: 'nama_vendor'
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at'
+                    },
+                    {
+                        data: 'pic',
+                        name: 'pic'
+                    },
+                    {
+                        data: 'tgl_terima_doc',
+                        name: 'tgl_terima_doc'
+                    },
+                    {
+                        data: 'lemari',
+                        name: 'lemari'
+                    },
+                    {
+                        data: 'lorong',
+                        name: 'lorong'
+                    },
+                    {
+                        data: 'baris',
+                        name: 'baris'
+                    },
+                    {
+                        data: 'box',
+                        name: 'box'
+                    },
+                    {
+                        data: 'no_folder',
+                        name: 'no_folder'
+                    },
+                    {
+                        data: 'upload_doc',
+                        name: 'upload_doc'
+                    },
+                    {
+                        data: 'kelengkapan_doc',
+                        name: 'kelengkapan_doc'
+                    },
+                    {
+                        data: 'ket_doc',
+                        name: 'ket_doc'
                     },
                 ]
             });
+
+            /*------------------------------------------
+            --------------------------------------------
+            Delete Product Code
+            --------------------------------------------
+            --------------------------------------------*/
+            $('body').on('click', '.deleteDoc', function() {
+
+                var doc_id = $(this).data("id");
+                var result = confirm("Are you sure to delete?");
+                if (result) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "document/destroy/" + doc_id,
+                        success: function(data) {
+                            table.draw();
+                            Swal.fire(
+                                'Data Berhasil di Hapus!',
+                                'You clicked the button!',
+                                'success'
+                            )
+                        },
+                        error: function(data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+            // End Delete Product Code
         });
     </script>
 @endsection
