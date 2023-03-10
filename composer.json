@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.3 || 8.1.6 || 8.1.13",
+        "php": "^7.3 || 8.1.6 || 8.1.13 || 8.1.16",
         "alfa6661/laravel-autonumber": "^1.2",
         "barryvdh/laravel-dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
