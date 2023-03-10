@@ -22,14 +22,14 @@ class UpdateStatusDocumentImport implements ToModel, WithHeadingRow
         // if product exists and the value also exists
         if ($doc) {
             $doc->update([
-                'jenis_doc' => $row['jenis_doc'],
+                // 'jenis_doc' => $row['jenis_doc'],
                 'pic' => $row['pic'],
                 // 'tgl_terima_doc' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_terima_doc']),
-                'lemari' => $row['lemari'],
-                'lorong' => $row['lorong'],
-                'baris' => $row['baris'],
-                'box' => $row['box'],
-                'ket_doc' => $row['ket_doc'],
+                // 'lemari' => $row['lemari'],
+                // 'lorong' => $row['lorong'],
+                // 'baris' => $row['baris'],
+                // 'box' => $row['box'],
+                // 'ket_doc' => $row['ket_doc'],
                 'status_doc' => 'TERSEDIA',
             ]);
 

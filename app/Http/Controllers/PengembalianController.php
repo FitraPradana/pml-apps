@@ -48,6 +48,9 @@ class PengembalianController extends Controller
             ->addColumn('tgl_pengembalian', function ($data) {
                 return Carbon::parse($data->tgl_pengembalian)->format('d M Y');
             })
+            ->addColumn('due_tgl_pengembalian', function ($data) {
+                return Carbon::parse($data->due_tgl_pengembalian)->format('d M Y');
+            })
             ->rawColumns(['action'])
             ->make(true);
     }
