@@ -54,11 +54,11 @@ class PengajuanPinjamanController extends Controller
             })
             ->editColumn('approval_status', function ($edit_status) {
                 if ($edit_status->approval_status == 'open') {
-                    return '<span class="badge bg-inverse-warning">open</span>';
+                    return '<span class="badge bg-inverse-warning">OPEN</span>';
                 } elseif ($edit_status->approval_status == 'approved') {
-                    return '<span class="badge bg-inverse-success">approved</span>';
+                    return '<span class="badge bg-inverse-success">APPROVED</span>';
                 } elseif ($edit_status->approval_status == 'rejected') {
-                    return '<span class="badge bg-inverse-danger">rejected</span>';
+                    return '<span class="badge bg-inverse-danger">REJECTED</span>';
                 }
             })
             ->addColumn('user_id', function ($data) {

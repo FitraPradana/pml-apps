@@ -38,6 +38,7 @@ class FixedAssetController extends Controller
         $asset = DB::table('fixed_assets')
             ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
             ->select('fixed_assets.*', 'locations.location_name')
+            ->orderByDesc('fixed_assets.updated_at')
             ->get();
 
         // return DataTables::of(FixedAssets::all())

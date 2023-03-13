@@ -22,7 +22,7 @@ class ScanController extends Controller
         return view('scan.scanner');
     }
 
-    public function get_scan_qrcode(Request $request,)
+    public function get_scan_qrcode(Request $request)
     {
         $asset = FixedAssets::where("qr_code", $request->qr_code)->first();
 
