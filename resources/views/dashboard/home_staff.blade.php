@@ -3,40 +3,40 @@
 @section('title', 'Staff Dashboard')
 
 @section('loader')
-<div id="loader-wrapper">
-    <div id="loader">
-        <div class="loader-ellips">
-          <span class="loader-ellips__dot"></span>
-          <span class="loader-ellips__dot"></span>
-          <span class="loader-ellips__dot"></span>
-          <span class="loader-ellips__dot"></span>
+    <div id="loader-wrapper">
+        <div id="loader">
+            <div class="loader-ellips">
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('content')
 
-<!-- Page Wrapper -->
-<div class="page-wrapper">
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
 
-    <!-- Page Content -->
-    <div class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="welcome-box">
-                    <div class="welcome-img">
-                        <img alt="" src="assets/img/profiles/avatar-02.jpg">
-                    </div>
-                    <div class="welcome-det">
-                        <h3>Welcome, {{ Auth::user()->username }}</h3>
-                        <p>{{ date('d M Y H:i:s') }}</p>
+        <!-- Page Content -->
+        <div class="content container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="welcome-box">
+                        <div class="welcome-img">
+                            <img alt="" src="{{ asset('/') }}assets/img/people.png">
+                        </div>
+                        <div class="welcome-det">
+                            <h3>Welcome, {{ Auth::user()->username }}</h3>
+                            <p>{{ date('d M Y H:i:s') }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
+            {{-- <div class="row">
             <div class="col-lg-8 col-md-8">
                 <section class="dash-section">
                     <h1 class="dash-sec-title">Today</h1>
@@ -239,12 +239,12 @@
                     </section>
                 </div>
             </div>
+        </div> --}}
+
         </div>
+        <!-- /Page Content -->
 
     </div>
-    <!-- /Page Content -->
-
-</div>
-<!-- /Page Wrapper -->
+    <!-- /Page Wrapper -->
 
 @endsection

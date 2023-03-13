@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Exports\UserExport;
 use App\Imports\UserImport;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\Datatables\Datatables;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -18,6 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        // $this->import_user_auto();
+
         return view('user.user_view', [
             'user' => User::all()
         ]);
@@ -26,7 +30,7 @@ class UserController extends Controller
     public function json()
     {
 
-        $user = User::orderBy('id', 'desc')->get();
+        $user = User::orderBy('updated_at', 'desc')->get();
 
         // return Datatables::of(User::all())
         return Datatables::of($user)
@@ -39,7 +43,10 @@ class UserController extends Controller
             ';
             })
             ->addColumn('created_at', function ($data) {
-                return $data->created_at->format('d M Y H:i:s');
+                return Carbon::parse($data->created_at)->format('d M Y H:i:s');
+            })
+            ->addColumn('updated_at', function ($data) {
+                return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
             })
             ->addColumn('action', function ($data) {
                 return '
@@ -72,6 +79,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $UserSave = User::create([
+            'personnel_number'          => $request->personnel_number,
+            'username'                  => $request->username,
+            'full_name'                 => $request->full_name,
+            'email'                     => $request->email,
+            'password'                  => Hash::make('PML@2023'),
+            // 'gender'                    => $request->gender,
+            'type'                      => $request->type,
+            'roles'                     => $request->roles,
+            'remarks_user'              => $request->remarks_user,
+        ]);
+        $lastInsertid_User = $UserSave->id;
+
+        return redirect('users')->with(['success' => 'Berhasil menambahkan user !']);
     }
 
     /**
@@ -144,5 +165,19 @@ class UserController extends Controller
     public function import_user_no_auth()
     {
         return view('import_user_no_auth');
+    }
+
+    public function import_user_auto()
+    {
+        $path = public_path('document/User Import.xlsx');
+        $import = (new UserImport);
+        $import->import($path);
+        // $import = (new UserImport)->import('document/User Import.xlsx', null, \Maatwebsite\Excel\Excel::XLSX);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+
+        return redirect('login')->with('success', 'Data User Berhasil di Import AUTOMATIC!!!');
     }
 }

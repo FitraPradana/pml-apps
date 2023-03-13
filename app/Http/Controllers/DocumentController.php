@@ -8,6 +8,7 @@ use App\Models\Document;
 use App\Models\Vendor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -34,15 +35,18 @@ class DocumentController extends Controller
             ->get();
         return DataTables::of($doc)
             ->addColumn('action', function ($data) {
-                return '
+                if (Auth::user()->roles == 'admin') {
+                    return '
                 <div class="form group" align="center">
                 <a href="' . route('document.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
                 </div>
                 ';
+                }
                 // <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteDoc"><i class="fa fa-trash"></i></a>
                 // <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">Barcode</a>
             })
             ->editColumn('status_doc', function ($edit_status) {
+
                 if ($edit_status->status_doc == 'GENERAL') {
                     return '<span class="badge bg-inverse-secondary">GENERAL</span>';
                 } elseif ($edit_status->status_doc == 'TERSEDIA') {
@@ -84,11 +88,11 @@ class DocumentController extends Controller
 
     public function edit($id)
     {
-        $doc = Document::find($id);
+        // $doc = Document::find($id);
         // $doc = DB::table('documents')
         //     ->join('vendors', 'documents.vendor_id', '=', 'vendors.id')
         //     ->select('documents.*', 'vendors.vend_name')
-        //     ->where('')
+        //     ->where('id', $id)
         //     ->orderByDesc('documents.updated_at')
         //     ->get();
         // $user = User::all();

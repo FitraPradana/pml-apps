@@ -62,6 +62,7 @@
                                     <th>#</th>
                                     <th>No</th>
                                     {{-- <th>ID</th> --}}
+                                    <th>User</th>
                                     <th>Kode Pengajuan</th>
                                     <th>Tgl Pengajuan</th>
                                     <th>Keterangan</th>
@@ -69,7 +70,6 @@
                                     <th>Updated Date</th>
                                     <th>Approval Status</th>
                                     <th>Approval Name</th>
-                                    <th>User</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -134,6 +134,10 @@
                     //     name: 'id'
                     // },
                     {
+                        data: 'user_id',
+                        name: 'user_id'
+                    },
+                    {
                         data: 'kode_pengajuan_pinjaman',
                         name: 'kode_pengajuan_pinjaman'
                     },
@@ -161,10 +165,7 @@
                         data: 'approval_name',
                         name: 'approval_name'
                     },
-                    {
-                        data: 'user_id',
-                        name: 'user_id'
-                    },
+
                 ]
             });
 

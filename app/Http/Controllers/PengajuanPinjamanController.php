@@ -29,18 +29,29 @@ class PengajuanPinjamanController extends Controller
 
     public function json()
     {
+        $id_user = Auth::user()->id;
         //
-        $query = DB::table('pengajuan_pinjaman')
-            ->join('users', 'pengajuan_pinjaman.user_id', '=', 'users.id')
-            ->select('pengajuan_pinjaman.*', 'users.username')
-            ->where('approval_status', '!=', 'approved')
-            ->orderByDesc('pengajuan_pinjaman.updated_at')
-            ->get();
+        if (Auth::user()->roles == 'admin') {
+            $query = DB::table('pengajuan_pinjaman')
+                ->join('users', 'pengajuan_pinjaman.user_id', '=', 'users.id')
+                ->select('pengajuan_pinjaman.*', 'users.username')
+                ->where('approval_status', '!=', 'approved')
+                ->orderByDesc('pengajuan_pinjaman.updated_at')
+                ->get();
+        } elseif (Auth::user()->roles == 'staff') {
+            $query = DB::table('pengajuan_pinjaman')
+                ->join('users', 'pengajuan_pinjaman.user_id', '=', 'users.id')
+                ->select('pengajuan_pinjaman.*', 'users.username')
+                ->where('approval_status', '!=', 'approved')
+                ->where('user_id', $id_user)
+                ->orderByDesc('pengajuan_pinjaman.updated_at')
+                ->get();
+        }
         return DataTables::of($query)
             ->addColumn('action', function ($data) {
-                if ($data->approval_status == 'open') {
-
-                    return '
+                if (Auth::user()->roles == 'admin') {
+                    if ($data->approval_status == 'open') {
+                        return '
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                             <div class="dropdown-menu">
@@ -50,6 +61,7 @@ class PengajuanPinjamanController extends Controller
                     </div>
 
                     ';
+                    }
                 }
             })
             ->editColumn('approval_status', function ($edit_status) {

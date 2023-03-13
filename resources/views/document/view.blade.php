@@ -35,17 +35,18 @@
                         {{-- <div class="btn-group">
                         <a href="{{ url('fixed_assets_stg_save') }}" onclick="return confirm ('Are you sure to Get Data From ERP?')" class="btn btn-info"><i class="fa fa-plus"></i> Generate Asset from ERP</a>
                     </div> --}}
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-info btn-rounded dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Import</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#import_document">Import Document</a>
-                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#update_document_status">Update Document Status / Compare Ekky</a>
+                        @if (Auth::user()->roles == 'admin')
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info btn-rounded dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Import</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#import_document">Import Document</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#update_document_status">Update Document Status / Compare Ekky</a>
+                                </div>
                             </div>
-                        </div>
-
+                        @endif
 
                     </div>
                 </div>
