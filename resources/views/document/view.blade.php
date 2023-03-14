@@ -35,6 +35,7 @@
                         {{-- <div class="btn-group">
                         <a href="{{ url('fixed_assets_stg_save') }}" onclick="return confirm ('Are you sure to Get Data From ERP?')" class="btn btn-info"><i class="fa fa-plus"></i> Generate Asset from ERP</a>
                     </div> --}}
+
                         @if (Auth::user()->roles == 'admin')
                             <div class="btn-group">
                                 <button type="button" class="btn btn-info btn-rounded dropdown-toggle"
@@ -128,6 +129,9 @@
         @include('document.modal_import_update_document_status')
         <!-- /Update Document Modal -->
 
+
+
+
     </div>
     <!-- /Page Wrapper -->
 
@@ -159,6 +163,10 @@
                 destroy: true,
                 ajax: "{{ url('document/json') }}",
                 columns: [{
+                        // dom: 'Bfrtip',
+                        // buttons: [
+                        //     'copy', 'excel', 'pdf', 'csv', 'print'
+                        // ],
                         data: 'action',
                         name: 'action',
                         searchable: false,

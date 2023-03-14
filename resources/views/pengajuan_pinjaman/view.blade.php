@@ -37,6 +37,10 @@
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_pengajuan"><i
                                     class="fa fa-plus"></i> Add Pengajuan</a>
                         </div>
+                        {{-- <div class="btn-group">
+                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_custom_policy"><i
+                                    class="fa fa-plus"></i> Add Pengajuan Custom</a>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -85,6 +89,10 @@
         <!-- Add Pengajuan Pinjaman Modal -->
         @include('pengajuan_pinjaman.modal_add')
         <!-- /Add Pengajuan Pinjaman Modal -->
+
+        <!-- Add Document Custom Modal -->
+        @include('pengajuan_pinjaman.modal_add_custom')
+        <!-- /Add Document Custom Modal -->
 
     </div>
     <!-- /Page Wrapper -->

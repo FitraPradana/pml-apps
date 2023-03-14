@@ -207,6 +207,9 @@
 <script src="{{ asset('/') }}assets/js/moment.min.js"></script>
 <script src="{{ asset('/') }}assets/js/bootstrap-datetimepicker.min.js"></script>
 
+<!-- Multiselect JS -->
+<script src="{{ asset('/') }}assets/js/multiselect.min.js"></script>
+
 
 <!-- Custom JS -->
 <script src="{{ asset('/') }}assets/js/app.js"></script>
