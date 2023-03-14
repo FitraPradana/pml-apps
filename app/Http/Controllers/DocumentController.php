@@ -88,7 +88,7 @@ class DocumentController extends Controller
 
     public function edit($id)
     {
-        // $doc = Document::find($id);
+        $doc = Document::find($id);
         // $doc = DB::table('documents')
         //     ->join('vendors', 'documents.vendor_id', '=', 'vendors.id')
         //     ->select('documents.*', 'vendors.vend_name')
