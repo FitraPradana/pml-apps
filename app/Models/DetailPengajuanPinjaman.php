@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Alfa6661\AutoNumber\AutoNumberTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DetailPengajuanPinjaman extends Model
 {
@@ -49,5 +50,15 @@ class DetailPengajuanPinjaman extends Model
                 'length' => 5 // Jumlah digit yang akan digunakan sebagai nomor urut
             ]
         ];
+    }
+
+    public function pengajuan_pinjaman(): BelongsTo
+    {
+        return $this->belongsTo(PengajuanPinjaman::class);
+    }
+
+    public function document(): BelongsTo
+    {
+        return $this->belongsTo(Document::class);
     }
 }

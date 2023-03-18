@@ -22,7 +22,10 @@ class PengajuanPinjamanController extends Controller
      */
     public function index()
     {
-        $document = Document::where('status_doc', 'TERSEDIA')->get();
+        $document = DB::table('documents')
+            ->join('vendors', 'documents.vendor_id', '=', 'vendors.id')
+            ->select('documents.*', 'vendors.vend_name')
+            ->get();
 
         return view('pengajuan_pinjaman.view', compact('document'));
     }
@@ -85,7 +88,13 @@ class PengajuanPinjamanController extends Controller
             ->addColumn('tgl_pengajuan_pinjaman', function ($data) {
                 return Carbon::parse($data->tgl_pengajuan_pinjaman)->format('d M Y');
             })
-            ->rawColumns(['action', 'approval_status'])
+            ->addColumn('detail', function ($data) {
+                $detail = collect(DetailPengajuanPinjaman::where('pengajuan_pinjaman_id', $data->id)->get());
+                return '
+                <a href="' . route('detail_pengajuan_pinjaman', $data->id) . '" class="btn btn-sm btn-primary">' . $detail->count() . ' Documents</a>
+                ';
+            })
+            ->rawColumns(['action', 'approval_status', 'detail'])
             ->make(true);
     }
 
@@ -245,5 +254,11 @@ class PengajuanPinjamanController extends Controller
 
 
         return redirect('pengajuan_pinjamans')->with(['error' => 'Has been ' . $PengPinjUpdate['kode_pengajuan_pinjaman'] . ' Rejected !']);
+    }
+
+    public function document_tersedia(Request $request)
+    {
+        $document = Document::where('status_doc', 'TERSEDIA')->get();
+        return response()->json($document);
     }
 }

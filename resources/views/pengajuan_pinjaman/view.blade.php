@@ -69,6 +69,7 @@
                                     <th>User</th>
                                     <th>Kode Pengajuan</th>
                                     <th>Tgl Pengajuan</th>
+                                    <th>Detail</th>
                                     <th>Keterangan</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
@@ -108,10 +109,27 @@
             // $(document).ready(function () {
 
             // SELECT2
-            $('.selectDoc').select2({
+            $('.selectDocumentTersedia').select2({
                 // placeholder: 'This is my placeholder',
-                // allowClear: true
+                // multiple: true,
+                // ajax: {
+                //     url: '/pengajuan_pinjaman/document_tersedia',
+                //     dataType: 'json',
+                //     delay: 250,
+                //     processResults: function(data) {
+                //         return {
+                //             results: $.map(data, function(item) {
+                //                 return {
+                //                     text: item.voucher,
+                //                     id: item.id
+                //                 }
+                //             })
+                //         };
+                //     },
+                //     cache: true
+                // }
             });
+            // $('#customleave_select').select2({});
 
             // GLOBAL SETUP
             $.ajaxSetup({
@@ -152,6 +170,10 @@
                     {
                         data: 'tgl_pengajuan_pinjaman',
                         name: 'tgl_pengajuan_pinjaman'
+                    },
+                    {
+                        data: 'detail',
+                        name: 'detail'
                     },
                     {
                         data: 'ket_pengajuan_pinjaman',

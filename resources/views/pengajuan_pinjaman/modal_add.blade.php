@@ -22,13 +22,16 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Document</label>
-                                <select class="selectDoc" style="width: 100%;" name="document_id[]" multiple="multiple"
-                                    required>
-                                    @foreach ($document as $val)
-                                        <option value="{{ $val->id }}">{{ $val->voucher }} || {{ $val->invoice }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div class="d-flex">
+                                    <select multiple data-allow-clear="1" class="selectDocumentTersedia"
+                                        style="width: 100%;" name="document_id[]" required>
+                                        @foreach ($document as $val)
+                                            <option value="{{ $val->id }}">{{ $val->voucher }} ||
+                                                {{ $val->vend_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

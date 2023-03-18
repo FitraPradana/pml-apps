@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FixedAssetController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\APIErpController;
+use App\Http\Controllers\DetailPengajuanPinjamanController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PengajuanPinjamanController;
@@ -216,6 +217,12 @@ Route::resource('pengajuan_pinjamans', PengajuanPinjamanController::class)->midd
 Route::get('/pengajuan_pinjaman/json', [PengajuanPinjamanController::class, 'json'])->middleware('auth');
 Route::get('/pengajuan_pinjaman/approve/{id}', [PengajuanPinjamanController::class, 'approve'])->name('pengajuan_pinjaman.approve')->middleware('auth');
 Route::get('/pengajuan_pinjaman/reject/{id}', [PengajuanPinjamanController::class, 'reject'])->name('pengajuan_pinjaman.reject')->middleware('auth');
+Route::get('/pengajuan_pinjaman/document_tersedia', [PengajuanPinjamanController::class, 'document_tersedia'])->name('pengajuan_pinjaman.document_tersedia')->middleware('auth');
+Route::get('/pengajuan_pinjaman/detail/{id}', [PengajuanPinjamanController::class, 'detail'])->name('pengajuan_pinjaman.detail')->middleware('auth');
+
+//Detail Pengajuan Pinjaman
+Route::get('/detail_pengajuan_pinjaman', [DetailPengajuanPinjamanController::class, 'index'])->middleware('auth');
+Route::get('/detail_pengajuan_pinjaman/json/{id_pengpinj}', [DetailPengajuanPinjamanController::class, 'json'])->name('detail_pengajuan_pinjaman')->middleware('auth');
 
 //Pinjaman
 Route::resource('pinjamans', PinjamanController::class)->middleware('auth');

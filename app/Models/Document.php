@@ -50,8 +50,8 @@ class Document extends Model
         'ket_doc',
     ];
 
-    // public function vendor()
-    // {
-    //     return $this->belongsTo(Vendor::class);
-    // }
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }
