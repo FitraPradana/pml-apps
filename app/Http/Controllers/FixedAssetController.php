@@ -44,23 +44,33 @@ class FixedAssetController extends Controller
         // return DataTables::of(FixedAssets::all())
         return DataTables::of($asset)
             ->editColumn('status_asset', function ($edit_status) {
-                if ($edit_status->status_asset == 'general') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-secondary"></i> General</a>';
-                } elseif ($edit_status->status_asset == 'good') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> GOOD</a>';
-                } elseif ($edit_status->status_asset == 'need_replacement') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Need Replacement</a>';
-                } elseif ($edit_status->status_asset == 'need_repair') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Need Repair</a>';
-                } elseif ($edit_status->status_asset == 'dont_exist') {
-                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Dont Exist</a>';
+                if ($edit_status->status_asset == 'GENERAL') {
+                    return '<span class="badge bg-inverse-secondary"> GENERAL</span>';
+                } elseif ($edit_status->status_asset == 'GOOD') {
+                    return '<span class="badge bg-inverse-success">GOOD</span>';
+                } elseif ($edit_status->status_asset == 'NEED_REPLACEMENT') {
+                    return '<span class="badge bg-inverse-warning"> NEED REPLACEMENT</span>';
+                } elseif ($edit_status->status_asset == 'NEED_REPAIR') {
+                    return '<span class="badge bg-inverse-warning"> NEED REPAIR</span>';
+                } elseif ($edit_status->status_asset == 'DONT_EXIST') {
+                    return '<span class="badge bg-inverse-danger">  DONT EXIST</span>';
+                }
+            })
+            ->editColumn('is_used', function ($edit_status) {
+                if ($edit_status->is_used == 'GENERAL') {
+                    return '<span class="badge bg-inverse-secondary">GENERAL</span>';
+                } elseif ($edit_status->is_used == 'DIPAKAI') {
+                    return '<span class="badge bg-inverse-success">DIPAKAI</span>';
+                } elseif ($edit_status->is_used == 'TIDAK_DIPAKAI') {
+                    return '<span class="badge bg-inverse-danger">TIDAK DIPAKAI</span>';
                 }
             })
             ->editColumn('last_img_condition_stock_take', function ($data) {
                 if ($data->last_img_condition_stock_take) {
                     return '
-                    <a href="' . asset('storage/' . $data->last_img_condition_stock_take) . '"> ' . asset('storage/' . $data->last_img_condition_stock_take) . ' </a>
-                ';
+                    <a href="' . asset('storage/' . $data->last_img_condition_stock_take) . '"><button type="button" class="btn btn-info btn-sm">Preview Img</button></a>
+                    ';
+                    // <a href="' . asset('storage/' . $data->last_img_condition_stock_take) . '"> ' . asset('storage/' . $data->last_img_condition_stock_take) . ' </a>
                 } else {
                     return '';
                 }
@@ -73,6 +83,9 @@ class FixedAssetController extends Controller
             })
             ->addColumn('acquisition_date', function ($data) {
                 return Carbon::parse($data->acquisition_date)->format('d M Y');
+            })
+            ->addColumn('last_update_stock_take_date', function ($data) {
+                return Carbon::parse($data->last_update_stock_take_date)->format('d M Y');
             })
             ->addColumn('created_at', function ($data) {
                 return Carbon::parse($data->created_at)->format('d M Y H:i:s');
@@ -89,7 +102,7 @@ class FixedAssetController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['action', 'status_asset', 'qr_code', 'last_img_condition_stock_take', 'net_book_value'])
+            ->rawColumns(['action', 'status_asset', 'is_used', 'qr_code', 'last_img_condition_stock_take', 'net_book_value'])
             ->make(true);
     }
 

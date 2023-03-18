@@ -31,6 +31,30 @@
                             <li class="breadcrumb-item active">Assets</li>
                         </ul>
                     </div>
+
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+            <!-- Content Starts -->
+            {{-- <div class="card">
+                <div class="card-body">
+                    <!-- <h4 class="card-title">Solid justified</h4> -->
+                    <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                        <li class="nav-item"><a class="nav-link active" href="user-dashboard.html">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="user-all-jobs.html">All </a></li>
+                        <li class="nav-item"><a class="nav-link" href="saved-jobs.html">Saved</a></li>
+                        <li class="nav-item"><a class="nav-link" href="applied-jobs.html">Applied</a></li>
+                        <li class="nav-item"><a class="nav-link" href="interviewing.html">Interviewing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="offered-jobs.html">Offered</a></li>
+                        <li class="nav-item"><a class="nav-link" href="visited-jobs.html">Visitied </a></li>
+                        <li class="nav-item"><a class="nav-link" href="archived-jobs.html">Archived </a></li>
+                    </ul>
+                </div>
+            </div> --}}
+
+            <div class="row">
+                <div class="col-md-12">
                     <div class="col-auto float-right ml-auto">
                         {{-- <div class="btn-group">
                         <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#up_image"><i class="fa fa-image"></i> Upload Image</a>
@@ -63,10 +87,7 @@
                     </div> --}}
                     </div>
                 </div>
-            </div>
-            <!-- /Page Header -->
-
-
+            </div><br><br>
 
             <div class="row">
                 <div class="col-md-12">
@@ -100,6 +121,7 @@
                                     <th>Action</th>
                                     <th>#</th>
                                     <th class="text-center">Status</th>
+                                    <th class="text-center">Is Used</th>
                                     <th>Fixed Asset Number</th>
                                     <th>Fixed Asset Name</th>
                                     <th>Fixed Asset Group</th>
@@ -114,7 +136,7 @@
                                     <th>Remarks</th>
                                     <th>Last Modified Name</th>
                                     <th class="text-center">QR Code</th>
-                                    <th>Image Asset</th>
+                                    {{-- <th>Image Asset</th> --}}
                                     <th>Last Image Condition</th>
                                     <th>Created at</th>
                                     <th>Updated at</th>
@@ -186,6 +208,10 @@
                         name: 'status_asset'
                     },
                     {
+                        data: 'is_used',
+                        name: 'is_used'
+                    },
+                    {
                         data: 'fixed_assets_number',
                         name: 'fixed_assets_number'
                     },
@@ -243,10 +269,10 @@
                         searchable: false,
                         sortable: false
                     },
-                    {
-                        data: 'img_asset',
-                        name: 'img_asset'
-                    },
+                    // {
+                    //     data: 'img_asset',
+                    //     name: 'img_asset'
+                    // },
                     {
                         data: 'last_img_condition_stock_take',
                         name: 'last_img_condition_stock_take'

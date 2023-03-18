@@ -141,6 +141,7 @@ Route::post('site/store', [SiteController::class, 'store'])->name('site.store')-
 // STOCK TAKE
 Route::get('/print_stock_take/{id}', [StockTakeController::class, 'print_stock_take'])->name('print.stock_take')->middleware('auth');
 Route::get('stock_takes', [StockTakeController::class, 'index'])->middleware('auth');
+Route::get('/stock_takes/json', [StockTakeController::class, 'json'])->middleware('auth');
 
 // Document Staging from ERP
 Route::get('doc_stg_index', [APIErpController::class, 'doc_stg_index'])->middleware('auth');

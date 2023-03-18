@@ -196,6 +196,8 @@
                         <ul style="display: none;">
                             <li><a class="{{ request()->is('fixed_assets') ? 'active' : '' }}"
                                     href="{{ url('fixed_assets') }}"> Assets </a></li>
+                            <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
+                                    href="{{ url('stock_takes') }}"> Stock Take </a></li>
                         </ul>
                     </li>
                 @endif
@@ -217,16 +219,15 @@
                     </li>
                 @endif
                 @if (Auth::user()->roles == 'admin')
-                    <li class="submenu">
+                    {{-- <li class="submenu">
                         <a href="#"><i class="las la-comment"></i> <span> Stock Take </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            {{-- <li><a class="" href="#"> Stock Take </a></li> --}}
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
                                     href="{{ url('stock_takes') }}"> Stock Take </a></li>
 
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="menu-title">
                         <span>Pages</span>
                     </li>

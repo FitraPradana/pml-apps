@@ -61,6 +61,17 @@
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
+                            <span class="dash-widget-icon"><i class="las la-user-friends"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumVendor }}</h3>
+                                <span>Vendors</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
                             <span class="dash-widget-icon"><i class="la la-user"></i></span>
                             <div class="dash-widget-info">
                                 <h3>{{ $sumEmployee }}</h3>
@@ -68,7 +79,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use App\Models\Room;
 use App\Models\Site;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,18 +22,9 @@ class LocationController extends Controller
 
     public function json()
     {
-        $loc = Location::orderBy('updated_at', 'desc')->get();
+        $loc = Location::with(['room', 'site'])->orderBy('updated_at', 'desc')->get();
 
         return DataTables::of($loc)
-            // ->addColumn('room_id', function($data){
-            //     return $data->room->room_name;
-            // })
-            // ->addColumn('created_at', function($data){
-            //     return $data->created_at->format('d M Y H:i:s');
-            // })
-            // ->addColumn('updated_at', function($data){
-            //     return $data->updated_at->format('d M Y H:i:s');
-            // })
             ->addColumn('action', function ($data) {
                 return '
                 <div class="form group" align="center">
@@ -40,6 +32,19 @@ class LocationController extends Controller
                 ';
                 // <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
             })
+            ->addColumn('room_id', function ($data) {
+                return $data->room->room_name;
+            })
+            ->addColumn('site_id', function ($data) {
+                return $data->site->site_name;
+            })
+            ->addColumn('created_at', function ($data) {
+                return Carbon::parse($data->created_at)->format('d M Y H:i:s');
+            })
+            ->addColumn('updated_at', function ($data) {
+                return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
+            })
+
             ->rawColumns(['action'])
             ->make(true);
     }

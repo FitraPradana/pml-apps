@@ -74,29 +74,7 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label>Status Asset</label>
-                                    <select class="form-control select"
-                                        @error('status_asset')
-                                    is-invalid
-                                @enderror
-                                        name="status_asset" required>
-                                        <option value="general" @selected(old('general', $asset->status_asset) == 'general')>General</option>
-                                        <option value="good" @selected(old('good', $asset->status_asset) == 'good')>GOOD</option>
-                                        <option value="need_replacement" @selected(old('need_replacement', $asset->status_asset) == 'need_replacement')>Need Replacement
-                                        </option>
-                                        <option value="need_repair" @selected(old('need_repair', $asset->status_asset) == 'need_repair')>Need Repair
-                                        </option>
-                                        <option value="dont_exist" @selected(old('dont_exist', $asset->status_asset) == 'dont_exist')>Dont Exist</option>
-                                    </select>
-                                    @error('status_asset')
-                                        <label style="color: red">{{ $message }}</label>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Location</label>
@@ -118,18 +96,46 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label>Remarks</label>
-                                    <textarea name="remarks_fixed_assets" id="remarks_fixed_assets" rows="3" class="form-control"
-                                        @error('remarks_fixed_assets')
-                                is-invalid
-                            @enderror>{{ old('remarks_fixed_assets', $asset->remarks_fixed_assets) }}</textarea>
-                                    @error('remarks_fixed_assets')
+                                    <label>Status Asset</label>
+                                    <select class="form-control select"
+                                        @error('status_asset')
+                                    is-invalid
+                                @enderror
+                                        name="status_asset" required>
+                                        <option value="GENERAL" @selected(old('GENERAL', $asset->status_asset) == 'GENERAL')>General</option>
+                                        <option value="GOOD" @selected(old('GOOD', $asset->status_asset) == 'GOOD')>GOOD</option>
+                                        <option value="NEED_REPLACEMENT" @selected(old('NEED_REPLACEMENT', $asset->status_asset) == 'NEED_REPLACEMENT')>Need Replacement
+                                        </option>
+                                        <option value="NEED_REPAIR" @selected(old('NEED_REPAIR', $asset->status_asset) == 'NEED_REPAIR')>Need Repair
+                                        </option>
+                                        <option value="DONT_EXIST" @selected(old('DONT_EXIST', $asset->status_asset) == 'DONT_EXIST')>Dont Exist</option>
+                                    </select>
+                                    @error('status_asset')
                                         <label style="color: red">{{ $message }}</label>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Status Pakai</label>
+                                    <select class="form-control select"
+                                        @error('is_used')
+                                    is-invalid
+                                @enderror
+                                        name="is_used" required>
+                                        <option value="GENERAL" @selected(old('GENERAL', $asset->is_used) == 'GENERAL')>GENERAL</option>
+                                        <option value="DIPAKAI" @selected(old('DIPAKAI', $asset->is_used) == 'DIPAKAI')>DIPAKAI</option>
+                                        <option value="TIDAK_DIPAKAI" @selected(old('TIDAK_DIPAKAI', $asset->is_used) == 'TIDAK_DIPAKAI')>TIDAK DIPAKAI
+                                        </option>
+                                    </select>
+                                    @error('is_used')
+                                        <label style="color: red">{{ $message }}</label>
+                                    @enderror
+                                </div>
+                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -151,8 +157,22 @@
                                     @enderror
                                 </div>
                             </div>
-
                         </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <textarea name="remarks_fixed_assets" id="remarks_fixed_assets" rows="8" class="form-control" required
+                                        @error('remarks_fixed_assets')
+                                is-invalid
+                            @enderror>{{ old('remarks_fixed_assets', $asset->remarks_fixed_assets) }}</textarea>
+                                    @error('remarks_fixed_assets')
+                                        <label style="color: red">{{ $message }}</label>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Save</button>
                         </div>

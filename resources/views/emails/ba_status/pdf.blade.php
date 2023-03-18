@@ -90,17 +90,29 @@
                                                 <td>STATUS</td>
                                                 <td>:</td>
                                                 <td>
-                                                    @if ($stock_take->status_asset == 'dont_exist')
+                                                    @if ($stock_take->status_asset == 'DONT_EXIST')
                                                         <span class="badge badge-danger"> DONT EXIST</span>
-                                                    @elseif ($stock_take->status_asset == 'need_replacement')
+                                                    @elseif ($stock_take->status_asset == 'NEED_REPLACEMENT')
                                                         <span class="badge badge-warning"> Need
                                                             Replacement</span>
-                                                    @elseif ($stock_take->status_asset == 'need_repair')
+                                                    @elseif ($stock_take->status_asset == 'NEED_REPAIR')
                                                         <span class="badge badge-warning"> Need
                                                             Repair</span>
-                                                    @elseif ($stock_take->status_asset == 'good')
+                                                    @elseif ($stock_take->status_asset == 'GOOD')
                                                         <span class="badge badge-success"> GOOD</span>
-                                                    @elseif ($stock_take->status_asset == 'general')
+                                                    @elseif ($stock_take->status_asset == 'GENERAL')
+                                                        <span class="badge badge-secondary"> GENERAL</span>
+                                                    @else
+                                                        <span class="badge badge-dark">KOSONG</span>
+                                                    @endif
+
+                                                    /
+
+                                                    @if ($stock_take->is_used == 'TIDAK_DIPAKAI')
+                                                        <span class="badge badge-danger"> TIDAK DIPAKAI</span>
+                                                    @elseif ($stock_take->is_used == 'DIPAKAI')
+                                                        <span class="badge badge-success"> DIPAKAI</span>
+                                                    @elseif ($stock_take->is_used == 'GENERAL')
                                                         <span class="badge badge-secondary"> GENERAL</span>
                                                     @else
                                                         <span class="badge badge-dark">KOSONG</span>

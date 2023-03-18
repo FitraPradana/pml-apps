@@ -16,10 +16,14 @@ return new class extends Migration
         Schema::create('stock_take_transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->dateTime('tgl_stock_take');
-            $table->string('status_asset');
             $table->text('remarks_stock_take');
             $table->string('last_img_condition_stock_take');
             $table->string('last_update_name');
+            // $table->string('status_asset')->nullable();
+            $table->enum('status_asset', ['GENERAL', 'GOOD', 'NEED_REPLACEMENT', 'NEED_REPAIR', 'DONT_EXIST'])->default('GENERAL');
+            // $table->string('is_used')->nullable();
+            $table->enum('is_used', ['GENERAL', 'DIPAKAI', 'TIDAK_DIPAKAI'])->default('GENERAL');
+
 
             // $table->foreignId('fixed_asset_id')->constrained();
 
@@ -28,6 +32,9 @@ return new class extends Migration
 
             $table->string('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations');
+
+            $table->string('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
 
 
             $table->timestamps();

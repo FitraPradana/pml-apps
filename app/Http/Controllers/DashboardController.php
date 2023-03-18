@@ -9,6 +9,7 @@ use App\Models\Location;
 use App\Models\Room;
 use App\Models\Site;
 use App\Models\User;
+use App\Models\Vendor;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,9 +33,10 @@ class DashboardController extends Controller
         $sumSite = Site::count('id');
         $sumRoom = Room::count('id');
         $sumLocation = Location::count('id');
+        $sumVendor = Vendor::count('id');
         return view(
             'dashboard.home_admin',
-            compact('sumAsset', 'sumDocument', 'sumUser', 'sumEmployee', 'sumVessel', 'sumSite', 'sumRoom', 'sumLocation')
+            compact('sumAsset', 'sumDocument', 'sumUser', 'sumEmployee', 'sumVendor', 'sumVessel', 'sumSite', 'sumRoom', 'sumLocation')
         );
     }
 

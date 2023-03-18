@@ -57,8 +57,9 @@ class ScanController extends Controller
             [
                 'status_asset'                  => 'required',
                 'location_id'                   => 'required',
+                'is_used'                       => 'required',
                 'remarks_fixed_assets'          => 'required',
-                'last_img_condition'            => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'last_img_condition'            => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             ],
             [
                 'last_img_condition.required'            => 'Wajib upload foto terbaru kondisi Asset saat ini !!'
@@ -90,9 +91,11 @@ class ScanController extends Controller
             'fixed_asset_id'                => $request->fixed_asset_id,
             'tgl_stock_take'                => today(),
             'status_asset'                  => $request->status_asset,
+            'is_used'                       => $request->is_used,
             'location_id'                   => $request->location_id,
             'remarks_stock_take'            => $request->remarks_fixed_assets,
             'last_update_name'              => Auth::user()->username,
+            'user_id'                       => Auth::user()->id,
             'last_img_condition_stock_take' => $request->file('last_img_condition')->store('stock_take_transaction'),
         ]);
         $LastInsertId_stock_take = $trans->id;
@@ -103,6 +106,7 @@ class ScanController extends Controller
         $dataFixedAsset = [
             'remarks_fixed_assets'          => $request->remarks_fixed_assets,
             'status_asset'                  => $request->status_asset,
+            'is_used'                       => $request->is_used,
             'location_id'                   => $request->location_id,
             'last_update_stock_take_date'   => today(),
             'last_modified_name'            => Auth::user()->username,

@@ -423,10 +423,12 @@
             </div>
         </div><br>
     </div>
+    {{-- <a href="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(400)->generate($code),) !!}" class="btn btn-primary center"
+        download="{{ $data->fixed_assets_number }} - {{ $data->fixed_assets_name }}">Download Barcode Origin</a><br> --}}
     <a href="data:image/png;base64, {!! base64_encode(
         QrCode::format('png')->size(400)->generate($code),
     ) !!}" class="btn btn-primary center"
-        download="{{ $data->fixed_assets_number }} - {{ $data->fixed_assets_name }}">Download Barcode Origin</a><br>
+        download="{{ $data->fixed_assets_number }}">Download Barcode Origin</a><br>
     <a class="btn btn-success center" id="download">Download Template Barcode</a><br>
     <a href="{{ url('fixed_assets') }}" class="btn btn-danger center">Back</a><br><br><br>
 

@@ -29,17 +29,19 @@ class StockTakeTransaction extends Model
     protected $fillable = [
         'tgl_stock_take',
         'status_asset',
+        'is_used',
         'pic',
         'remarks_stock_take',
         'last_img_condition_stock_take',
         'fixed_asset_id',
         'location_id',
+        'user_id',
         'last_update_name',
     ];
 
-    public function site()
+    public function location()
     {
-        return $this->belongsTo(Site::class);
+        return $this->belongsTo(Location::class);
     }
 
     public function fixed_asset()
