@@ -39,12 +39,12 @@ class ScanController extends Controller
         ]);
     }
 
-    public function show_edit($id)
+    public function show_edit($fix_asset)
     {
         $user = User::all();
         $site = Site::all();
         $location = Location::all();
-        $asset = FixedAssets::where("id", $id)->first();
+        $asset = FixedAssets::where("fixed_assets_number", $fix_asset)->first();
         $stock_take = StockTakeTransaction::all();
         return view('scan.update_scan_asset', compact('asset', 'user', 'site', 'stock_take', 'location'));
     }

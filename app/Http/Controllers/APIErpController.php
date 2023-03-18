@@ -142,7 +142,7 @@ class APIErpController extends Controller
                 // 'last_update_stock_take_date' => '',
                 // 'pic'                   => $value['pic'],
                 // 'remarks_fixed_assets'  => $value['remarks_fixed_assets'],
-                'qr_code'               => url('scan_edit_form', $value['id']),
+                'qr_code'               => url('scan_edit_form', $value['AssetId']),
                 // 'qr_code'               => $qrcode,
                 // 'last_modified_name' => '',
                 // 'location_id'               => $location_id_gnrl->id,

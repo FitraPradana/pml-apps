@@ -120,7 +120,7 @@ Route::put('scanner_update/{id}', [BarcodeController::class, 'update'])->name('s
 
 // SCANNER
 Route::get('scan_form', [ScanController::class, 'index'])->middleware('auth');
-Route::get('scan_edit_form/{id}', [ScanController::class, 'show_edit'])->name('scan.edit')->middleware('auth');
+Route::get('scan_edit_form/{fix_asset}', [ScanController::class, 'show_edit'])->name('scan.edit')->middleware('auth');
 Route::post('get_scan_qrcode', [ScanController::class, 'get_scan_qrcode'])->middleware('auth');
 Route::put('update_scan_asset', [ScanController::class, 'update_scan_asset'])->name('update_scan_asset.update')->middleware('auth');
 
