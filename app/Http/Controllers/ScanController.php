@@ -137,7 +137,7 @@ class ScanController extends Controller
                     ->attachData($pdf->output(), "BA Status Asset.pdf");
             });
 
-            return redirect('fixed_assets')->with(['success' => 'Status Asset berhasil di Update !']);
+            return redirect('stock_takes')->with(['success' => 'Status Asset berhasil di Update !']);
         } else {
 
             $data["email"] = ["fitra.jaya@pml.co.id", "pradanafitrah45@gmail.com"];
@@ -160,7 +160,7 @@ class ScanController extends Controller
                     ->subject($data["title"])
                     ->attachData($pdf->output(), "BA Status Asset.pdf");
             });
-            return redirect('fixed_assets')->with(['success' => 'Status Asset berhasil di Update !']);
+            return redirect('stock_takes')->with(['success' => 'Status Asset berhasil di Update !']);
         }
 
         // return redirect('fixed_assets')->with(['success' => 'Status Asset '. $request->fixed_assets_number .' Berhasil Di Update!']);
