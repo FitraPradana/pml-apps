@@ -48,7 +48,7 @@ Route::get('/', function () {
 // LOGIN
 Route::controller(LoginController::class)->group(function () {
     Route::get('login', 'index')->name('login');
-    Route::post('/login/proses', 'proses')->middleware('auth');
+    Route::post('/login/proses', 'proses');
     Route::get('logout', 'logout')->name('logout');
 });
 
