@@ -325,6 +325,8 @@ class APIErpController extends Controller
     public function vendors_stg_json()
     {
         //
+        // $data = APP[env]
+
         $api_vend = 'https://prod-06.southeastasia.logic.azure.com:443/workflows/4d4b85f077664ffa9a8d1206dbacad4e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=NYpQ-_Q6h9e3R_ZRbue7s9PwFPDaLFsknmXHCyOdblg';
         $client = new Client();
         $response = $client->request('GET', $api_vend);

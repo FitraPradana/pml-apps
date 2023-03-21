@@ -30,10 +30,11 @@ class StockTakeController extends Controller
         //     ->get();
 
         if (Auth::user()->roles == 'admin') {
-            $stock_take = StockTakeTransaction::with(['location', 'fixed_asset'])->orderBy('updated_at', 'desc')->get();
+            $stock_take = StockTakeTransaction::with(['location', 'fixed_asset'])->orderBy('stock_take_transactions.updated_at', 'desc')->get();
         } else {
             $stock_take = StockTakeTransaction::with(['location', 'fixed_asset'])->where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->get();
         }
+
         return DataTables::of($stock_take)
             ->addColumn('action', function ($data) {
                 if (Auth::user()->roles == 'admin') {

@@ -117,7 +117,7 @@ class ScanController extends Controller
         if ($dataFixedAsset['status_asset'] == 'good') {
             // $result = (new SendMailController)->ba_status(['id' => $LastInsertId_stock_take]);
 
-            $data["email"] = ["fitra.jaya@pml.co.id", "pradanafitrah45@gmail.com"];
+            $data["email"] = ["fitra.jaya@pml.co.id", "pradanafitrah45@gmail.com", "indah.fresha@pml.co.id", "dimas.damar@pml.co.id"];
             $data["title"] = "Admin Asset Management PML";
             $data["body"] = "Status Asset berhasil di Update";
             $data["today"] = today()->format('d-M-y');
@@ -140,7 +140,7 @@ class ScanController extends Controller
             return redirect('stock_takes')->with(['success' => 'Status Asset berhasil di Update !']);
         } else {
 
-            $data["email"] = ["fitra.jaya@pml.co.id", "pradanafitrah45@gmail.com"];
+            $data["email"] = ["fitra.jaya@pml.co.id", "pradanafitrah45@gmail.com", "indah.fresha@pml.co.id", "dimas.damar@pml.co.id"];
             $data["title"] = "Admin Asset Management PML";
             $data["body"] = "Status Asset berhasil di Update";
             $data["today"] = today()->format('d-M-y');
