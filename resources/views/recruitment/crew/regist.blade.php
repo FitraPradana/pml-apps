@@ -682,7 +682,7 @@
             <div class="row">
                 <div class="col-12 col-md">
 
-                    <small class="d-block mb-3 text-muted">&copy; PT. Pulau Seroja Jaya 2023</small>
+                    <small class="d-block mb-3 text-muted">&copy; PT. Patria Maritime Lines 2023</small>
                 </div>
 
             </div>
@@ -1208,7 +1208,7 @@
 
             $("#btnsimpan").click(function() {
                 alert(
-                    "PENERIMAAN CREW DI PT. PATRIA MARITIME LINES TIDAK DIKENAKAN BIAYA ( GRATIS ), untuk pengaduan dapat menghubungi email berikut crewing@pulauseroja.com"
+                    "PENERIMAAN CREW DI PT. PATRIA MARITIME LINES TIDAK DIKENAKAN BIAYA ( GRATIS ), untuk pengaduan dapat menghubungi email berikut crewing@pml.co.id"
                 );
                 //alert($('#table-workexp >tbody:last >tr').length);
                 var isValid = true;
