@@ -1,0 +1,4 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+103.146.30.155:82	TRUE	/	FALSE	1999999999	ci_session	06kpgukbbrrsgtrhecp3nton7ncch15u
+

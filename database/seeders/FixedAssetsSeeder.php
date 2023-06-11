@@ -16,7 +16,7 @@ class FixedAssetsSeeder extends Seeder
     public function run()
     {
         $asset = [
-            'fixed_assets_number' => 'test',
+            'fixed_asseusernamets_number' => 'test',
             'fixed_assets_name' => 'test',
             'fixed_assets_description' => 'test',
             'site_id' => 'test',

@@ -14,6 +14,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PengajuanPinjamanController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomVesselController;
 use App\Http\Controllers\ScanController;
@@ -234,3 +235,10 @@ Route::get('/pinjaman/kembalikan/{id}', [PinjamanController::class, 'kembalikan'
 //Pengembalian
 Route::resource('pengembalians', PengembalianController::class)->middleware('auth');
 Route::get('/pengembalian/json', [PengembalianController::class, 'json'])->middleware('auth');
+
+
+
+
+
+// Recruitment Crew
+Route::get('/recruitment_crew/regist', [RecruitmentController::class, 'recruitment_crew_regist']);

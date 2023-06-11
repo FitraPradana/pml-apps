@@ -1,0 +1,12 @@
+HTTrack3.49-2+htsswf+htsjava launched on Fri, 09 Jun 2023 16:00:54 at http://103.146.30.155:82/recruit/recruitCrew +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" http://103.146.30.155:82/recruit/recruitCrew -O1 "C:\xampp\htdocs\recruiter_crew\recruiter_web" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+16:01:09	Error: 	"Not Found" (404) at link 103.146.30.155:82/assets/js/vendor/jquery-slim.min.js (from 103.146.30.155:82/recruit/recruitCrew)
+
+HTTrack Website Copier/3.49-2 mirror complete in 22 seconds : 16 links scanned, 14 files written (882179 bytes overall) [542353 bytes received at 24652 bytes/sec], 461860 bytes transferred using HTTP compression in 3 files, ratio 24%, 2.2 requests per connection
+(1 errors, 0 warnings, 0 messages)
