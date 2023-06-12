@@ -137,7 +137,7 @@
     <div class="container py-3 putih">
         <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom ban">
             <h5 class="my-0 mr-md-auto font-weight-normal"><img alt="Brand"
-                    src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/img/logo_pml.png"
+                    src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/img/LOGO_PML2.png"
                     height="80px">
                 <!-- <span style="font-family:sans-serif;font-size:28px;font-weight:bold;">Patria Maritime Lines</span> -->
             </h5>
