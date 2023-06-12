@@ -242,3 +242,4 @@ Route::get('/pengembalian/json', [PengembalianController::class, 'json'])->middl
 
 // Recruitment Crew
 Route::get('/recruitment_crew/regist', [RecruitmentController::class, 'recruitment_crew_regist']);
+Route::get('/recruitment_crew', [RecruitmentController::class, 'index']);

@@ -915,7 +915,7 @@
             });		*/
 
             $("#btnbatal").click(function() {
-                window.location.href = "http://pulauseroja.com/career";
+                window.location.href = "{{ url('recruitment_crew') }}";
             });
 
 
