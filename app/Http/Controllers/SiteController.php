@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiteExport;
 use App\Imports\SiteImport;
 use App\Models\Room;
 use App\Models\Site;
@@ -9,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiteController extends Controller
 {
@@ -101,5 +103,10 @@ class SiteController extends Controller
         }
 
         return redirect('/sites')->with('success', 'Data Site Berhasil di Import AUTOMATIC!!!');
+    }
+
+    public function export()
+    {
+        return Excel::download(new SiteExport, 'sites.xlsx');
     }
 }

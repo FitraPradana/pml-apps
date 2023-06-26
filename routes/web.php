@@ -106,18 +106,10 @@ Route::get('cek_api', [APIErpController::class, 'cek_api']);
 Route::get('invoice_ar', [APIErpController::class, 'invoice_ar']);
 Route::resource('tests', TestController::class);
 
-
-
-
-
-
 Route::get('/barcode', [BarcodeController::class, 'index'])->middleware('auth');
 Route::get('/scan', [BarcodeController::class, 'scan'])->middleware('auth');
 Route::post('scanner', [BarcodeController::class, 'scanner_validasi'])->middleware('auth');
 Route::put('scanner_update/{id}', [BarcodeController::class, 'update'])->name('scanner.update')->middleware('auth');
-
-
-
 
 // SCANNER
 Route::get('scan_form', [ScanController::class, 'index'])->middleware('auth');
@@ -129,14 +121,14 @@ Route::put('update_scan_asset', [ScanController::class, 'update_scan_asset'])->n
 Route::get('rooms', [RoomController::class, 'index'])->middleware('auth');
 Route::get('/room/json', [RoomController::class, 'json'])->middleware('auth');
 Route::post('room_import', [RoomController::class, 'import'])->name('room.import')->middleware('auth');
+Route::get('room_export', [RoomController::class, 'export'])->name('room.export')->middleware('auth');
 
 // SITE
 Route::get('sites', [SiteController::class, 'index'])->middleware('auth');
 Route::get('/site/json', [SiteController::class, 'json'])->middleware('auth');
 Route::post('site_import', [SiteController::class, 'import'])->name('site.import')->middleware('auth');
 Route::post('site/store', [SiteController::class, 'store'])->name('site.store')->middleware('auth');
-
-
+Route::get('site_export', [SiteController::class, 'export'])->name('site.export')->middleware('auth');
 
 
 // STOCK TAKE
@@ -153,6 +145,7 @@ Route::get('doc_stg_save', [APIErpController::class, 'doc_stg_save'])->middlewar
 Route::get('employees_stg_index', [APIErpController::class, 'employees_stg_index'])->middleware('auth');
 Route::get('employees_stg_json', [APIErpController::class, 'employees_stg_json'])->middleware('auth');
 Route::get('employees_stg_save', [APIErpController::class, 'employees_stg_save'])->middleware('auth');
+
 
 // Customer Staging from ERP
 Route::get('customers_stg_index', [APIErpController::class, 'customers_stg_index'])->middleware('auth');
@@ -176,10 +169,10 @@ Route::get('vessels_stg_save', [APIErpController::class, 'vessels_stg_save'])->m
 
 
 
-
 // VESSEL
 Route::get('vessels', [VesselController::class, 'index'])->middleware('auth');
 Route::get('vessel/json', [VesselController::class, 'json'])->middleware('auth');
+Route::get('vessel_export', [VesselController::class, 'export'])->name('vessel.export')->middleware('auth');
 
 
 // LOCATION
@@ -191,18 +184,10 @@ Route::post('location/store', [LocationController::class, 'store'])->name('locat
 Route::get('vendors', [VendorController::class, 'index'])->middleware('auth');
 Route::get('vendor/json', [VendorController::class, 'json'])->middleware('auth');
 
-
-
-
-
 // Email
 Route::get('test_index', [SendMailController::class, 'test_index'])->name('test_index.viewemail')->middleware('auth');
 Route::get('test_send_email', [SendMailController::class, 'ba_status'])->name('test_send_email.sendmail')->middleware('auth');
 Route::get('ba_status/{id}', [SendMailController::class, 'ba_status'])->name('ba_status.sendmail')->middleware('auth');
-
-
-
-
 
 
 // Document

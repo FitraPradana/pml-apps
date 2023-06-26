@@ -44,6 +44,14 @@
                                 <a class="dropdown-item" href="#">Template Import Site</a>
                             </div>
                         </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Site</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('site.export') }}">Export</a>
+                                <a class="dropdown-item" href="#">Template Export Site</a>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
