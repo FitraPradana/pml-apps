@@ -17,10 +17,10 @@ class FixedAssetsImport implements ToModel, WithHeadingRow, WithValidation, Skip
 
     use Importable, SkipsFailures;
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
 

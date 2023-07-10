@@ -413,7 +413,7 @@ class APIErpController extends Controller
             $filtered = $collectdata;
         } else {
             foreach ($site as $key => $value) {
-                $v[] = $value->id;
+                $v[] = $value->site_code;
             }
             $filtered = $collectdata->whereNotIn('SiteId', $v);
         }
@@ -458,12 +458,15 @@ class APIErpController extends Controller
         }
 
 
-
         foreach ($filtered as $value) {
-            $vessId = $value['VesselId'];
+            $vessId[] = $value['VesselId'];
+
 
             if ($vessId) {
                 $vessel_parm = Vessel::where('vess_id', $value['VesselId'])->first();
+                if (!$vessel_parm) {
+                    return redirect('sites_stg_index')->with(['error' => 'Vessel ' . $value['VesselId'] . ' tidak tersedia di Master Vessel !']);
+                }
                 Site::create([
                     'site_code'             => $value['SiteId'],
                     'site_name'             => $value['Name'],
@@ -483,6 +486,8 @@ class APIErpController extends Controller
                 ]);
             }
         }
+
+
         return redirect('sites')->with(['success' => 'Data Site Berhasil Di Generate from ERP !']);
     }
 

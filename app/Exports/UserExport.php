@@ -9,25 +9,22 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class UserExport implements FromCollection, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return User::all();
     }
 
 
-    public function headings():array{
-        return[
+    public function headings(): array
+    {
+        return [
             'ID',
             'Personnel Number',
+            'Username',
             'Full Name',
             'Email',
-            'Username',
-            'Birthday',
-            'Phone',
-            'Address',
-            'Gender',
             'Type',
             'Roles',
             'Images',

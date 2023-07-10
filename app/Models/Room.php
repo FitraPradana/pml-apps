@@ -40,4 +40,9 @@ class Room extends Model
     {
         return $this->hasMany(Site::class);
     }
+
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
 }

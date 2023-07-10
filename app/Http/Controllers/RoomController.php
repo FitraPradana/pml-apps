@@ -45,6 +45,25 @@ class RoomController extends Controller
             ->make(true);
     }
 
+    public function store(Request $request)
+    {
+        //validate form
+        $this->validate($request, [
+            // 'site_code'              => 'required',
+            'room_name'              => 'required',
+            // 'room_id'                => 'required',
+        ]);
+
+        // Insert Site
+        Room::create([
+            'room_code'               => $request->room_code,
+            'room_name'               => $request->room_name,
+            'remarks_room'            => $request->remarks_room,
+        ]);
+
+        return redirect('rooms')->with(['success' => 'Room Code ' . $request->room_code . ' Berhasil Di Tambah!']);
+    }
+
     public function import(Request $request)
     {
         $file = $request->file('file')->store('public/import');

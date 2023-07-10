@@ -34,15 +34,17 @@
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location"><i
                                 class="fa fa-plus"></i> Add Location</a>
                     </div>
-                    {{-- <div class="col-auto float-right ml-auto">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Import Location</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#import_location">Import</a>
-                            <a class="dropdown-item" href="#">Template Import Location</a>
+                    <div class="col-auto float-right ml-auto">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Import Location</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                    data-target="#import_location">Import</a>
+                                <a class="dropdown-item" href="#">Template Import Location</a>
+                            </div>
                         </div>
                     </div>
-                </div> --}}
 
                 </div>
             </div>
@@ -107,7 +109,7 @@
         <!-- /Page Content -->
 
         <!-- Import Site Modal -->
-        {{-- @include('site.import_site') --}}
+        @include('location.import_location')
         <!-- /Import Site Modal -->
 
         <!-- Add Location Modal -->

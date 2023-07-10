@@ -18,13 +18,16 @@ use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomVesselController;
 use App\Http\Controllers\ScanController;
+use App\Http\Controllers\ScanVesselController;
 use App\Http\Controllers\SendMailController;
+use App\Http\Controllers\SetTypeTugBargeController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StockTakeController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VesselController;
 use App\Models\RoomVessel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,9 +45,7 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-// Route::get('/', function () {
-//     return view('layouts.main');
-// });
+// Route::get('/', [LoginController::class, 'index']);
 
 // LOGIN
 Route::controller(LoginController::class)->group(function () {
@@ -108,6 +109,7 @@ Route::resource('tests', TestController::class);
 
 Route::get('/barcode', [BarcodeController::class, 'index'])->middleware('auth');
 Route::get('/scan', [BarcodeController::class, 'scan'])->middleware('auth');
+
 Route::post('scanner', [BarcodeController::class, 'scanner_validasi'])->middleware('auth');
 Route::put('scanner_update/{id}', [BarcodeController::class, 'update'])->name('scanner.update')->middleware('auth');
 
@@ -119,6 +121,7 @@ Route::put('update_scan_asset', [ScanController::class, 'update_scan_asset'])->n
 
 // ROOM
 Route::get('rooms', [RoomController::class, 'index'])->middleware('auth');
+Route::post('room/store', [RoomController::class, 'store'])->name('room.store')->middleware('auth');
 Route::get('/room/json', [RoomController::class, 'json'])->middleware('auth');
 Route::post('room_import', [RoomController::class, 'import'])->name('room.import')->middleware('auth');
 Route::get('room_export', [RoomController::class, 'export'])->name('room.export')->middleware('auth');
@@ -179,6 +182,8 @@ Route::get('vessel_export', [VesselController::class, 'export'])->name('vessel.e
 Route::get('locations', [LocationController::class, 'index'])->middleware('auth');
 Route::get('location/json', [LocationController::class, 'json'])->middleware('auth');
 Route::post('location/store', [LocationController::class, 'store'])->name('location.store')->middleware('auth');
+Route::post('location_import', [LocationController::class, 'import'])->name('location.import')->middleware('auth');
+
 
 //Vendor
 Route::get('vendors', [VendorController::class, 'index'])->middleware('auth');
@@ -228,3 +233,23 @@ Route::get('/pengembalian/json', [PengembalianController::class, 'json'])->middl
 // Recruitment Crew
 Route::get('/recruitment_crew/regist', [RecruitmentController::class, 'recruitment_crew_regist']);
 Route::get('/recruitment_crew', [RecruitmentController::class, 'index']);
+
+
+
+// Set Type Tug and Barge
+Route::get('/settype_tugbarge', [SetTypeTugBargeController::class, 'index'])->middleware('auth');
+Route::get('/settype_tugbarge/json', [SetTypeTugBargeController::class, 'json'])->middleware('auth');
+Route::get('/settype_tugbarge/data_db', [SetTypeTugBargeController::class, 'data_db'])->middleware('auth');
+Route::get('/settype_tugbarge/data_db2', [SetTypeTugBargeController::class, 'data_db2'])->middleware('auth');
+
+
+
+
+// REPORT VESSEL
+Route::get('/scan_vessels', [ScanVesselController::class, 'index'])->middleware('auth');
+// Route::get('/scan_vessels/scan', [BarcodeController::class, 'scan_vessels'])->middleware('auth');
+
+
+
+// GET TUG BARGE FIXED ASSET
+Route::get('/scan_vessels/get_tugbarge/{id}', [ScanVesselController::class, 'get_tugbarge'])->name('scan_vessels.get_tugbarge')->middleware('auth');

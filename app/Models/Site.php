@@ -45,4 +45,9 @@ class Site extends Model
     {
         return $this->belongsTo(Vessel::class);
     }
+
+    // public function locations()
+    // {
+    //     return $this->hasMany(Location::class);
+    // }
 }

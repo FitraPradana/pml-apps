@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\LocationImport;
 use App\Models\Location;
 use App\Models\Room;
 use App\Models\Site;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class LocationController extends Controller
 {
@@ -23,6 +25,13 @@ class LocationController extends Controller
     public function json()
     {
         $loc = Location::with(['room', 'site'])->orderBy('updated_at', 'desc')->get();
+
+        // $loc = DB::table('locations')
+        //     ->leftJoin('rooms', 'rooms.id', '=', 'locations.room_id')
+        //     ->leftJoin('sites', 'sites.id', '=', 'locations.site_id')
+        //     ->select('locations.*', 'sites.site_name', 'rooms.room_name')
+        //     ->orderByDesc('locations.updated_at')
+        //     ->get();
 
         return DataTables::of($loc)
             ->addColumn('action', function ($data) {
@@ -62,5 +71,19 @@ class LocationController extends Controller
         ]);
 
         return redirect('locations')->with(['success' => 'Location Code ' . $request->location_code . ' Berhasil Di Tambahkan!']);
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file')->store('public/import');
+
+        $import = new LocationImport();
+        $import->import($file);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+
+        return redirect('/locations')->with('success', 'Data Location Berhasil di Import !!!');
     }
 }

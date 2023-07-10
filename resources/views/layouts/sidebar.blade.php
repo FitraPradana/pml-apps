@@ -36,9 +36,13 @@
                             <li><a class="{{ request()->is('scan') ? 'active' : '' }}"
                                     href="{{ url('scan') }}">Scan</a>
                             </li>
+                            {{-- <li><a class="{{ request()->is('scan_vessel') ? 'active' : '' }}"
+                                    href="{{ url('scan') }}">Scan
+                                    Vessel</a>
+                            </li> --}}
                             {{-- <li><a class="{{ request()->is('barcode') ? 'active' : '' }}" href="{{ url('barcode') }}">Barcode</a></li> --}}
-                            <li><a href="#">Contacts</a></li>
-                            <li><a href="#">File Manager</a></li>
+                            {{-- <li><a href="#">Contacts</a></li> --}}
+                            {{-- <li><a href="#">File Manager</a></li> --}}
                         </ul>
                     </li>
                 @endif
@@ -124,12 +128,13 @@
                         <li><a class="" href=""> Staging Crew </a></li>
                     </ul>
                 </li> --}}
-                    {{-- <li class="submenu">
-                    <a href="#"><i class="las la-user-circle"></i> <span> Employee </span> <span class="menu-arrow"></span></a>
-                    <ul style="display: none;">
-                        <li><a class="" href="#"> Employee </a></li>
-                    </ul>
-                </li> --}}
+                    <li class="submenu">
+                        <a href="#"><i class="las la-user-circle"></i> <span> Employees </span> <span
+                                class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a class="" href="#"> All Employees </a></li>
+                        </ul>
+                    </li>
                     {{-- <li class="submenu">
                     <a href="#"><i class="las la-users"></i> <span> Customer </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
@@ -150,6 +155,9 @@
                         <ul style="display: none;">
                             <li><a class="{{ request()->is('vessels') ? 'active' : '' }}" href="{{ url('vessels') }}">
                                     Vessel </a></li>
+                            <li><a class="{{ request()->is('settype_tugbarge') ? 'active' : '' }}"
+                                    href="{{ url('settype_tugbarge') }}">
+                                    Set Pair </a></li>
                         </ul>
                     </li>
                     <li class="submenu">
@@ -198,6 +206,9 @@
                                     href="{{ url('fixed_assets') }}"> Assets </a></li>
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
                                     href="{{ url('stock_takes') }}"> Stock Take </a></li>
+                            <li><a class="{{ request()->is('scan_vessels') ? 'active' : '' }}"
+                                    href="{{ url('scan_vessels') }}">Scan
+                                    Vessel</a>
                         </ul>
                     </li>
                 @endif

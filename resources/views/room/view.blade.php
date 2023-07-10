@@ -26,14 +26,18 @@
                     <div class="col">
                         <h3 class="page-title">Room</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Master Vessel</a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Master Room</a></li>
                             <li class="breadcrumb-item active">Room</li>
                         </ul>
+                    </div>
+                    <div class="btn-group">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_room"><i
+                                class="fa fa-plus"></i> Add Room</a>
                     </div>
 
                     <div class="col-auto float-right ml-auto">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-danger btn-rounded dropdown-toggle" data-toggle="dropdown"
+                            <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Import Room</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
@@ -41,14 +45,13 @@
                                 <a class="dropdown-item" href="#">Template Import Room</a>
                             </div>
                         </div>
-                        <div class="btn-group">
+                        {{-- <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Room</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('room.export') }}">Export</a>
-                                <a class="dropdown-item" href="#">Template Export Room</a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>
@@ -109,6 +112,10 @@
         <!-- Import Room Modal -->
         @include('room.import_room')
         <!-- /Import Room Modal -->
+
+        <!-- Add Location Modal -->
+        @include('room.add_modal')
+        <!-- /Add Location Modal -->
 
 
     </div>
