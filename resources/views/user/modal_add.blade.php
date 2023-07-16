@@ -67,10 +67,8 @@
                                 <label>Roles</label>
                                 <select class="select" name="roles" required>
                                     <option value="admin">Administrator</option>
-                                    <option value="owner">Owner</option>
-                                    <option value="manager">Manager</option>
-                                    <option value="crew">Crew</option>
-                                    <option value="staff">Staff</option>
+                                    <option value="user">Owner</option>
+                                    <option value="vessel">Vessel</option>
                                 </select>
                             </div>
                         </div>

@@ -127,7 +127,7 @@
                                     <th>Fixed Asset Group</th>
                                     <th>Main Fixed Asset</th>
                                     <th>Information 3</th>
-                                    <th>Vessel ID</th>
+                                    {{-- <th>Vessel ID</th> --}}
                                     <th>Location</th>
                                     <th>Acquisition Date</th>
                                     <th>Net Book Value</th>
@@ -191,6 +191,7 @@
                 // allowPageScroll: true,
                 destroy: true,
                 // scrollX: true,
+                // order: [],
                 ajax: "{{ url('/fixed_asset/json') }}",
                 columns: [{
                         data: 'action',
@@ -231,10 +232,10 @@
                         data: 'information3',
                         name: 'information3'
                     },
-                    {
-                        data: 'vessel_id',
-                        name: 'vessel_id'
-                    },
+                    // {
+                    //     data: 'vessel_id',
+                    //     name: 'vessel_id'
+                    // },
                     {
                         data: 'location_id',
                         name: 'location_id'

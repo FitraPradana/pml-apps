@@ -87,6 +87,12 @@
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <tr>
+                                                <td>KODE</td>
+                                                <td>:</td>
+                                                <td><b>{{ $stock_take->kode_stock_take }}</b></td>
+
+                                            </tr>
+                                            <tr>
                                                 <td>STATUS</td>
                                                 <td>:</td>
                                                 <td>

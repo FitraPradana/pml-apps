@@ -70,7 +70,8 @@
             <!-- Logo -->
             <div class="header-left">
                 <a href="#" class="logo">
-                    <img src="{{ asset('/') }}assets/img/synergy.png" width="40" height="40" alt="">
+                    {{-- <img src="{{ asset('/') }}assets/img/synergy.png" width="40" height="40" alt=""> --}}
+                    <img src="{{ asset('/') }}assets/img/people.png" width="40" height="40" alt="">
                 </a>
             </div>
             <!-- /Logo -->

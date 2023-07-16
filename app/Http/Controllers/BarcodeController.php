@@ -37,7 +37,7 @@ class BarcodeController extends Controller
     {
         $fixed_assets = FixedAssets::where("qr_code", $request->qr_code)->first();
 
-        if($fixed_assets == null) {
+        if ($fixed_assets == null) {
             return response()->json([
                 "status_error" => "Data Asset tidak ditemukan"
             ]);
@@ -58,7 +58,8 @@ class BarcodeController extends Controller
         // return response()->json(['result' => $fixed_assets]);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $dataFixedAsset = [
             'remarks_fixed_assets' => $request->remarks_fixed_assets,
             'status_asset' => $request->status_asset,

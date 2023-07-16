@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('stock_take_transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('kode_stock_take');
             $table->dateTime('tgl_stock_take');
             $table->text('remarks_stock_take');
             $table->string('last_img_condition_stock_take');

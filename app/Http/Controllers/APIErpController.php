@@ -7,6 +7,7 @@ use App\Models\FixedAssets;
 use App\Models\Location;
 use App\Models\Room;
 use App\Models\Site;
+use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -14,9 +15,12 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon as SupportCarbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\Continue_;
 
 class APIErpController extends Controller
 {
@@ -411,15 +415,25 @@ class APIErpController extends Controller
         $site = Site::all();
         if ($site->isEmpty()) {
             $filtered = $collectdata;
+            $vessIdNotNull = $collectdata->where('VesselId', '!=', null);
+            $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
+            $union = $vessIdNotNull->union($cabang);
+            // $vessIdnull = $collectdata->where('SiteId', 'like', '7%');
+            // $unionALL = $union->union($vessIdnull);
         } else {
             foreach ($site as $key => $value) {
                 $v[] = $value->site_code;
             }
             $filtered = $collectdata->whereNotIn('SiteId', $v);
+            $vessIdNotNull = $filtered->where('VesselId', '!=', null);
+            $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
+            $union = $vessIdNotNull->union($cabang);
+            // $vessIdnull = $collectdata->where('SiteId', 'like', '7%');
+            // $unionALL = $union->union($vessIdnull);
         }
+        // return $vessIdnull;
 
-
-        return DataTables::of($filtered)
+        return DataTables::of($union)
             ->make(true);
     }
 
@@ -449,24 +463,39 @@ class APIErpController extends Controller
 
         $site = Site::all();
         if ($site->isEmpty()) {
-            $filtered = $data;
+            $filtered = $collectdata;
+            $vessIdNotNull = $collectdata->where('VesselId', '!=', null);
+            $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
+            $vessIdnull = $collectdata->where('SiteId', 'LIKE', "7%");
+            $union = $vessIdNotNull->union($cabang);
         } else {
-            foreach ($site as $key => $value) {
+            foreach ($site as $value) {
                 $v[] = $value->site_code;
             }
             $filtered = $collectdata->whereNotIn('SiteId', $v);
+            $vessIdNotNull = $filtered->where('VesselId', '!=', null);
+            $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
+            $vessIdnull = $collectdata->where('SiteId', 'LIKE', '76872%')->values()->all();
+            $union = $vessIdNotNull->union($cabang);
         }
 
+        // return $filtered;
+        // return $vessIdnull;
 
-        foreach ($filtered as $value) {
-            $vessId[] = $value['VesselId'];
+        // Begin Transaction
+        DB::beginTransaction();
 
+        try {
+            foreach ($vessIdNotNull as $key => $v) {
+                $select_param[] = $v;
+                $siteId_param[] = $v['SiteId'];
+                $vessId_param[] = $v['VesselId'];
+            }
+            // return $vessId_param;
 
-            if ($vessId) {
+            // if ($vessId_param !== null) {
+            foreach ($vessIdNotNull as $key => $value) {
                 $vessel_parm = Vessel::where('vess_id', $value['VesselId'])->first();
-                if (!$vessel_parm) {
-                    return redirect('sites_stg_index')->with(['error' => 'Vessel ' . $value['VesselId'] . ' tidak tersedia di Master Vessel !']);
-                }
                 Site::create([
                     'site_code'             => $value['SiteId'],
                     'site_name'             => $value['Name'],
@@ -474,18 +503,30 @@ class APIErpController extends Controller
                     'vessel_id'            => $vessel_parm->id,
                 ]);
             }
+            // }
 
-            if ($vessId == null) {
-                $vessel_parm_gnrl = Vessel::where('vess_id', 'GNRL')->first();
+            // if ($vessId_param == '') {
+            foreach ($cabang as $key => $value) {
                 Site::create([
                     'site_code'             => $value['SiteId'],
                     'site_name'             => $value['Name'],
-                    'remarks_site'          => '',
+                    'remarks_site'          => 'SITE PML',
                     // 'vessel_id'            => '',
-                    // 'vessel_id'            => $vessel_parm_gnrl->id,
                 ]);
             }
+            // }
+
+
+
+            // Commit Transaction
+            DB::commit();
+        } catch (\Throwable $th) {
+            // Rollback Transaction
+            DB::rollback();
         }
+
+
+
 
 
         return redirect('sites')->with(['success' => 'Data Site Berhasil Di Generate from ERP !']);
@@ -509,6 +550,8 @@ class APIErpController extends Controller
         $collectdata = collect($data);
         $query = $collectdata->all();
 
+        // dd($collectdata);
+        // return $collectdata;
         $vess = Vessel::all();
         if ($vess->isEmpty()) {
             $filtered = $collectdata;
@@ -533,29 +576,70 @@ class APIErpController extends Controller
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
         $collectdata = collect($data);
-
+        // return $collectdata;
         $vess = Vessel::all();
         if ($vess->isEmpty()) {
-            $filtered = $data;
+            $filtered = $collectdata;
+            $filter_tug = $filtered->where('VessType', '=', 'TUG');
         } else {
             foreach ($vess as $key => $value) {
                 $v[] = $value->vess_id;
             }
             $filtered = $collectdata->whereNotIn('VessID', $v);
+            $filter_tug = $filtered->where('VessType', '=', 'TUG');
         }
 
-        foreach ($filtered as $value) {
+        // $filter_tug[] = $filtered->where('VessType', '=', 'TUG');
+        // return $filter_tug;
+
+        // Begin Transaction
+        DB::beginTransaction();
+
+        try {
+            foreach ($filtered as $value) {
+                // $vesstype[] = $value['VessType'];
+
+                Vessel::create([
+                    'vess_id'               => $value['VessID'],
+                    'vess_name'             => $value['VessName'],
+                    'vess_type'             => $value['VessType'],
+                    'vess_class'            => $value['VessClassID'],
+                    'vess_remarks'          => '',
+                ]);
+            }
 
 
-            Vessel::create([
-                'vess_id'               => $value['VessID'],
-                'vess_name'             => $value['VessName'],
-                'vess_type'             => $value['VessType'],
-                'vess_class'            => $value['VessClassID'],
-                'vess_remarks'          => '',
+            // CREATE USER ACCOUNT VESSEL TUG
+            foreach ($filter_tug as $value) {
+                // $vesstype[] = $value['VessType'];
 
-            ]);
+                User::create([
+                    'personnel_number'  => $value['SiteId'],
+                    'username'          => $value['VessID'],
+                    'full_name'         => $value['VessName'],
+                    'email'             => $value['VessID'] . '@pml.co.id',
+                    'password'          => Hash::make('PML@2023'),
+                    'type'              => 'vessel',
+                    'roles'             => 'vessel',
+                    'remarks_user'      => '',
+                ]);
+            }
+            // END CREATE USER ACCOUNT VESSEL TUG
+
+            // Commit Transaction
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            // Rollback Transaction
+            DB::rollback();
         }
+
+
+
+
+
+
+
         return redirect('vessels')->with(['success' => 'Data Vessel Berhasil Di Generate from ERP !']);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
+use App\Models\Site;
 
 class SetTypeTugBargeController extends Controller
 {
@@ -17,10 +18,19 @@ class SetTypeTugBargeController extends Controller
 
     public function json()
     {
-        $tugbarge = DB::connection('mysql-vms-prod')->table("settype_tugbarge")->get();
+        $tugbarge = DB::connection('mysql-vms-prod')->table("settype_tugbarge")
+            ->where('is_active', '=', 1)
+            ->get();
 
         return DataTables::of($tugbarge)
-
+            ->addColumn('tug_name', function ($data) {
+                $sites = DB::table('sites')->where('site_code', '=', $data->tug)->first();
+                return $sites ? $sites->site_name : '';
+            })
+            ->addColumn('barge_name', function ($data) {
+                $sites = DB::table('sites')->where('site_code', '=', $data->barge)->first();
+                return $sites ? $sites->site_name : '';
+            })
             ->addColumn('action', function ($data) {
                 return '
                 <div class="form group" align="center">
@@ -28,7 +38,7 @@ class SetTypeTugBargeController extends Controller
                 ';
                 // <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'tug_name'])
             ->make(true);
     }
 

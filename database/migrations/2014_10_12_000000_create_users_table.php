@@ -24,7 +24,7 @@ return new class extends Migration
             // $table->timestamp('email_verified_at')->nullable();
             // $table->enum('gender', ['general', 'male', 'female'])->default('general');
             $table->enum('type', ['general', 'employee', 'vessel'])->default('general');
-            $table->enum('roles', ['admin', 'owner', 'manager', 'crew', 'staff'])->default('staff');
+            $table->enum('roles', ['admin', 'user', 'vessel'])->default('user');
             $table->string('image')->nullable();
             $table->string('remarks_user')->nullable();
             $table->rememberToken();

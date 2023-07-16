@@ -41,10 +41,10 @@ class Site extends Model
         return $this->belongsTo(Room::class);
     }
 
-    public function vessel()
-    {
-        return $this->belongsTo(Vessel::class);
-    }
+    // public function vessel()
+    // {
+    //     return $this->belongsTo(Vessel::class);
+    // }
 
     // public function locations()
     // {

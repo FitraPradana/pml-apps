@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Alfa6661\AutoNumber\AutoNumberTrait;
 
 class StockTakeTransaction extends Model
 {
     use HasFactory;
+    use AutoNumberTrait;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -27,6 +29,7 @@ class StockTakeTransaction extends Model
     protected $table = "stock_take_transactions";
     protected $primaryKey = "id";
     protected $fillable = [
+        'kode_stock_take',
         'tgl_stock_take',
         'status_asset',
         'is_used',
@@ -47,5 +50,20 @@ class StockTakeTransaction extends Model
     public function fixed_asset()
     {
         return $this->belongsTo(FixedAssets::class);
+    }
+
+    /**
+     * Return the autonumber configuration array for this model.
+     *
+     * @return array
+     */
+    public function getAutoNumberOptions()
+    {
+        return [
+            'kode_stock_take' => [
+                'format' => 'BA/PML/' . date('m') . '/?', // Format kode yang akan digunakan.
+                'length' => 5 // Jumlah digit yang akan digunakan sebagai nomor urut
+            ]
+        ];
     }
 }

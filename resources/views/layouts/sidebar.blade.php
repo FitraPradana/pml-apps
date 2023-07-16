@@ -57,6 +57,9 @@
                                     href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
                             <li><a class="{{ request()->is('sites_stg_index') ? 'active' : '' }}"
                                     href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
+                            <li><a class="{{ request()->is('locations') ? 'active' : '' }}"
+                                    href="{{ url('locations') }}">
+                                    Location </a></li>
                             <li><a class="{{ request()->is('fixed_assets_stg_index') ? 'active' : '' }}"
                                     href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
 
@@ -87,18 +90,18 @@
                 </li> --}}
                 @if (Auth::user()->roles == 'admin')
                     <li class="menu-title">
-                        <span>Administration</span>
+                        <span>ERP Controller</span>
                     </li>
                     <li class="submenu">
                         <a href="#"><i class="las la-server"></i> <span> Staging From ERP </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a class="{{ request()->is('employees_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('employees_stg_index') }}"> Staging Employee </a></li>
-                            <li><a class="{{ request()->is('customers_stg_index') ? 'active' : '' }}"
+                            {{-- <li><a class="{{ request()->is('employees_stg_index') ? 'active' : '' }}"
+                                    href="{{ url('employees_stg_index') }}"> Staging Employee </a></li> --}}
+                            {{-- <li><a class="{{ request()->is('customers_stg_index') ? 'active' : '' }}"
                                     href="{{ url('customers_stg_index') }}"> Staging Customer </a></li>
                             <li><a class="{{ request()->is('vendors_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('vendors_stg_index') }}"> Staging Vendor </a></li>
+                                    href="{{ url('vendors_stg_index') }}"> Staging Vendor </a></li> --}}
                             <li><a class="{{ request()->is('vessels_stg_index') ? 'active' : '' }}"
                                     href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
                             <li><a class="{{ request()->is('sites_stg_index') ? 'active' : '' }}"
@@ -109,7 +112,8 @@
                                     href="{{ url('doc_stg_index') }}"> Staging Document </a></li>
                         </ul>
                     </li>
-                    {{-- <li class="submenu">
+                @endif
+                {{-- <li class="submenu">
                     <a href="#"><i class="las la-cubes"></i> <span> Master </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a class="{{ request()->is('rooms') ? 'active' : '' }}" href="{{ url('rooms') }}"> Room</a></li>
@@ -121,34 +125,38 @@
 
 
 
-                    {{-- <li class="submenu">
+                {{-- <li class="submenu">
                     <a href="#"><i class="las la-user-shield"></i> <span> Crew </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a class="" href=""> Crew </a></li>
                         <li><a class="" href=""> Staging Crew </a></li>
                     </ul>
                 </li> --}}
-                    <li class="submenu">
+                @if (Auth::user()->roles == 'admin')
+                    <li class="menu-title">
+                        <span>Master Administration</span>
+                    </li>
+                    {{-- <li class="submenu">
                         <a href="#"><i class="las la-user-circle"></i> <span> Employees </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
                             <li><a class="" href="#"> All Employees </a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     {{-- <li class="submenu">
                     <a href="#"><i class="las la-users"></i> <span> Customer </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a class="" href=""> Customer </a></li>
                     </ul>
                 </li> --}}
-                    <li class="submenu">
+                    {{-- <li class="submenu">
                         <a href="#"><i class="las la-user-friends"></i> <span> Vendor </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
                             <li><a class="{{ request()->is('vendors') ? 'active' : '' }}" href="{{ url('vendors') }}">
                                     Vendor </a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="submenu">
                         <a href="#"><i class="las la-ship"></i> <span> Vessel </span> <span
                                 class="menu-arrow"></span></a>
@@ -193,11 +201,11 @@
                     <li class="{{ request()->is('users') ? 'active' : '' }}">
                         <a href="{{ url('users') }}"><i class="la la-user-plus"></i> <span>Users</span></a>
                     </li>
-                    <li class="menu-title">
-                        <span>Transaction</span>
-                    </li>
                 @endif
                 @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'staff' or Auth::user()->roles == 'crew')
+                    <li class="menu-title">
+                        <span>Fixed Assets</span>
+                    </li>
                     <li class="submenu">
                         <a href="#"><i class="la la-object-ungroup"></i> <span> Fixed Assets </span> <span
                                 class="menu-arrow"></span></a>
@@ -207,12 +215,15 @@
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
                                     href="{{ url('stock_takes') }}"> Stock Take </a></li>
                             <li><a class="{{ request()->is('scan_vessels') ? 'active' : '' }}"
-                                    href="{{ url('scan_vessels') }}">Scan
+                                    href="{{ url('scan_vessels') }}">Report
                                     Vessel</a>
                         </ul>
                     </li>
                 @endif
                 @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'staff')
+                    <li class="menu-title">
+                        <span>Filling Document</span>
+                    </li>
                     <li class="submenu">
                         <a href="#"><i class="la la-file-text"></i> <span> Filling Document </span> <span
                                 class="menu-arrow"></span></a>

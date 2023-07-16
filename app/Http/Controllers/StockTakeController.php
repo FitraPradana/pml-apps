@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class StockTakeController extends Controller
 {
@@ -40,7 +41,7 @@ class StockTakeController extends Controller
                 if (Auth::user()->roles == 'admin') {
                     return '
                 <div class="form group" align="center">
-                <a href="' . route('document.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
+                <a href="' . route('print.stock_take', $data->id) . '" target="_blank" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
                 </div>
                 ';
                 }
@@ -83,6 +84,9 @@ class StockTakeController extends Controller
             ->addColumn('fixed_asset_id', function ($data) {
                 return $data->fixed_asset->fixed_assets_number;
             })
+            ->addColumn('fixed_asset_name', function ($data) {
+                return $data->fixed_asset->information3;
+            })
             ->addColumn('location_id', function ($data) {
                 return $data->location->location_name;
             })
@@ -101,9 +105,16 @@ class StockTakeController extends Controller
 
     public function print_stock_take($id)
     {
-        $today = today()->format('d-M-y');
-        $stock_take = StockTakeTransaction::with('site')->where('id', $id)->first();
-        $status = 'Print Data !';
-        return view('stock_take.print', compact('stock_take', 'today', 'status'));
+        $data["today"] = today()->format('d-M-y');
+        $data["stock_take"] =
+            DB::table('stock_take_transactions')
+            ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id', '=', 'fixed_assets.id')
+            ->leftJoin('locations', 'stock_take_transactions.location_id', '=', 'locations.id')
+            ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.fixed_assets_name', 'fixed_assets.acquisition_date', 'locations.location_name')
+            ->where('stock_take_transactions.id', $id)
+            ->first();
+
+        $pdf = PDF::loadView('emails.ba_status.pdf', $data)->setPaper('a4', 'landscape');
+        return $pdf->stream();
     }
 }

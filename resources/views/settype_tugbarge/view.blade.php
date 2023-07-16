@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Data Site')
+@section('title', 'Data Set Pair')
 
 @section('content')
 
@@ -73,7 +73,9 @@
                                     <th>year</th>
                                     <th>First Date</th>
                                     <th>Tug</th>
+                                    <th>Tug Name</th>
                                     <th>Barge</th>
+                                    <th>Barge Name</th>
                                     <th>Is Active</th>
                                     <th>Tug Power</th>
                                     <th>Barge Capacity</th>
@@ -144,8 +146,16 @@
                         name: 'tug'
                     },
                     {
+                        data: 'tug_name',
+                        name: 'tug_name'
+                    },
+                    {
                         data: 'barge',
                         name: 'barge'
+                    },
+                    {
+                        data: 'barge_name',
+                        name: 'barge_name'
                     },
                     {
                         data: 'is_active',

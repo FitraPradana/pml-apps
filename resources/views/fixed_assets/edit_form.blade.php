@@ -129,7 +129,7 @@
                                         @error('location_id')
                                     is-invalid
                                 @enderror
-                                        name="location_id" required>
+                                        id="location_id" name="location_id" required>
                                         @foreach ($location as $val)
                                             <option value="{{ $val->id }}"
                                                 @if (old('location_id') == $val->id || $val->id == $asset->location_id) selected @endif>{{ $val->location_name }}
@@ -170,5 +170,18 @@
 
     </div>
     <!-- /Page Wrapper -->
+
+@endsection
+
+
+@section('under_body')
+    <script type="text/javascript">
+        $(function() {
+            // SELECT2
+            $('#location_id').select2({
+                // width: '250'
+            });
+        });
+    </script>
 
 @endsection

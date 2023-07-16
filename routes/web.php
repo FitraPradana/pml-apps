@@ -15,6 +15,7 @@ use App\Http\Controllers\PengajuanPinjamanController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\RecruitmentController;
+use App\Http\Controllers\ReportVesselController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomVesselController;
 use App\Http\Controllers\ScanController;
@@ -183,6 +184,7 @@ Route::get('locations', [LocationController::class, 'index'])->middleware('auth'
 Route::get('location/json', [LocationController::class, 'json'])->middleware('auth');
 Route::post('location/store', [LocationController::class, 'store'])->name('location.store')->middleware('auth');
 Route::post('location_import', [LocationController::class, 'import'])->name('location.import')->middleware('auth');
+Route::get('location/insert_general', [LocationController::class, 'insert_general'])->middleware('auth');
 
 
 //Vendor
@@ -246,10 +248,13 @@ Route::get('/settype_tugbarge/data_db2', [SetTypeTugBargeController::class, 'dat
 
 
 // REPORT VESSEL
-Route::get('/scan_vessels', [ScanVesselController::class, 'index'])->middleware('auth');
+Route::get('/scan_vessels', [ReportVesselController::class, 'index'])->middleware('auth');
 // Route::get('/scan_vessels/scan', [BarcodeController::class, 'scan_vessels'])->middleware('auth');
 
 
 
 // GET TUG BARGE FIXED ASSET
-Route::get('/scan_vessels/get_tugbarge/{id}', [ScanVesselController::class, 'get_tugbarge'])->name('scan_vessels.get_tugbarge')->middleware('auth');
+Route::match(['get', 'post'], '/scan_vessels_get_tugbarge_testing', [ReportVesselController::class, 'json_testing'])->middleware('auth');
+Route::match(['get', 'post'], '/report_vessels_get_tug', [ReportVesselController::class, 'get_asset_tug_json'])->middleware('auth');
+Route::match(['get', 'post'], '/report_vessels_get_barge', [ReportVesselController::class, 'get_asset_barge_json'])->middleware('auth');
+Route::match(['get', 'post'], '/get_barge', [ReportVesselController::class, 'get_barge'])->middleware('auth');

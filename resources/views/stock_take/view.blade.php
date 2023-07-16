@@ -59,12 +59,15 @@
                         <table id="datatables" class="table table-striped custom-table datatable">
                             <thead>
                                 <tr>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Action</th>
                                     <th>#</th>
+                                    <th>Kode Stock Take</th>
                                     <th>Tanggal</th>
-                                    <th>Fixed Assets</th>
+                                    <th>Fixed Assets Number</th>
+                                    <th>Fixed Assets Name</th>
                                     <th>Status Asset</th>
                                     <th>Is Used</th>
+                                    <th>Location</th>
                                     <th>Remarks Stock Take</th>
                                     <th>Last Image Condition</th>
                                     <th>Last Update Name</th>
@@ -105,17 +108,20 @@
                 serverSide: true,
                 destroy: true,
                 ajax: "{{ url('/stock_takes/json') }}",
-                columns: [
-                    // {
-                    //     data: 'action',
-                    //     name: 'action',
-                    //     searchable: false,
-                    //     sortable: false
-                    // },
+                columns: [{
+                        data: 'action',
+                        name: 'action',
+                        searchable: false,
+                        sortable: false
+                    },
                     {
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
+                    },
+                    {
+                        data: 'kode_stock_take',
+                        name: 'kode_stock_take'
                     },
                     {
                         data: 'tgl_stock_take',
@@ -126,12 +132,20 @@
                         name: 'fixed_asset_id'
                     },
                     {
+                        data: 'fixed_asset_name',
+                        name: 'fixed_asset_name'
+                    },
+                    {
                         data: 'status_asset',
                         name: 'status_asset'
                     },
                     {
                         data: 'is_used',
                         name: 'is_used'
+                    },
+                    {
+                        data: 'location_id',
+                        name: 'location_id'
                     },
                     {
                         data: 'remarks_stock_take',

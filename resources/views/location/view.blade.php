@@ -63,6 +63,11 @@
                             Data Room Masih KOSONG !!! Harap di Input terlebih dahulu
                         </div>
                     @endif
+                    @if ($site->isEmpty())
+                        <div class="alert alert-danger" role="alert">
+                            Data Site Masih KOSONG !!! Harap di Input terlebih dahulu
+                        </div>
+                    @endif
 
                     @if (session()->has('failures'))
                         <div class="alert alert-danger" role="alert">
@@ -115,7 +120,6 @@
         <!-- Add Location Modal -->
         @include('location.add_modal')
         <!-- /Add Location Modal -->
-
 
     </div>
     <!-- /Page Wrapper -->

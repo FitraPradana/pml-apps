@@ -129,13 +129,13 @@ class ScanController extends Controller
                 ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.fixed_assets_name', 'fixed_assets.acquisition_date', 'locations.location_name')
                 ->where('stock_take_transactions.id', $LastInsertId_stock_take)
                 ->first();
-            $pdf = PDF::loadView('emails.ba_status.pdf', $data);
+            $pdf = PDF::loadView('emails.ba_status.pdf', $data)->setPaper('a4', 'landscape');
 
-            Mail::send('emails.ba_status.body', $data, function ($message) use ($data, $pdf) {
-                $message->to($data["email"], $data["email"])
-                    ->subject($data["title"])
-                    ->attachData($pdf->output(), "BA Status Asset.pdf");
-            });
+            // Mail::send('emails.ba_status.body', $data, function ($message) use ($data, $pdf) {
+            //     $message->to($data["email"], $data["email"])
+            //         ->subject($data["title"])
+            //         ->attachData($pdf->output(), "BA Status Asset.pdf");
+            // });
 
             return redirect('stock_takes')->with(['success' => 'Status Asset berhasil di Update !']);
         } else {
@@ -153,13 +153,13 @@ class ScanController extends Controller
                 ->where('stock_take_transactions.id', $LastInsertId_stock_take)
                 ->first();
 
-            $pdf = PDF::loadView('emails.ba_status.pdf', $data);
+            $pdf = PDF::loadView('emails.ba_status.pdf', $data)->setPaper('a4', 'landscape');
 
-            Mail::send('emails.ba_status.body', $data, function ($message) use ($data, $pdf) {
-                $message->to($data["email"], $data["email"])
-                    ->subject($data["title"])
-                    ->attachData($pdf->output(), "BA Status Asset.pdf");
-            });
+            // Mail::send('emails.ba_status.body', $data, function ($message) use ($data, $pdf) {
+            //     $message->to($data["email"], $data["email"])
+            //         ->subject($data["title"])
+            //         ->attachData($pdf->output(), "BA Status Asset.pdf");
+            // });
             return redirect('stock_takes')->with(['success' => 'Status Asset berhasil di Update !']);
         }
 

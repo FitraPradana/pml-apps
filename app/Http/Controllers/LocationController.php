@@ -17,8 +17,25 @@ class LocationController extends Controller
 
     public function index()
     {
+
+
         $room = Room::all();
         $site = Site::all();
+        $location = Location::all();
+        if ($location->isEmpty()) {
+            $this->import_location_auto();
+        }
+
+
+        // $gnrl_loc = Location::where('location_code', '=', 'GNRL')->first();
+        // if (!$site->isEmpty() and !$room->isEmpty()) {
+        //     if (!$gnrl_loc) {
+        //         $this->insert_general();
+        //     }
+        // }
+
+
+
         return view('location.view', compact(['room', 'site']));
     }
 
@@ -85,5 +102,33 @@ class LocationController extends Controller
         }
 
         return redirect('/locations')->with('success', 'Data Location Berhasil di Import !!!');
+    }
+
+    // public function insert_general()
+    // {
+    //     $site = Site::where('site_code', '=', 'GNRL')->first();
+    //     $room = Room::where('room_code', '=', 'GNRL')->first();
+    //     //
+    //     Location::create([
+    //         'location_code'             => 'GNRL',
+    //         'location_name'             => 'General Location',
+    //         'location_remarks'          => '',
+    //         'site_id'                   => $site['id'],
+    //         'room_id'                   => $room->id,
+    //     ]);
+    // }
+
+    public function import_location_auto()
+    {
+        $path = public_path('document/Location Import.xlsx');
+
+        $import = new LocationImport();
+        $import->import($path);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+
+        return redirect('/locations')->with('success', 'Data Room Berhasil di Import AUTOMATIC!!!');
     }
 }
