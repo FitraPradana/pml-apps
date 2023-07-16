@@ -22,8 +22,10 @@ class LocationController extends Controller
         $room = Room::all();
         $site = Site::all();
         $location = Location::all();
-        if ($location->isEmpty()) {
-            $this->import_location_auto();
+        if (!$site->isEmpty() and !$room->isEmpty()) {
+            if ($location->isEmpty()) {
+                $this->import_location_auto();
+            }
         }
 
 
