@@ -27,6 +27,7 @@ use App\Http\Controllers\StockTakeController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VesselController;
 use App\Models\RoomVessel;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -61,11 +62,11 @@ Route::group(['middleware' => ['auth']], function () {
         // DASHBOARD
         Route::get('home_admin', [DashboardController::class, 'home_admin']);
     });
-    Route::group(['middleware' => ['cekUserLogin:staff']], function () {
+    Route::group(['middleware' => ['cekUserLogin:user']], function () {
         // DASHBOARD
         Route::get('home_staff', [DashboardController::class, 'home_staff']);
     });
-    Route::group(['middleware' => ['cekUserLogin:crew']], function () {
+    Route::group(['middleware' => ['cekUserLogin:vessel']], function () {
         // DASHBOARD
         Route::get('home_crew', [DashboardController::class, 'home_crew']);
     });
@@ -256,5 +257,12 @@ Route::get('/scan_vessels', [ReportVesselController::class, 'index'])->middlewar
 // GET TUG BARGE FIXED ASSET
 Route::match(['get', 'post'], '/scan_vessels_get_tugbarge_testing', [ReportVesselController::class, 'json_testing'])->middleware('auth');
 Route::match(['get', 'post'], '/report_vessels_get_tug', [ReportVesselController::class, 'get_asset_tug_json'])->middleware('auth');
-Route::match(['get', 'post'], '/report_vessels_get_barge', [ReportVesselController::class, 'get_asset_barge_json'])->middleware('auth');
 Route::match(['get', 'post'], '/get_barge', [ReportVesselController::class, 'get_barge'])->middleware('auth');
+Route::match(['get', 'post'], '/report_vessels_get_barge', [ReportVesselController::class, 'get_asset_barge_json'])->middleware('auth');
+
+
+
+Route::get('/ip', function () {
+    $checkLocation = geoip()->getLocation($_SERVER['REMOTE_ADDR']);
+    return $checkLocation->toArray();
+});

@@ -85,6 +85,8 @@ class ScanController extends Controller
 
         // END Img Condition Stock Take Transaction =============================
 
+        $ip_saya = request()->ip();
+        $checkLocation = geoip()->getLocation($ip_saya);
         // Insert Stock Take Transaction
         $trans = StockTakeTransaction::create([
             'id'                            => $request->stock_take_transaction_id,
@@ -93,7 +95,8 @@ class ScanController extends Controller
             'status_asset'                  => $request->status_asset,
             'is_used'                       => $request->is_used,
             'location_id'                   => $request->location_id,
-            'remarks_stock_take'            => $request->remarks_fixed_assets,
+            // 'remarks_stock_take'            => $request->remarks_fixed_assets,
+            'remarks_stock_take'            => $ip_saya . '+' . $checkLocation->country . '+' . $checkLocation->city . '+' . $checkLocation->state . '+' . $checkLocation->state_name . '+' . $checkLocation->postal_code . '+' . $checkLocation->timezone,
             'last_update_name'              => Auth::user()->username,
             'user_id'                       => Auth::user()->id,
             'last_img_condition_stock_take' => $request->file('last_img_condition')->store('stock_take_transaction'),

@@ -18,10 +18,10 @@
                         @elseif (Auth::user()->roles == 'manager')
                             <li><a class="{{ request()->is('home_manager') ? 'active' : '' }}"
                                     href="{{ url('home_manager') }}">Manager Dashboard</a></li>
-                        @elseif (Auth::user()->roles == 'staff')
+                        @elseif (Auth::user()->roles == 'user')
                             <li><a class="{{ request()->is('home_staff') ? 'active' : '' }}"
                                     href="{{ url('home_staff') }}">Staff Dashboard</a></li>
-                        @elseif (Auth::user()->roles == 'crew')
+                        @elseif (Auth::user()->roles == 'vessel')
                             <li><a class="{{ request()->is('home_crew') ? 'active' : '' }}"
                                     href="{{ url('home_crew') }}">Crew Dashboard</a></li>
                         @endif
@@ -46,31 +46,13 @@
                         </ul>
                     </li>
                 @endif
-                @if (Auth::user()->roles == 'admin')
-                    <li class="submenu">
-                        <a href="#"><i class="las la-tools"></i> <span> Configuration</span> <span
-                                class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a class="{{ request()->is('rooms') ? 'active' : '' }}" href="{{ url('rooms') }}">
-                                    Room</a></li>
-                            <li><a class="{{ request()->is('vessels_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
-                            <li><a class="{{ request()->is('sites_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
-                            <li><a class="{{ request()->is('locations') ? 'active' : '' }}"
-                                    href="{{ url('locations') }}">
-                                    Location </a></li>
-                            <li><a class="{{ request()->is('fixed_assets_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
+                <li class="{{ request()->is('scan') ? 'active' : '' }}">
+                    <a href="{{ url('scan_form') }}"><i class="la la-qrcode"></i> <span>Scan
+                            Barcode</span></a>
+                    {{-- <a href="{{ url('print_stock_take') }}"><i class="las la-print"></i> <span>Print Asset</span></a> --}}
+                    {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
+                </li>
 
-                        </ul>
-                    </li>
-                    <li class="{{ request()->is('scan') ? 'active' : '' }}">
-                        <a href="{{ url('scan_form') }}"><i class="la la-qrcode"></i> <span>Scan Barcode</span></a>
-                        {{-- <a href="{{ url('print_stock_take') }}"><i class="las la-print"></i> <span>Print Asset</span></a> --}}
-                        {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
-                    </li>
-                @endif
                 {{-- <li>
                     <a class="{{ request()->is('barcode') ? 'active' : '' }}" href="{{ url('barcode') }}"><i class="la la-ticket"></i> <span>Barcode</span></a>
                 </li> --}}
@@ -202,7 +184,7 @@
                         <a href="{{ url('users') }}"><i class="la la-user-plus"></i> <span>Users</span></a>
                     </li>
                 @endif
-                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'staff' or Auth::user()->roles == 'crew')
+                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'crew')
                     <li class="menu-title">
                         <span>Fixed Assets</span>
                     </li>
@@ -220,7 +202,7 @@
                         </ul>
                     </li>
                 @endif
-                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'staff')
+                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user')
                     <li class="menu-title">
                         <span>Filling Document</span>
                     </li>
@@ -240,7 +222,7 @@
                         </ul>
                     </li>
                 @endif
-                @if (Auth::user()->roles == 'admin')
+                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user')
                     {{-- <li class="submenu">
                         <a href="#"><i class="las la-comment"></i> <span> Stock Take </span> <span
                                 class="menu-arrow"></span></a>
@@ -253,9 +235,9 @@
                     <li class="menu-title">
                         <span>Pages</span>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="{{ url('login') }}"><i class="la la-user"></i> <span>Form Login</span></a>
-                    </li>
+                    </li> --}}
                     <li class="submenu">
                         <a href="#"><i class="la la-user"></i> <span> Profile </span> <span
                                 class="menu-arrow"></span></a>
@@ -264,21 +246,43 @@
                             <li><a href="#"> Client Profile </a></li>
                         </ul>
                     </li>
+                    @if (Auth::user()->roles == 'admin')
+                        <li class="submenu">
+                            <a href="#"><i class="las la-tools"></i> <span> Configuration</span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a class="{{ request()->is('rooms') ? 'active' : '' }}"
+                                        href="{{ url('rooms') }}">
+                                        Room</a></li>
+                                <li><a class="{{ request()->is('vessels_stg_index') ? 'active' : '' }}"
+                                        href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
+                                <li><a class="{{ request()->is('sites_stg_index') ? 'active' : '' }}"
+                                        href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
+                                <li><a class="{{ request()->is('locations') ? 'active' : '' }}"
+                                        href="{{ url('locations') }}">
+                                        Location </a></li>
+                                <li><a class="{{ request()->is('fixed_assets_stg_index') ? 'active' : '' }}"
+                                        href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
 
-                    <li>
-                        <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>
-                    </li>
-                    <li class="submenu">
-                        <a href="#"><i class="la la-key"></i> <span> Authentication </span> <span
-                                class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="#"> Login </a></li>
-                            <li><a href="#"> Register </a></li>
-                            <li><a href="#"> Forgot Password </a></li>
-                            <li><a href="#"> OTP </a></li>
-                            <li><a href="#"> Lock Screen </a></li>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    @endif
+                    @if (Auth::user()->roles == 'admin')
+                        <li>
+                            <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="la la-key"></i> <span> Authentication </span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="#"> Login </a></li>
+                                <li><a href="#"> Register </a></li>
+                                <li><a href="#"> Forgot Password </a></li>
+                                <li><a href="#"> OTP </a></li>
+                                <li><a href="#"> Lock Screen </a></li>
+                            </ul>
+                        </li>
+                    @endif
                 @endif
 
             </ul>

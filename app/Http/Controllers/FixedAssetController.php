@@ -169,7 +169,7 @@ class FixedAssetController extends Controller
             // 'fixed_assets_number'        => 'required',
             // 'fixed_assets_description'   => 'required',
             // 'acquisition_date'              => 'required',
-            'net_book_value'                => 'required',
+            // 'net_book_value'                => 'required',
             'status_asset'                  => 'required',
             'location_id'                   => 'required',
             'remarks_fixed_assets'          => 'required',

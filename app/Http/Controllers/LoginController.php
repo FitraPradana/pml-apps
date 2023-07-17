@@ -15,9 +15,9 @@ class LoginController extends Controller
         if ($user = Auth::user()) {
             if ($user->roles == 'admin') {
                 return redirect()->intended('home_admin');
-            } elseif ($user->roles == 'staff') {
+            } elseif ($user->roles == 'user') {
                 return redirect()->intended('home_staff');
-            } elseif ($user->roles == 'crew') {
+            } elseif ($user->roles == 'vessel') {
                 return redirect()->intended('home_crew');
             }
         }
@@ -50,9 +50,9 @@ class LoginController extends Controller
             $user = Auth::user();
             if ($user->roles == 'admin') {
                 return redirect()->intended('home_admin');
-            } elseif ($user->roles == 'staff') {
+            } elseif ($user->roles == 'user') {
                 return redirect()->intended('home_staff');
-            } elseif ($user->roles == 'crew') {
+            } elseif ($user->roles == 'vessel') {
                 return redirect()->intended('home_crew');
             }
 

@@ -131,6 +131,6 @@ class LocationController extends Controller
             return back()->withFailures($import->failures());
         }
 
-        return redirect('/locations')->with('success', 'Data Room Berhasil di Import AUTOMATIC!!!');
+        return redirect('/locations')->with('success', 'Data Location Berhasil di Import AUTOMATIC!!!');
     }
 }

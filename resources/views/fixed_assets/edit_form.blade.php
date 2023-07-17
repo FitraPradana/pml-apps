@@ -51,19 +51,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Main Fixed Asset <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" value="{{ $asset->main_fixed_assets }}"
-                                        readonly>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Vessel ID</label>
-                                    <input class="form-control " type="text" value="{{ $asset->vessel_id }}" readonly>
-                                </div>
-                            </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Information 3</label>
@@ -71,37 +58,30 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <label>Acquisition Date</label>
-                                    <input class="form-control"
-                                        @error('acquisition_date')
+                                    <label>Location</label>
+                                    <select class="form-control select"
+                                        @error('location_id')
                                     is-invalid
                                 @enderror
-                                        type="text" value="{{ old('acquisition_date', $asset->acquisition_date) }}"
-                                        name="acquisition_date" disabled required>
-                                    @error('acquisition_date')
+                                        id="location_id" name="location_id" required>
+                                        {{-- <option value="">-- Pilih Location --</option> --}}
+                                        @foreach ($location as $val)
+                                            <option value="{{ $val->id }}"
+                                                @if (old('location_id') == $val->id || $val->id == $asset->location_id) selected @endif>{{ $val->location_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('location_id')
                                         <label style="color: red">{{ $message }}</label>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <div class="form-group">
-                                    <label>Net Book Value</label>
-                                    <input class="form-control"
-                                        @error('net_book_value')
-                                    is-invalid
-                                @enderror
-                                        type="text" value="{{ old('net_book_value', $asset->net_book_value) }}"
-                                        name="net_book_value" required>
-                                    @error('net_book_value')
-                                        <label style="color: red">{{ $message }}</label>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status Asset</label>
                                     <select class="form-control select"
@@ -122,21 +102,42 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
+
+                            <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label>Location</label>
+                                    <label>Status Pakai</label>
                                     <select class="form-control select"
-                                        @error('location_id')
+                                        @error('is_used')
                                     is-invalid
                                 @enderror
-                                        id="location_id" name="location_id" required>
-                                        @foreach ($location as $val)
-                                            <option value="{{ $val->id }}"
-                                                @if (old('location_id') == $val->id || $val->id == $asset->location_id) selected @endif>{{ $val->location_name }}
-                                            </option>
-                                        @endforeach
+                                        name="is_used" required>
+                                        <option value="GENERAL" @selected(old('GENERAL', $asset->is_used) == 'GENERAL')>GENERAL</option>
+                                        <option value="DIPAKAI" @selected(old('DIPAKAI', $asset->is_used) == 'DIPAKAI')>DIPAKAI</option>
+                                        <option value="TIDAK_DIPAKAI" @selected(old('TIDAK_DIPAKAI', $asset->is_used) == 'TIDAK_DIPAKAI')>TIDAK DIPAKAI
+                                        </option>
                                     </select>
-                                    @error('location_id')
+                                    @error('is_used')
+                                        <label style="color: red">{{ $message }}</label>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Upload Image</label><br>
+                                    @if ($asset->last_img_condition_stock_take)
+                                        <img src="{{ asset('storage/' . $asset->last_img_condition_stock_take) }}"
+                                            class="img-thumbnail" style="width:20%">
+                                    @else
+                                        <span class="badge badge-danger">Belum ada Foto</span>
+                                    @endif
+                                    <input type="file" class="form-control"
+                                        @error('last_img_condition')
+                                is-invalid
+                            @enderror
+                                        id="last_img_condition" name="last_img_condition" accept="image/*">
+                                    @error('last_img_condition')
                                         <label style="color: red">{{ $message }}</label>
                                     @enderror
                                 </div>
@@ -146,13 +147,10 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Remarks</label>
-                                    <input class="form-control"
+                                    <textarea name="remarks_fixed_assets" id="remarks_fixed_assets" rows="8" class="form-control" required
                                         @error('remarks_fixed_assets')
-                                    is-invalid
-                                @enderror
-                                        type="text"
-                                        value="{{ old('remarks_fixed_assets', $asset->remarks_fixed_assets) }}"
-                                        name="remarks_fixed_assets" required>
+                                is-invalid
+                            @enderror>{{ old('remarks_fixed_assets', $asset->remarks_fixed_assets) }}</textarea>
                                     @error('remarks_fixed_assets')
                                         <label style="color: red">{{ $message }}</label>
                                     @enderror

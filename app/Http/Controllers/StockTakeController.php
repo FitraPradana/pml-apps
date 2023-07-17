@@ -41,7 +41,7 @@ class StockTakeController extends Controller
                 if (Auth::user()->roles == 'admin') {
                     return '
                 <div class="form group" align="center">
-                <a href="' . route('print.stock_take', $data->id) . '" target="_blank" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
+                <a href="' . route('print.stock_take', $data->id) . '" target="_blank" class="edit btn btn-xs btn-dark btn-flat btn-sm editAsset"><i class="fa fa-print"></i></a>
                 </div>
                 ';
                 }

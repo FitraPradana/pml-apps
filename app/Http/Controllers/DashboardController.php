@@ -13,6 +13,7 @@ use App\Models\Vendor;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -48,11 +49,22 @@ class DashboardController extends Controller
     public function home_crew()
     {
         $session_login = Auth::user()->username;
+        $session_login_id = Auth::user()->personnel_number;
 
-        $asset = FixedAssets::where('vessel_id', '=', $session_login)->get();
+        // $asset = FixedAssets::where('vessel_id', '=', $session_login)->get();
+        $asset =
+            DB::table('fixed_assets')
+            ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
+            ->leftJoin('sites', 'locations.site_id', '=', 'sites.id')
+            ->select('fixed_assets.*', 'locations.location_name', 'sites.site_code', 'sites.site_name')
+            ->where('site_code', '=', $session_login_id)
+            ->orderByDesc('fixed_assets.updated_at')
+            ->get();
+
         // $user = User::where('username', '=', $session_login)->get();
         $user = User::orderBy('updated_at', 'desc')->get();
 
         return view('dashboard.home_crew', compact('asset', 'user'));
+        // return view('dashboard.home_crew');
     }
 }
