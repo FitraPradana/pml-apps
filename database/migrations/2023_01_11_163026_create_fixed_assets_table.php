@@ -40,6 +40,9 @@ return new class extends Migration
             $table->string('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations');
 
+            $table->string('asset_category_id')->nullable();
+            $table->foreign('asset_category_id')->references('id')->on('asset_categories');
+
 
             $table->timestamps();
         });

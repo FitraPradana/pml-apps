@@ -42,11 +42,32 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Fixed Asset Name</label>
                                     <input class="form-control" type="text" value="{{ $asset->fixed_assets_name }}"
                                         name="fixed_assets_name" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Fixed Asset Category</label>
+                                    <select class="form-control select"
+                                        @error('asset_category_id')
+                                    is-invalid
+                                @enderror
+                                        id="asset_category_id" name="asset_category_id" required>
+                                        <option value="">-- Pilih Asset Category --</option>
+                                        @foreach ($asset_category as $val)
+                                            <option value="{{ $val->id }}"
+                                                @if (old('asset_category_id') == $val->id || $val->id == $asset->asset_category_id) selected @endif>
+                                                {{ $val->asset_category_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('asset_category_id')
+                                        <label style="color: red">{{ $message }}</label>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -177,6 +198,9 @@
         $(function() {
             // SELECT2
             $('#location_id').select2({
+                // width: '250'
+            });
+            $('#asset_category_id').select2({
                 // width: '250'
             });
         });

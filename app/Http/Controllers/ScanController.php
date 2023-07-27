@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use Mail;
+use App\Helpers\UserSystemInfoHelper;
 
 class ScanController extends Controller
 {

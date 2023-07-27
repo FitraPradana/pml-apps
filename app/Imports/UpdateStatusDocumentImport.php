@@ -19,6 +19,7 @@ class UpdateStatusDocumentImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $doc = Document::where('voucher', $row['voucher'])->first();
+        // return $doc;
         // if product exists and the value also exists
         if ($doc) {
             $doc->update([
@@ -32,7 +33,6 @@ class UpdateStatusDocumentImport implements ToModel, WithHeadingRow
                 // 'ket_doc' => $row['ket_doc'],
                 'status_doc' => 'TERSEDIA',
             ]);
-
             return $doc;
         }
     }

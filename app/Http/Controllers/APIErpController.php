@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssetCategory;
 use App\Models\Document;
 use App\Models\FixedAssets;
 use App\Models\Location;
@@ -98,6 +99,14 @@ class APIErpController extends Controller
         // END Validasi Table Location Kosong
 
 
+        // Validasi Table Asset Category Kosong
+        $asset_category = AssetCategory::all();
+        if ($asset_category->isEmpty()) {
+            return redirect('fixed_assets_stg_index')->with(['error_asset_category_kosong' => 'Data Asset Category masih KOSONG, Harap isi pada Form Asset Category !']);
+        }
+        // END Validasi Table Asset Category Kosong
+
+
 
         $api_fixed_assets = 'https://prod-19.southeastasia.logic.azure.com:443/workflows/dc06527840cd42e5930a2f8ffd5b001d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6UQg7E24Ln9yqEoCODwhPqNVEFNVP6dWQoiWN6c-jI4';
         $client = new Client();
@@ -105,6 +114,8 @@ class APIErpController extends Controller
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
         $collectdata = collect($data);
+
+        // return $collectdata;
 
         $asset = FixedAssets::all();
         if ($asset->isEmpty()) {
@@ -120,6 +131,7 @@ class APIErpController extends Controller
             $qrcode = Str::random(20);
             $vessId = $value['KREVesselId'];
             $location_id_gnrl = Location::where('location_code', 'GNRL')->first();
+            $asset_category_id_gnrl = AssetCategory::where('asset_category_code', 'GNRL')->first();
 
             // $site_gnrl = Site::where('id','')->first();
             // if($value['KREVesselId'] == '' || $value['KREVesselId'] == null)
@@ -150,6 +162,7 @@ class APIErpController extends Controller
                 // 'qr_code'               => $qrcode,
                 // 'last_modified_name' => '',
                 // 'location_id'               => $location_id_gnrl->id,
+                // 'asset_category_id'               => $asset_category_id_gnrl->id,
             ]);
         }
 
@@ -170,7 +183,7 @@ class APIErpController extends Controller
     public function doc_stg_json()
     {
         //
-        $api_doc = 'https://prod-10.southeastasia.logic.azure.com:443/workflows/f72beb54ca9d40c2bb2746c5cb7f4da7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=zQPlwyEMDTO3AgRq21BNEtjNTUybKSo08_WxF47ZrZU';
+        $api_doc = 'https://prod-60.southeastasia.logic.azure.com:443/workflows/22489788604d488294d41a0ef460855d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=q7ZOP9chFOnQ3I99TqgtQFcV2vqV85RifmREO8mXONs';
         $client = new Client();
         $response = $client->request('GET', $api_doc);
         $body = $response->getBody()->getContents();
@@ -199,9 +212,14 @@ class APIErpController extends Controller
 
     public function doc_stg_save()
     {
+        // Validasi Table Vendor Kosong
+        $vendor = Vendor::all();
+        if ($vendor->isEmpty()) {
+            return redirect('doc_stg_index')->with(['error_vendor_kosong' => 'Data Vendor masih KOSONG, Harap isi pada Form Vendor !']);
+        }
+        // END Validasi Table Vendor Kosong
 
-
-        $api_doc = 'https://prod-10.southeastasia.logic.azure.com:443/workflows/f72beb54ca9d40c2bb2746c5cb7f4da7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=zQPlwyEMDTO3AgRq21BNEtjNTUybKSo08_WxF47ZrZU';
+        $api_doc = 'https://prod-60.southeastasia.logic.azure.com:443/workflows/22489788604d488294d41a0ef460855d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=q7ZOP9chFOnQ3I99TqgtQFcV2vqV85RifmREO8mXONs';
         $client = new Client();
         $response = $client->request('GET', $api_doc);
         $body = $response->getBody()->getContents();
@@ -210,15 +228,15 @@ class APIErpController extends Controller
 
         $doc = Document::all();
         if ($doc->isEmpty()) {
-            $filtered = $data;
+            $filtered = $collectdata;
         } else {
             foreach ($doc as $key => $value) {
-                $v[] = $value->Voucher;
+                $v[] = $value->voucher;
             }
             $filtered = $collectdata->whereNotIn('Voucher', $v);
         }
 
-        foreach ($filtered as $value) {
+        foreach ($filtered as $key => $value) {
 
             $vend = Vendor::where('accountnum', $value['AccountNum'])->first();
 

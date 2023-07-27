@@ -204,7 +204,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
     ],
 
     /*
@@ -224,7 +223,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-
 
     ])->toArray(),
 

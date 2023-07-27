@@ -66,6 +66,13 @@
                                 >>> </a>
                         </div>
                     @endif
+                    @if (session()->has('error_asset_category_kosong'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error_asset_category_kosong') }} <a href="{{ url('asset_category') }}"> Form
+                                Asset Category
+                                >>> </a>
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table id="datatables" class="table table-striped table-nowrap custom-table mb-0 datatable">
                             <thead>

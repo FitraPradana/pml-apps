@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Data Vendor')
+@section('title', 'Data Asset Category')
 
 @section('content')
 
@@ -24,27 +24,33 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Vendor</h3>
+                        <h3 class="page-title">Asset Category</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Master</a></li>
-                            <li class="breadcrumb-item active">Vendor</li>
+                            <li class="breadcrumb-item"><a href="index.html">Master Asset Category</a></li>
                         </ul>
                     </div>
-                    {{-- <div class="btn-group">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_vendor"><i
-                                class="fa fa-plus"></i> Add Vendor</a>
+                    <div class="btn-group">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_asset_category"><i
+                                class="fa fa-plus"></i> Add Asset Category</a>
                     </div>
+
                     <div class="col-auto float-right ml-auto">
                         <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Import Vendor</button>
+                                aria-haspopup="true" aria-expanded="false">Import Asset Category</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#import_vendor">Import</a>
-                                <a class="dropdown-item" href="#">Template Import Vendor</a>
+                                    data-target="#import_room">Import</a>
                             </div>
                         </div>
-                    </div> --}}
+                        {{-- <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Room</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('room.export') }}">Export</a>
+                            </div>
+                        </div> --}}
+                    </div>
 
                 </div>
             </div>
@@ -58,11 +64,6 @@
                             {{ session('success') }}
                         </div>
                     @endif
-                    {{-- @if ($room->isEmpty())
-                    <div class="alert alert-danger" role="alert">
-                        Data Room Masih KOSONG !!! Harap di Input terlebih dahulu
-                    </div>
-                @endif --}}
 
                     @if (session()->has('failures'))
                         <div class="alert alert-danger" role="alert">
@@ -89,12 +90,9 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    {{-- <th>ID</th> --}}
-                                    <th>Account</th>
-                                    <th>Search Name</th>
-                                    <th>Vendor Name</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
+                                    <th>ID Asset Category</th>
+                                    <th>Code Asset Category</th>
+                                    <th>Name</th>
                                     <th>Remarks</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
@@ -109,17 +107,19 @@
         </div>
         <!-- /Page Content -->
 
-        <!-- Import Site Modal -->
-        {{-- @include('site.import_site') --}}
-        <!-- /Import Site Modal -->
+        <!-- Import Room Modal -->
+        {{-- @include('room.import_room') --}}
+        <!-- /Import Room Modal -->
 
-        <!-- Add Site Modal -->
-        {{-- @include('site.add_modal') --}}
-        <!-- /Add Site Modal -->
+        <!-- Add Location Modal -->
+        {{-- @include('room.add_modal') --}}
+        <!-- /Add Location Modal -->
 
 
     </div>
     <!-- /Page Wrapper -->
+
+
 @endsection
 
 
@@ -130,16 +130,18 @@
         $(function() {
             // $(document).ready(function () {
 
-            // SELECT2
-            // $('#room_id').select2({
-            //     width: '250'
-            // });
+            // GLOBAL SETUP
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
             $('#datatables').DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
-                ajax: "{{ url('vendor/json') }}",
+                ajax: "{{ url('/asset_category/json') }}",
                 columns: [{
                         data: 'action',
                         name: 'action',
@@ -151,34 +153,21 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
-                    // {
-                    //     data: 'id',
-                    //     name: 'id'
-                    // },
                     {
-                        data: 'accountnum',
-                        name: 'accountnum'
+                        data: 'id',
+                        name: 'id'
                     },
                     {
-                        data: 'search_name',
-                        name: 'search_name'
+                        data: 'asset_category_code',
+                        name: 'asset_category_code'
                     },
                     {
-                        data: 'vend_name',
-                        name: 'vend_name'
+                        data: 'asset_category_name',
+                        name: 'asset_category_name'
                     },
                     {
-                        data: 'vend_phone',
-                        name: 'vend_phone'
-                    },
-                    {
-                        data: 'vend_address',
-                        name: 'vend_address'
-                    },
-
-                    {
-                        data: 'vend_remarks',
-                        name: 'vend_remarks'
+                        data: 'remarks_asset_category',
+                        name: 'remarks_asset_category'
                     },
                     {
                         data: 'created_at',

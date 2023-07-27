@@ -42,7 +42,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input class="form-control " type="text" value="{{ $doc->description }}" readonly>
+                                    <input class="form-control" type="text" value="{{ $doc->description }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                                     is-invalid
                                 @enderror
                                         name="status_doc" required>
-                                        <option value="GENERAL" @selected(old('GENERAL', $doc->status_doc) == 'GENERAL')>General</option>
+                                        {{-- <option value="GENERAL" @selected(old('GENERAL', $doc->status_doc) == 'GENERAL')>General</option> --}}
                                         <option value="TERSEDIA" @selected(old('TERSEDIA', $doc->status_doc) == 'TERSEDIA')>Tersedia</option>
                                         <option value="BELUM_TERSEDIA" @selected(old('BELUM_TERSEDIA', $doc->status_doc) == 'BELUM_TERSEDIA')>Belum Tersedia
                                         </option>
@@ -155,11 +155,10 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Keterangan Document</label>
-                                    <input class="form-control"
+                                    <textarea name="ket_doc" id="ket_doc" rows="8" class="form-control" required
                                         @error('ket_doc')
-                                    is-invalid
-                                @enderror
-                                        type="text" value="{{ old('ket_doc', $doc->ket_doc) }}" name="ket_doc" required>
+                                is-invalid
+                            @enderror>{{ old('ket_doc', $doc->ket_doc) }}</textarea>
                                     @error('ket_doc')
                                         <label style="color: red">{{ $message }}</label>
                                     @enderror

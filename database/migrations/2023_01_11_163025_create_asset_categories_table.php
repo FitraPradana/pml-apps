@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('asset_categories', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('asset_category_code');
+            $table->string('asset_category_name');
+            $table->text('remarks_asset_category')->nullable();
             $table->timestamps();
         });
     }

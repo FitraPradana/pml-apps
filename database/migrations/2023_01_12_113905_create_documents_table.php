@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->date('tgl_posting')->nullable();
-            $table->enum('status_doc', ['GENERAL', 'TERSEDIA', 'BELUM_TERSEDIA', 'DIPINJAM'])->default('GENERAL');
-            $table->string('voucher');
+            $table->enum('status_doc', ['GENERAL', 'TERSEDIA', 'BELUM_TERSEDIA', 'DIPINJAM'])->default('BELUM_TERSEDIA');
+            $table->string('voucher')->unique();
             $table->string('invoice')->nullable();
             $table->string('last_settle_voucher')->nullable();
             $table->date('last_settle_date')->nullable();

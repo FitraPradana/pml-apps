@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\UserExport;
 use App\Imports\FA_UpdateNetBookValueImport;
 use App\Imports\FixedAssetsImport;
+use App\Models\AssetCategory;
 use App\Models\FixedAssets;
 use App\Models\Site;
 use App\Models\User;
@@ -28,7 +29,8 @@ class FixedAssetController extends Controller
     public function index()
     {
         return view('fixed_assets.view', [
-            'asset' => FixedAssets::all()
+            'asset' => FixedAssets::all(),
+            'asset_category' => AssetCategory::all()
         ]);
     }
 
@@ -37,7 +39,8 @@ class FixedAssetController extends Controller
         // $asset = FixedAssets::with('site')->orderBy('updated_at', 'desc')->get();
         $asset = DB::table('fixed_assets')
             ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
-            ->select('fixed_assets.*', 'locations.location_name')
+            ->leftJoin('asset_categories', 'fixed_assets.asset_category_id', '=', 'asset_categories.id')
+            ->select('fixed_assets.*', 'locations.location_name', 'asset_categories.asset_category_name')
             ->orderByDesc('fixed_assets.updated_at')
             ->get();
 
@@ -77,6 +80,9 @@ class FixedAssetController extends Controller
             })
             ->addColumn('location_id', function ($data) {
                 return $data->location_name;
+            })
+            ->addColumn('asset_category_id', function ($data) {
+                return $data->asset_category_name;
             })
             ->addColumn('net_book_value', function ($data) {
                 return rupiah($data->net_book_value);
@@ -151,7 +157,8 @@ class FixedAssetController extends Controller
         $asset = FixedAssets::find($id);
         $site = Site::all();
         $location = Location::all();
-        return view('fixed_assets.edit_form', compact('asset', 'user', 'site', 'location'));
+        $asset_category = AssetCategory::all();
+        return view('fixed_assets.edit_form', compact('asset', 'user', 'site', 'location', 'asset_category'));
     }
 
     /**

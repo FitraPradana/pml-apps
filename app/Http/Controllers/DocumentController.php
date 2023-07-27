@@ -31,7 +31,8 @@ class DocumentController extends Controller
         $doc = DB::table('documents')
             ->join('vendors', 'documents.vendor_id', '=', 'vendors.id')
             ->select('documents.*', 'vendors.vend_name')
-            ->orderByDesc('documents.updated_at')
+            // ->orderByDesc('documents.updated_at')
+            ->orderByDesc('documents.tgl_posting')
             ->get();
         return DataTables::of($doc)
             ->addColumn('action', function ($data) {

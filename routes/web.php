@@ -30,6 +30,9 @@ use App\Models\RoomVessel;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\UserSystemInfoHelper;
+use App\Http\Controllers\AssetCategoryController;
+use App\Http\Controllers\CrewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -266,3 +269,20 @@ Route::get('/ip', function () {
     $checkLocation = geoip()->getLocation($_SERVER['REMOTE_ADDR']);
     return $checkLocation->toArray();
 });
+// Route::get('/ip_details', function () {
+//     $get_ip = UserSystemInfoHelper::get_ip();
+//     $get_browser = UserSystemInfoHelper::get_browsers();
+//     $get_device = UserSystemInfoHelper::get_device();
+//     $get_os = UserSystemInfoHelper::get_os();
+//     return $get_device;
+// });
+
+// ASSET CATEGORY
+Route::get('asset_category', [AssetCategoryController::class, 'index'])->middleware('auth');
+Route::get('/asset_category/json', [AssetCategoryController::class, 'json'])->middleware('auth');
+Route::post('asset_category/store', [AssetCategoryController::class, 'store'])->name('asset_category.store')->middleware('auth');
+
+
+
+Route::get('crew_report_data', [CrewController::class, 'index'])->name('crew_report_data')->middleware('auth');
+Route::get('crew_report_json', [CrewController::class, 'json_report'])->name('crew_report_json')->middleware('auth');

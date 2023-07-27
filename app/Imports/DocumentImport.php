@@ -39,20 +39,20 @@ class DocumentImport implements ToModel, WithHeadingRow //, WithValidation, Skip
         ]);
     }
 
-    // public function rules(): array
-    // {
-    //     return [
-    //         'voucher' => 'required|unique:documents',
-    //         // 'fixed_assets_name' => 'required',
-    //         // 'fixed_assets_description' => 'required',
-    //         // 'site_id' => 'required',
-    //         // 'site_name' => 'required',
-    //         // 'acquisition_date' => today(),
-    //         // 'nbv' => 'required',
-    //         // 'status' => 'general',
-    //         // 'last_update' => 'required',
-    //         // 'pic' => 'required',
-    //         // 'remarks' => 'required',
-    //     ];
-    // }
+    public function rules(): array
+    {
+        return [
+            'voucher' => 'required|unique:documents',
+            // 'fixed_assets_name' => 'required',
+            // 'fixed_assets_description' => 'required',
+            // 'site_id' => 'required',
+            // 'site_name' => 'required',
+            // 'acquisition_date' => today(),
+            // 'nbv' => 'required',
+            // 'status' => 'general',
+            // 'last_update' => 'required',
+            // 'pic' => 'required',
+            // 'remarks' => 'required',
+        ];
+    }
 }

@@ -52,7 +52,14 @@
                     {{-- <a href="{{ url('print_stock_take') }}"><i class="las la-print"></i> <span>Print Asset</span></a> --}}
                     {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
                 </li>
-
+                @if (Auth::user()->roles == 'vessel')
+                    <li class="{{ request()->is('scan') ? 'active' : '' }}">
+                        <a href="{{ url('crew_report_data') }}"><i class="la la-book"></i> <span>Report Asset
+                                Vessel</span></a>
+                        {{-- <a href="{{ url('print_stock_take') }}"><i class="las la-print"></i> <span>Print Asset</span></a> --}}
+                        {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
+                    </li>
+                @endif
                 {{-- <li>
                     <a class="{{ request()->is('barcode') ? 'active' : '' }}" href="{{ url('barcode') }}"><i class="la la-ticket"></i> <span>Barcode</span></a>
                 </li> --}}
@@ -81,9 +88,9 @@
                             {{-- <li><a class="{{ request()->is('employees_stg_index') ? 'active' : '' }}"
                                     href="{{ url('employees_stg_index') }}"> Staging Employee </a></li> --}}
                             {{-- <li><a class="{{ request()->is('customers_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('customers_stg_index') }}"> Staging Customer </a></li>
+                                    href="{{ url('customers_stg_index') }}"> Staging Customer </a></li> --}}
                             <li><a class="{{ request()->is('vendors_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('vendors_stg_index') }}"> Staging Vendor </a></li> --}}
+                                    href="{{ url('vendors_stg_index') }}"> Staging Vendor </a></li>
                             <li><a class="{{ request()->is('vessels_stg_index') ? 'active' : '' }}"
                                     href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
                             <li><a class="{{ request()->is('sites_stg_index') ? 'active' : '' }}"
@@ -131,14 +138,14 @@
                         <li><a class="" href=""> Customer </a></li>
                     </ul>
                 </li> --}}
-                    {{-- <li class="submenu">
+                    <li class="submenu">
                         <a href="#"><i class="las la-user-friends"></i> <span> Vendor </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
                             <li><a class="{{ request()->is('vendors') ? 'active' : '' }}" href="{{ url('vendors') }}">
                                     Vendor </a></li>
                         </ul>
-                    </li> --}}
+                    </li>
                     <li class="submenu">
                         <a href="#"><i class="las la-ship"></i> <span> Vessel </span> <span
                                 class="menu-arrow"></span></a>
@@ -192,6 +199,8 @@
                         <a href="#"><i class="la la-object-ungroup"></i> <span> Fixed Assets </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
+                            <li><a class="{{ request()->is('asset_category') ? 'active' : '' }}"
+                                    href="{{ url('asset_category') }}"> Asset Category</a></li>
                             <li><a class="{{ request()->is('fixed_assets') ? 'active' : '' }}"
                                     href="{{ url('fixed_assets') }}"> Assets </a></li>
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
@@ -251,18 +260,14 @@
                             <a href="#"><i class="las la-tools"></i> <span> Configuration</span> <span
                                     class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a class="{{ request()->is('rooms') ? 'active' : '' }}"
-                                        href="{{ url('rooms') }}">
+                                <li><a href="{{ url('asset_category') }}"> Asset Category</a></li>
+                                <li><a href="{{ url('rooms') }}">
                                         Room</a></li>
-                                <li><a class="{{ request()->is('vessels_stg_index') ? 'active' : '' }}"
-                                        href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
-                                <li><a class="{{ request()->is('sites_stg_index') ? 'active' : '' }}"
-                                        href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
-                                <li><a class="{{ request()->is('locations') ? 'active' : '' }}"
-                                        href="{{ url('locations') }}">
+                                <li><a href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
+                                <li><a href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
+                                <li><a href="{{ url('locations') }}">
                                         Location </a></li>
-                                <li><a class="{{ request()->is('fixed_assets_stg_index') ? 'active' : '' }}"
-                                        href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
+                                <li><a href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
 
                             </ul>
                         </li>

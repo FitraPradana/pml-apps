@@ -125,6 +125,7 @@
                                     <th>Fixed Asset Number</th>
                                     <th>Fixed Asset Name</th>
                                     <th>Fixed Asset Group</th>
+                                    <th>Fixed Asset Category</th>
                                     <th>Main Fixed Asset</th>
                                     <th>Information 3</th>
                                     {{-- <th>Vessel ID</th> --}}
@@ -223,6 +224,10 @@
                     {
                         data: 'fixed_assets_group',
                         name: 'fixed_assets_group'
+                    },
+                    {
+                        data: 'asset_category_id',
+                        name: 'asset_category_id'
                     },
                     {
                         data: 'main_fixed_assets',

@@ -56,7 +56,7 @@
                     @endif
                     @if (session()->has('error_vendor_kosong'))
                         <div class="alert alert-danger" role="alert">
-                            {{ session('error_vendor_kosong') }} <a href="{{ url('vendors_stg_index') }}"> Form ROOM >>>
+                            {{ session('error_vendor_kosong') }} <a href="{{ url('vendors_stg_index') }}"> Form Vendor >>>
                             </a>
                         </div>
                     @endif

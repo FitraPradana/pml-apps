@@ -18,7 +18,6 @@ class LocationController extends Controller
     public function index()
     {
 
-
         $room = Room::all();
         $site = Site::all();
         $location = Location::all();
