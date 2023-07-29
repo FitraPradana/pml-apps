@@ -99,6 +99,7 @@
                                     <th>Name</th>
                                     <th>Site</th>
                                     <th>Room</th>
+                                    <th>Employee</th>
                                     <th>Remarks</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
@@ -135,9 +136,12 @@
 
             // SELECT2
             $('#site_id').select2({
-                width: '250'
+                width: '100%'
             });
             $('#room_id').select2({
+                width: '250'
+            });
+            $('#employee_id').select2({
                 width: '250'
             });
             // END SELECT2
@@ -177,6 +181,10 @@
                     {
                         data: 'room_id',
                         name: 'room_id'
+                    },
+                    {
+                        data: 'employee_id',
+                        name: 'employee_id'
                     },
                     {
                         data: 'location_remarks',

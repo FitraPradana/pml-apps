@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\LocationImport;
+use App\Models\Employee;
 use App\Models\Location;
 use App\Models\Room;
 use App\Models\Site;
@@ -20,6 +21,7 @@ class LocationController extends Controller
 
         $room = Room::all();
         $site = Site::all();
+        $employee = Employee::all();
         $location = Location::all();
         if (!$site->isEmpty() and !$room->isEmpty()) {
             if ($location->isEmpty()) {
@@ -37,19 +39,20 @@ class LocationController extends Controller
 
 
 
-        return view('location.view', compact(['room', 'site']));
+        return view('location.view', compact(['room', 'site', 'employee']));
     }
 
     public function json()
     {
-        $loc = Location::with(['room', 'site'])->orderBy('updated_at', 'desc')->get();
+        // $loc = Location::with(['room', 'site'])->orderBy('updated_at', 'desc')->get();
 
-        // $loc = DB::table('locations')
-        //     ->leftJoin('rooms', 'rooms.id', '=', 'locations.room_id')
-        //     ->leftJoin('sites', 'sites.id', '=', 'locations.site_id')
-        //     ->select('locations.*', 'sites.site_name', 'rooms.room_name')
-        //     ->orderByDesc('locations.updated_at')
-        //     ->get();
+        $loc = DB::table('locations')
+            ->leftJoin('rooms', 'rooms.id', '=', 'locations.room_id')
+            ->leftJoin('sites', 'sites.id', '=', 'locations.site_id')
+            ->leftJoin('employees', 'employees.id', '=', 'locations.employee_id')
+            ->select('locations.*', 'sites.site_name', 'rooms.room_name', 'employees.emp_name')
+            ->orderByDesc('locations.updated_at')
+            ->get();
 
         return DataTables::of($loc)
             ->addColumn('action', function ($data) {
@@ -60,10 +63,13 @@ class LocationController extends Controller
                 // <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
             })
             ->addColumn('room_id', function ($data) {
-                return $data->room->room_name;
+                return $data->room_name;
             })
             ->addColumn('site_id', function ($data) {
-                return $data->site->site_name;
+                return $data->site_name;
+            })
+            ->addColumn('employee_id', function ($data) {
+                return $data->emp_name;
             })
             ->addColumn('created_at', function ($data) {
                 return Carbon::parse($data->created_at)->format('d M Y H:i:s');
@@ -79,13 +85,14 @@ class LocationController extends Controller
     public function store(Request $request)
     {
 
-        // Insert Site
+        // Insert Location
         Location::create([
             'location_code'           => $request->location_code,
             'location_name'           => $request->location_name,
             'location_remarks'        => $request->location_remarks,
             'site_id'                 => $request->site_id,
             'room_id'                 => $request->room_id,
+            'employee_id'             => $request->employee_id,
         ]);
 
         return redirect('locations')->with(['success' => 'Location Code ' . $request->location_code . ' Berhasil Di Tambahkan!']);

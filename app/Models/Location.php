@@ -32,6 +32,7 @@ class Location extends Model
         'location_remarks',
         'site_id',
         'room_id',
+        'employee_id',
         'created_at',
         'updated_at',
     ];

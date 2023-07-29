@@ -38,4 +38,18 @@ class EmployeeController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+
+    // public function insert_general()
+    // {
+    //     $site = Site::where('site_code', '=', 'GNRL')->first();
+    //     $room = Room::where('room_code', '=', 'GNRL')->first();
+    //     //
+    //     Location::create([
+    //         'location_code'             => 'GNRL',
+    //         'location_name'             => 'General Location',
+    //         'location_remarks'          => '',
+    //         'site_id'                   => $site['id'],
+    //         'room_id'                   => $room->id,
+    //     ]);
+    // }
 }

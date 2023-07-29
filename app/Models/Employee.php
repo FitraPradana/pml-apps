@@ -35,5 +35,6 @@ class Employee extends Model
         'emp_remarks',
         'user_id',
         'department_id',
+
     ];
 }
