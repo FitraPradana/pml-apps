@@ -30,6 +30,9 @@ return new class extends Migration
             $table->string('room_id');
             $table->foreign('room_id')->references('id')->on('rooms');
 
+            $table->string('employee_id')->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees');
+
             $table->timestamps();
         });
     }

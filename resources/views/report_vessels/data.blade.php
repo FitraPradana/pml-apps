@@ -60,12 +60,12 @@
 
             <!-- Search Filter -->
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+                {{-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
                     <div class="form-group form-focus">
                         <input type="hidden" class="form-control floating">
-                        {{-- <label class="focus-label">Employee Name</label> --}}
+                        <label class="focus-label">Employee Name</label>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
                     <div class="form-group form-focus select-focus">
                         <select class="select floating" id="filter_tug">
@@ -88,7 +88,7 @@
             </div>
             <!-- /Search Filter -->
 
-            <di<div class="row">
+            <div class="row">
                 <div class="col-md-12 d-flex">
                     <div class="card card-table flex-fill">
                         <div class="card-header">
@@ -118,6 +118,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12 d-flex">
                     <div class="card card-table flex-fill">
                         <div class="card-header">
@@ -147,10 +149,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
-    </div>
-    <!-- /Page Content -->
+        <!-- /Page Content -->
 
 
     </div>

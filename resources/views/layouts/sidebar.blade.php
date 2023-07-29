@@ -53,12 +53,12 @@
                     {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
                 </li>
                 @if (Auth::user()->roles == 'vessel')
-                    <li class="{{ request()->is('scan') ? 'active' : '' }}">
-                        <a href="{{ url('crew_report_data') }}"><i class="la la-book"></i> <span>Report Asset
-                                Vessel</span></a>
-                        {{-- <a href="{{ url('print_stock_take') }}"><i class="las la-print"></i> <span>Print Asset</span></a> --}}
-                        {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
-                    </li>
+                    {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}"> --}}
+                    {{-- <a href="{{ url('crew_report_data') }}"><i class="la la-book"></i> <span>Report Asset
+                                Vessel</span></a> --}}
+                    {{-- <a href="{{ url('print_stock_take') }}"><i class="las la-print"></i> <span>Print Asset</span></a> --}}
+                    {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
+                    {{-- </li> --}}
                 @endif
                 {{-- <li>
                     <a class="{{ request()->is('barcode') ? 'active' : '' }}" href="{{ url('barcode') }}"><i class="la la-ticket"></i> <span>Barcode</span></a>

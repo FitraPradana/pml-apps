@@ -51,7 +51,6 @@ class DashboardController extends Controller
         $session_login = Auth::user()->username;
         $session_login_id = Auth::user()->personnel_number;
 
-        // $asset = FixedAssets::where('vessel_id', '=', $session_login)->get();
         $asset =
             DB::table('fixed_assets')
             ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
@@ -64,7 +63,23 @@ class DashboardController extends Controller
         // $user = User::where('username', '=', $session_login)->get();
         $user = User::orderBy('updated_at', 'desc')->get();
 
-        return view('dashboard.home_crew', compact('asset', 'user'));
-        // return view('dashboard.home_crew');
+        $tugbarge = DB::connection('mysql-vms-prod')->table("settype_tugbarge")
+            ->where('tug', $session_login_id)
+            ->where('is_active', '=', 1)
+            ->first();
+
+        $data_tug = DB::table('sites')
+            ->leftJoin('vessels', 'sites.vessel_id', '=', 'vessels.id')
+            ->select('sites.*', 'vessels.vess_name', 'vessels.vess_type')
+            ->where('site_code', $session_login_id)->get();
+
+        $data_barge = DB::table('sites')
+            ->leftJoin('vessels', 'sites.vessel_id', '=', 'vessels.id')
+            ->select('sites.*', 'vessels.vess_name', 'vessels.vess_type')
+            ->where('site_code', $tugbarge->barge)->get();
+
+        // return $data_barge;
+
+        return view('dashboard.home_crew', compact('asset', 'user', 'data_tug', 'data_barge'));
     }
 }

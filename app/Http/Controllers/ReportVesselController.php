@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReportVesselController extends Controller
@@ -25,6 +26,7 @@ class ReportVesselController extends Controller
 
     public function get_asset_tug_json(Request $request)
     {
+
         $on_tug = $request->on_tug;
         $asset = DB::table('fixed_assets')
             ->join('locations', 'fixed_assets.location_id', '=', 'locations.id')
@@ -128,6 +130,7 @@ class ReportVesselController extends Controller
         $site = DB::table("sites")
             ->where('site_code', $tugbarge->barge)
             ->first();
+
         return response()->json([
             "berhasil" => "Data Asset berhasil ditemukan",
             "id_tug" => $on_tug,
