@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\UserSystemInfoHelper;
 use App\Http\Controllers\AssetCategoryController;
 use App\Http\Controllers\CrewController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -190,6 +191,9 @@ Route::post('location/store', [LocationController::class, 'store'])->name('locat
 Route::post('location_import', [LocationController::class, 'import'])->name('location.import')->middleware('auth');
 Route::get('location/insert_general', [LocationController::class, 'insert_general'])->middleware('auth');
 
+//Employee
+Route::get('employees', [EmployeeController::class, 'index'])->middleware('auth');
+Route::get('employee/json', [EmployeeController::class, 'json'])->middleware('auth');
 
 //Vendor
 Route::get('vendors', [VendorController::class, 'index'])->middleware('auth');
@@ -286,3 +290,8 @@ Route::post('asset_category/store', [AssetCategoryController::class, 'store'])->
 
 Route::get('crew_report_data', [CrewController::class, 'index'])->name('crew_report_data')->middleware('auth');
 Route::get('crew_report_json', [CrewController::class, 'json_report'])->name('crew_report_json')->middleware('auth');
+
+
+// Form Asset Kategori Per Kapal
+Route::get('form_asset_view', [FixedAssetController::class, 'form_asset_view'])->name('form_asset_view')->middleware('auth');
+Route::get('form_asset_view_json', [FixedAssetController::class, 'form_asset_view_json'])->name('form_asset_view_json')->middleware('auth');

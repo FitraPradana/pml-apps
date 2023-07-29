@@ -85,8 +85,8 @@
                         <a href="#"><i class="las la-server"></i> <span> Staging From ERP </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            {{-- <li><a class="{{ request()->is('employees_stg_index') ? 'active' : '' }}"
-                                    href="{{ url('employees_stg_index') }}"> Staging Employee </a></li> --}}
+                            <li><a class="{{ request()->is('employees_stg_index') ? 'active' : '' }}"
+                                    href="{{ url('employees_stg_index') }}"> Staging Employee </a></li>
                             {{-- <li><a class="{{ request()->is('customers_stg_index') ? 'active' : '' }}"
                                     href="{{ url('customers_stg_index') }}"> Staging Customer </a></li> --}}
                             <li><a class="{{ request()->is('vendors_stg_index') ? 'active' : '' }}"
@@ -125,13 +125,14 @@
                     <li class="menu-title">
                         <span>Master Administration</span>
                     </li>
-                    {{-- <li class="submenu">
+                    <li class="submenu">
                         <a href="#"><i class="las la-user-circle"></i> <span> Employees </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a class="" href="#"> All Employees </a></li>
+                            <li><a class="{{ request()->is('employees') ? 'active' : '' }}"
+                                    href="{{ url('employees') }}"> All Employees </a></li>
                         </ul>
-                    </li> --}}
+                    </li>
                     {{-- <li class="submenu">
                     <a href="#"><i class="las la-users"></i> <span> Customer </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">

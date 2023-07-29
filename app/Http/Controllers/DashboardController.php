@@ -29,7 +29,7 @@ class DashboardController extends Controller
         $sumAsset = FixedAssets::count('id');
         $sumDocument = Document::count('id');
         $sumUser = User::count('id');
-        $sumEmployee = Employee::count('emp_id');
+        $sumEmployee = Employee::count('id');
         $sumVessel = Vessel::count('id');
         $sumSite = Site::count('id');
         $sumRoom = Room::count('id');

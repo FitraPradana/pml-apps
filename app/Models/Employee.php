@@ -27,13 +27,12 @@ class Employee extends Model
     protected $table = "employees";
     protected $primaryKey = "id";
     protected $fillable = [
-        'personel_number',
-        'name_search',
-        'employee_name',
-        'birthday',
-        'phone',
-        'address',
-        'gender',
+        'emp_accountnum',
+        'emp_name',
+        'emp_email',
+        'emp_phone',
+        'emp_address',
+        'emp_remarks',
         'user_id',
         'department_id',
     ];

@@ -255,4 +255,13 @@ class FixedAssetController extends Controller
         $qrcode = QrCode::size(400)->generate($data->qr_code);
         return view('barcode.generate', compact('qrcode', 'code', 'data'));
     }
+
+
+
+
+
+    public function form_asset_view()
+    {
+        return view('fixed_assets.form_asset_pml.view');
+    }
 }

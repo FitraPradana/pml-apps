@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AssetCategory;
 use App\Models\Document;
+use App\Models\Employee;
 use App\Models\FixedAssets;
 use App\Models\Location;
 use App\Models\Room;
@@ -274,25 +275,97 @@ class APIErpController extends Controller
         $query = $collectdata->all();
         // dd($collectdata);
 
-        // $doc = Document::all();
-        // if($doc->isEmpty())
-        // {
-        //     $filtered = $collectdata;
-        // }else{
-        //     foreach ($doc as $key => $value) {
-        //         $v[] = $value->voucher;
-        //     }
-        //     $filtered = $collectdata->whereNotIn('Voucher', $v);
-        // }
+        $emp = Employee::all();
+        if ($emp->isEmpty()) {
+            $filtered = $collectdata;
+        } else {
+            foreach ($emp as $key => $value) {
+                $v[] = $value->emp_accountnum;
+            }
+            $filtered = $collectdata->whereNotIn('PersonnelNumber', $v);
+        }
 
 
-        return DataTables::of($query)
+        return DataTables::of($filtered)
             ->make(true);
     }
 
     public function employees_stg_save()
     {
         //
+        $api_emp = 'https://prod-14.southeastasia.logic.azure.com:443/workflows/fe8a1201c18d439f9d6730697b58ddf7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xGvURR69AcshnEafSrk7PvciEzi30HdoabCvrajTd7U';
+        $client = new Client();
+        $response = $client->request('GET', $api_emp);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        $collectdata = collect($data);
+        $query = $collectdata->all();
+
+        // dd($collectdata);
+        // return $collectdata;
+
+        $emp = Employee::all();
+        if ($emp->isEmpty()) {
+            $filtered = $collectdata;
+        } else {
+            foreach ($emp as $key => $value) {
+                $v[] = $value->emp_accountnum;
+            }
+            $filtered = $collectdata->whereNotIn('PersonnelNumber', $v);
+        }
+
+        DB::beginTransaction();
+        try {
+
+            // Create Employee
+            foreach ($filtered as $key => $value) {
+                $insert_emp = Employee::create([
+                    'emp_accountnum'        => $value['PersonnelNumber'],
+                    'emp_name'              => $value['Name'],
+                    'emp_email'             => $value['PrimaryContactEmail'],
+                    'emp_phone'             => $value['PrimaryContactPhone'],
+                    'emp_address'           => '',
+                    'emp_remarks'           => '',
+                    // 'department_id'         => '',
+                    // 'user_id'             => '1',
+                ]);
+            }
+            // return $insert_emp;
+            // END Create Employee
+
+            // CEK DATA EMPLOYEE
+            $emp_cek = Employee::all();
+            if ($emp->isEmpty()) {
+                $filtered_emp = $emp_cek;
+            } else {
+                foreach ($emp as $key => $value) {
+                    $v[] = $value->emp_accountnum;
+                }
+                $filtered_emp = $emp_cek->whereNotIn('emp_accountnum', $v);
+            }
+            // return $filtered_emp;
+            // CREATE USER ACCOUNT EMPLOYEE
+            foreach ($filtered_emp as $key => $val) {
+                User::create([
+                    'personnel_number'  => $val['emp_accountnum'],
+                    'username'          => $val['emp_accountnum'],
+                    'full_name'         => $val['emp_name'],
+                    'email'             => $val['emp_email'] . '@pml.co.id',
+                    'password'          => Hash::make('PML@2023'),
+                    'type'              => 'employee',
+                    'roles'             => 'user',
+                    'remarks_user'      => '',
+                ]);
+            }
+            // END CREATE USER ACCOUNT EMPLOYEE
+
+            DB::commit();
+            return redirect('employees')->with(['success' => 'Data Employee Berhasil Di Generate from ERP !']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            throw $th;
+            // return redirect('employees_stg_index')->with(['error' => 'Data Employee Gagal Di Generate from ERP !']);
+        }
     }
 
 
@@ -491,29 +564,29 @@ class APIErpController extends Controller
                 $v[] = $value->site_code;
             }
             $filtered = $collectdata->whereNotIn('SiteId', $v);
-            $vessIdNotNull = $filtered->where('VesselId', '!=', null);
+            $vessIdNotNull = $collectdata->where('VesselId', '!=', null);
             $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
             $vessIdnull = $collectdata->where('SiteId', 'LIKE', '76872%')->values()->all();
             $union = $vessIdNotNull->union($cabang);
         }
 
         // return $filtered;
-        // return $vessIdnull;
+        // return !$vessIdNotNull;
+        foreach ($vessIdNotNull as $key => $v) {
+            $select_param[] = $v;
+            $siteId_param[] = $v['SiteId'];
+            $vessId_param[] = $v['VesselId'];
+        }
+        // return $vessId_param;
 
         // Begin Transaction
         DB::beginTransaction();
 
         try {
-            foreach ($vessIdNotNull as $key => $v) {
-                $select_param[] = $v;
-                $siteId_param[] = $v['SiteId'];
-                $vessId_param[] = $v['VesselId'];
-            }
-            // return $vessId_param;
-
             // if ($vessId_param !== null) {
             foreach ($vessIdNotNull as $key => $value) {
                 $vessel_parm = Vessel::where('vess_id', $value['VesselId'])->first();
+                // return $vessel_parm;
                 Site::create([
                     'site_code'             => $value['SiteId'],
                     'site_name'             => $value['Name'],
@@ -534,18 +607,13 @@ class APIErpController extends Controller
             }
             // }
 
-
-
             // Commit Transaction
             DB::commit();
         } catch (\Throwable $th) {
             // Rollback Transaction
             DB::rollback();
+            throw $th;
         }
-
-
-
-
 
         return redirect('sites')->with(['success' => 'Data Site Berhasil Di Generate from ERP !']);
     }
@@ -651,12 +719,6 @@ class APIErpController extends Controller
             // Rollback Transaction
             DB::rollback();
         }
-
-
-
-
-
-
 
         return redirect('vessels')->with(['success' => 'Data Vessel Berhasil Di Generate from ERP !']);
     }
