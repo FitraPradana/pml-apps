@@ -16,7 +16,7 @@ class LoginController extends Controller
             if ($user->roles == 'admin') {
                 return redirect()->intended('home_admin');
             } elseif ($user->roles == 'user') {
-                return redirect()->intended('home_staff');
+                return redirect()->intended('home_user');
             } elseif ($user->roles == 'vessel') {
                 return redirect()->intended('home_crew');
             }
@@ -51,7 +51,7 @@ class LoginController extends Controller
             if ($user->roles == 'admin') {
                 return redirect()->intended('home_admin');
             } elseif ($user->roles == 'user') {
-                return redirect()->intended('home_staff');
+                return redirect()->intended('home_user');
             } elseif ($user->roles == 'vessel') {
                 return redirect()->intended('home_crew');
             }

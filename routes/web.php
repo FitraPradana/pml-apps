@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::group(['middleware' => ['cekUserLogin:user']], function () {
         // DASHBOARD
-        Route::get('home_staff', [DashboardController::class, 'home_staff']);
+        Route::get('home_user', [DashboardController::class, 'home_user']);
     });
     Route::group(['middleware' => ['cekUserLogin:vessel']], function () {
         // DASHBOARD

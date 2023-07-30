@@ -29,7 +29,7 @@
                             <img alt="" src="{{ asset('/') }}assets/img/people.png">
                         </div>
                         <div class="welcome-det">
-                            <h3>Welcome, {{ Auth::user()->username }}</h3>
+                            <h3>Welcome, {{ Auth::user()->full_name }}</h3>
                             <p>{{ date('d M Y H:i:s') }}</p>
                         </div>
                     </div>

@@ -19,8 +19,8 @@
                             <li><a class="{{ request()->is('home_manager') ? 'active' : '' }}"
                                     href="{{ url('home_manager') }}">Manager Dashboard</a></li>
                         @elseif (Auth::user()->roles == 'user')
-                            <li><a class="{{ request()->is('home_staff') ? 'active' : '' }}"
-                                    href="{{ url('home_staff') }}">Staff Dashboard</a></li>
+                            <li><a class="{{ request()->is('home_user') ? 'active' : '' }}"
+                                    href="{{ url('home_user') }}">User Dashboard</a></li>
                         @elseif (Auth::user()->roles == 'vessel')
                             <li><a class="{{ request()->is('home_crew') ? 'active' : '' }}"
                                     href="{{ url('home_crew') }}">Crew Dashboard</a></li>
@@ -192,26 +192,36 @@
                         <a href="{{ url('users') }}"><i class="la la-user-plus"></i> <span>Users</span></a>
                     </li>
                 @endif
-                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'crew')
-                    <li class="menu-title">
-                        <span>Fixed Assets</span>
-                    </li>
-                    <li class="submenu">
-                        <a href="#"><i class="la la-object-ungroup"></i> <span> Fixed Assets </span> <span
-                                class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+
+                {{-- FIXED ASSETS --}}
+
+                <li class="menu-title">
+                    <span>Fixed Assets</span>
+                </li>
+                <li class="submenu">
+                    <a href="#"><i class="la la-object-ungroup"></i> <span> Fixed Assets </span> <span
+                            class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        @if (Auth::user()->roles == 'admin')
                             <li><a class="{{ request()->is('asset_category') ? 'active' : '' }}"
                                     href="{{ url('asset_category') }}"> Asset Category</a></li>
+                        @endif
+                        @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'vessel')
                             <li><a class="{{ request()->is('fixed_assets') ? 'active' : '' }}"
                                     href="{{ url('fixed_assets') }}"> Assets </a></li>
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
                                     href="{{ url('stock_takes') }}"> Stock Take </a></li>
+                        @endif
+                        @if (Auth::user()->roles == 'admin')
                             <li><a class="{{ request()->is('scan_vessels') ? 'active' : '' }}"
                                     href="{{ url('scan_vessels') }}">Report
                                     Vessel</a>
-                        </ul>
-                    </li>
-                @endif
+                        @endif
+                    </ul>
+                </li>
+                {{-- END FIXED ASSETS --}}
+
+                {{-- FILLING DOCUMENT --}}
                 @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user')
                     <li class="menu-title">
                         <span>Filling Document</span>
@@ -232,63 +242,51 @@
                         </ul>
                     </li>
                 @endif
-                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user')
-                    {{-- <li class="submenu">
-                        <a href="#"><i class="las la-comment"></i> <span> Stock Take </span> <span
-                                class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
-                                    href="{{ url('stock_takes') }}"> Stock Take </a></li>
-
-                        </ul>
-                    </li> --}}
+                {{-- END FILLING DOCUMENT --}}
+                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'vessel')
                     <li class="menu-title">
                         <span>Pages</span>
                     </li>
-                    {{-- <li>
-                        <a href="{{ url('login') }}"><i class="la la-user"></i> <span>Form Login</span></a>
-                    </li> --}}
                     <li class="submenu">
-                        <a href="#"><i class="la la-user"></i> <span> Profile </span> <span
+                        <a href="#"><i class="la la-key"></i> <span> Authentication </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a href="#"> Employee Profile </a></li>
-                            <li><a href="#"> Client Profile </a></li>
+                            <li><a href="#"> Ganti Password </a></li>
                         </ul>
                     </li>
-                    @if (Auth::user()->roles == 'admin')
-                        <li class="submenu">
-                            <a href="#"><i class="las la-tools"></i> <span> Configuration</span> <span
-                                    class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li><a href="{{ url('asset_category') }}"> Asset Category</a></li>
-                                <li><a href="{{ url('rooms') }}">
-                                        Room</a></li>
-                                <li><a href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
-                                <li><a href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
-                                <li><a href="{{ url('locations') }}">
-                                        Location </a></li>
-                                <li><a href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
+                @endif
+                @if (Auth::user()->roles == 'admin')
+                    <li class="submenu">
+                        <a href="#"><i class="las la-tools"></i> <span> Configuration</span> <span
+                                class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url('asset_category') }}"> Asset Category</a></li>
+                            <li><a href="{{ url('rooms') }}">
+                                    Room</a></li>
+                            <li><a href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
+                            <li><a href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
+                            <li><a href="{{ url('locations') }}">
+                                    Location </a></li>
+                            <li><a href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
 
-                            </ul>
-                        </li>
-                    @endif
-                    @if (Auth::user()->roles == 'admin')
-                        <li>
-                            <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>
-                        </li>
-                        <li class="submenu">
-                            <a href="#"><i class="la la-key"></i> <span> Authentication </span> <span
-                                    class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li><a href="#"> Login </a></li>
-                                <li><a href="#"> Register </a></li>
-                                <li><a href="#"> Forgot Password </a></li>
-                                <li><a href="#"> OTP </a></li>
-                                <li><a href="#"> Lock Screen </a></li>
-                            </ul>
-                        </li>
-                    @endif
+                        </ul>
+                    </li>
+                @endif
+                @if (Auth::user()->roles == 'admin')
+                    <li>
+                        <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><i class="la la-key"></i> <span> Authentication </span> <span
+                                class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="#"> Login </a></li>
+                            <li><a href="#"> Register </a></li>
+                            <li><a href="#"> Forgot Password </a></li>
+                            <li><a href="#"> OTP </a></li>
+                            <li><a href="#"> Lock Screen </a></li>
+                        </ul>
+                    </li>
                 @endif
 
             </ul>

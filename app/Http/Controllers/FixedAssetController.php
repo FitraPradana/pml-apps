@@ -37,12 +37,34 @@ class FixedAssetController extends Controller
     public function json()
     {
         // $asset = FixedAssets::with('site')->orderBy('updated_at', 'desc')->get();
-        $asset = DB::table('fixed_assets')
-            ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
-            ->leftJoin('asset_categories', 'fixed_assets.asset_category_id', '=', 'asset_categories.id')
-            ->select('fixed_assets.*', 'locations.location_name', 'asset_categories.asset_category_name')
-            ->orderByDesc('fixed_assets.updated_at')
-            ->get();
+        // return Auth::user()->roles;
+        if (Auth::user()->roles == 'admin') {
+            $asset = DB::table('fixed_assets')
+                ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
+                ->leftJoin('asset_categories', 'fixed_assets.asset_category_id', '=', 'asset_categories.id')
+                ->select('fixed_assets.*', 'locations.location_name', 'asset_categories.asset_category_name')
+                ->orderByDesc('fixed_assets.updated_at')
+                ->get();
+        } elseif (Auth::user()->roles == 'user') {
+            $asset = DB::table('fixed_assets')
+                ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
+                ->leftJoin('employees', 'locations.employee_id', '=', 'employees.id')
+                ->leftJoin('asset_categories', 'fixed_assets.asset_category_id', '=', 'asset_categories.id')
+                ->select('fixed_assets.*', 'locations.location_name', 'asset_categories.asset_category_name')
+                ->where('emp_accountnum', Auth::user()->personnel_number)
+                ->orderByDesc('fixed_assets.updated_at')
+                ->get();
+        } elseif (Auth::user()->roles == 'vessel') {
+            $asset = DB::table('fixed_assets')
+                ->leftJoin('locations', 'fixed_assets.location_id', '=', 'locations.id')
+                ->leftJoin('sites', 'locations.site_id', '=', 'sites.id')
+                ->leftJoin('asset_categories', 'fixed_assets.asset_category_id', '=', 'asset_categories.id')
+                ->select('fixed_assets.*', 'locations.location_name', 'asset_categories.asset_category_name')
+                ->where('site_code', Auth::user()->personnel_number)
+                ->orderByDesc('fixed_assets.updated_at')
+                ->get();
+        }
+
 
         // return DataTables::of(FixedAssets::all())
         return DataTables::of($asset)

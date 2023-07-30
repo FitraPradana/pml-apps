@@ -41,7 +41,7 @@ class PengajuanPinjamanController extends Controller
                 ->where('approval_status', '!=', 'approved')
                 ->orderByDesc('pengajuan_pinjaman.updated_at')
                 ->get();
-        } elseif (Auth::user()->roles == 'staff') {
+        } elseif (Auth::user()->roles == 'user') {
             $query = DB::table('pengajuan_pinjaman')
                 ->join('users', 'pengajuan_pinjaman.user_id', '=', 'users.id')
                 ->select('pengajuan_pinjaman.*', 'users.username')

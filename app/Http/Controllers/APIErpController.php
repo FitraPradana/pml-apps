@@ -350,7 +350,7 @@ class APIErpController extends Controller
                     'personnel_number'  => $val['emp_accountnum'],
                     'username'          => $val['emp_accountnum'],
                     'full_name'         => $val['emp_name'],
-                    'email'             => $val['emp_email'] . '@pml.co.id',
+                    'email'             => $val['emp_email'],
                     'password'          => Hash::make('PML@2023'),
                     'type'              => 'employee',
                     'roles'             => 'user',

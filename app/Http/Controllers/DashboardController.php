@@ -41,9 +41,9 @@ class DashboardController extends Controller
         );
     }
 
-    public function home_staff()
+    public function home_user()
     {
-        return view('dashboard.home_staff');
+        return view('dashboard.home_user');
     }
 
     public function home_crew()

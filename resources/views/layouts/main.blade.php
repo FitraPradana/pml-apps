@@ -124,10 +124,10 @@
                         <span class="user-img"><img src="{{ asset('/') }}assets/img/people.png" alt="">
                             <span class="status online"></span></span>
 
-                        @if (empty(Auth::user()->username))
+                        @if (empty(Auth::user()->full_name))
                             <span>Guest</span>
                         @else
-                            <span>{{ Auth::user()->username }}</span>
+                            <span>{{ Auth::user()->full_name }}</span>
                         @endif
 
                     </a>
