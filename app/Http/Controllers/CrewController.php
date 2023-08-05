@@ -33,18 +33,16 @@ class CrewController extends Controller
     // }
 
 
-    public function crew_report_json(Request $request)
-    {
-
-        //
-        $on_tug = $request->on_tug;
-        $asset = DB::table('fixed_assets')
-            ->join('locations', 'fixed_assets.location_id', '=', 'locations.id')
-            ->join('sites', 'locations.site_id', '=', 'sites.id')
-            ->select('fixed_assets.*', 'locations.location_name', 'sites.site_code')
-            ->where('site_code', $on_tug)
-            // ->where('site_code', '=', '1903005')
-            ->orderByDesc('fixed_assets.updated_at')
-            ->get();
-    }
+    // public function crew_report_json(Request $request)
+    // {
+    //     $on_tug = $request->on_tug;
+    //     $asset = DB::table('fixed_assets')
+    //         ->join('locations', 'fixed_assets.location_id', '=', 'locations.id')
+    //         ->join('sites', 'locations.site_id', '=', 'sites.id')
+    //         ->select('fixed_assets.*', 'locations.location_name', 'sites.site_code')
+    //         ->where('site_code', $on_tug)
+    //         // ->where('site_code', '=', '1903005')
+    //         ->orderByDesc('fixed_assets.updated_at')
+    //         ->get();
+    // }
 }

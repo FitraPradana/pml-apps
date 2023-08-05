@@ -20,6 +20,7 @@ class SetTypeTugBargeController extends Controller
     {
         $tugbarge = DB::connection('mysql-vms-prod')->table("settype_tugbarge")
             ->where('is_active', '=', 1)
+            ->orderBy('first_date', 'desc')
             ->get();
 
         return DataTables::of($tugbarge)

@@ -31,9 +31,7 @@ return new class extends Migration
             $table->string('img_asset')->nullable();
             $table->string('last_modified_name')->nullable();
             $table->string('last_img_condition_stock_take')->nullable();
-            // $table->string('status_asset')->nullable();
             $table->enum('status_asset', ['GENERAL', 'GOOD', 'NEED_REPLACEMENT', 'NEED_REPAIR', 'DONT_EXIST'])->default('GENERAL');
-            // $table->string('is_used')->nullable();
             $table->enum('is_used', ['GENERAL', 'DIPAKAI', 'TIDAK_DIPAKAI'])->default('GENERAL');
 
 

@@ -46,6 +46,8 @@ class FixedAssets extends Model
         'last_img_condition_stock_take',
         'site_id',
         'location_id',
+        'asset_category_id',
+        'is_used',
     ];
 
     public function site()

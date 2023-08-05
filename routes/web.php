@@ -285,7 +285,10 @@ Route::get('/ip', function () {
 Route::get('asset_category', [AssetCategoryController::class, 'index'])->middleware('auth');
 Route::get('/asset_category/json', [AssetCategoryController::class, 'json'])->middleware('auth');
 Route::post('asset_category/store', [AssetCategoryController::class, 'store'])->name('asset_category.store')->middleware('auth');
-
+Route::get('map_ast_cat_view', [AssetCategoryController::class, 'map_ast_cat_view'])->name('map_ast_cat_view')->middleware('auth');
+Route::get('map_ast_cat_view_json', [AssetCategoryController::class, 'map_ast_cat_view_json'])->name('map_ast_cat_view_json')->middleware('auth');
+Route::post('map_ast_cat_save', [AssetCategoryController::class, 'map_ast_cat_save'])->name('map_ast_cat_save')->middleware('auth');
+Route::delete('map_ast_cat_delete/{id}', [AssetCategoryController::class, 'map_ast_cat_delete'])->name('map_ast_cat_delete')->middleware('auth');
 
 
 Route::get('crew_report_data', [CrewController::class, 'index'])->name('crew_report_data')->middleware('auth');
@@ -294,4 +297,5 @@ Route::get('crew_report_json', [CrewController::class, 'json_report'])->name('cr
 
 // Form Asset Kategori Per Kapal
 Route::get('form_asset_view', [FixedAssetController::class, 'form_asset_view'])->name('form_asset_view')->middleware('auth');
-Route::get('form_asset_view_json', [FixedAssetController::class, 'form_asset_view_json'])->name('form_asset_view_json')->middleware('auth');
+// Route::get('form_asset_view_json', [FixedAssetController::class, 'form_asset_view_json'])->name('form_asset_view_json')->middleware('auth');
+// Route::get('get_mapping_assets_json', [FixedAssetController::class, 'get_mapping_assets_json'])->name('get_mapping_assets_json')->middleware('auth');

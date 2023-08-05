@@ -205,14 +205,20 @@
                         @if (Auth::user()->roles == 'admin')
                             <li><a class="{{ request()->is('asset_category') ? 'active' : '' }}"
                                     href="{{ url('asset_category') }}"> Asset Category</a></li>
+                            <li><a class="{{ request()->is('map_ast_cat_view') ? 'active' : '' }}"
+                                    href="{{ url('map_ast_cat_view') }}"> Mapping Asset Category</a></li>
                         @endif
                         @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'vessel')
                             <li><a class="{{ request()->is('fixed_assets') ? 'active' : '' }}"
-                                    href="{{ url('fixed_assets') }}"> Assets </a></li>
+                                    href="{{ url('fixed_assets') }}"> Fixed Assets </a></li>
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
-                                    href="{{ url('stock_takes') }}"> Stock Take </a></li>
+                                    href="{{ url('stock_takes') }}"> BA Assets / Stock Take </a></li>
+                            <li><a class="{{ request()->is('log_trans_fixed_assets') ? 'active' : '' }}"
+                                    href="{{ url('log_trans_fixed_assets') }}"> Log Trans Fixed Assets </a></li>
                         @endif
                         @if (Auth::user()->roles == 'admin')
+                            <li><a class="{{ request()->is('form_asset_view') ? 'active' : '' }}"
+                                    href="{{ url('form_asset_view') }}"> Form Vessel</a></li>
                             <li><a class="{{ request()->is('scan_vessels') ? 'active' : '' }}"
                                     href="{{ url('scan_vessels') }}">Report
                                     Vessel</a>

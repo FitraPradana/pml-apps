@@ -13,11 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('asset_categories', function (Blueprint $table) {
+        Schema::create('mapping_asset_categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('asset_category_code')->unique();
-            $table->string('asset_category_name');
-            $table->text('remarks_asset_category')->nullable();
+
+            $table->string('asset_category_id');
+            $table->foreign('asset_category_id')->references('id')->on('asset_categories');
+
+            $table->string('location_id');
+            $table->foreign('location_id')->references('id')->on('locations');
+
+            $table->text('remarks_mapping_asset_category')->nullable();
+
             $table->timestamps();
         });
     }
@@ -29,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asset_categories');
+        Schema::dropIfExists('mapping_asset_categories');
     }
 };

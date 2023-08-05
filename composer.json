@@ -8,6 +8,7 @@
         "php": "^7.3 || 8.1.6 || 8.1.13 || 8.1.16 || 8.1.18",
         "alfa6661/laravel-autonumber": "^1.2",
         "barryvdh/laravel-dompdf": "^2.0",
+        "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",

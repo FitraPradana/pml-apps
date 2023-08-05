@@ -26,6 +26,8 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
+                            <input type="hidden" name="last_img_condition_stock_take"
+                                value="{{ $asset->last_img_condition_stock_take }}">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Fixed Asset Number <span class="text-danger">*</span></label>
@@ -109,14 +111,32 @@
                                         @error('status_asset')
                                     is-invalid
                                 @enderror
-                                        name="status_asset" required>
-                                        <option value="general" @selected(old('general', $asset->status_asset) == 'general')>General</option>
-                                        <option value="good" @selected(old('good', $asset->status_asset) == 'good')>GOOD</option>
-                                        <option value="need_replacement" @selected(old('need_replacement', $asset->status_asset) == 'need_replacement')>Need Replacement
+                                        id="status_asset" name="status_asset" required>
+                                        <option value="GENERAL" {{ $asset->status_asset == 'GENERAL' ? 'selected' : '' }}>
+                                            General
                                         </option>
-                                        <option value="need_repair" @selected(old('need_repair', $asset->status_asset) == 'need_repair')>Need Repair
+                                        <option value="GOOD" {{ $asset->status_asset == 'GOOD' ? 'selected' : '' }}>GOOD
                                         </option>
-                                        <option value="dont_exist" @selected(old('dont_exist', $asset->status_asset) == 'dont_exist')>Dont Exist</option>
+                                        <option value="NEED_REPLACEMENT"
+                                            {{ $asset->status_asset == 'NEED_REPLACEMENT' ? 'selected' : '' }}>Need
+                                            Replacement
+                                        </option>
+                                        <option value="NEED_REPAIR"
+                                            {{ $asset->status_asset == 'NEED_REPAIR' ? 'selected' : '' }}>Need Repair
+                                        </option>
+                                        <option value="DONT_EXIST"
+                                            {{ $asset->status_asset == 'DONT_EXIST' ? 'selected' : '' }}>Dont Exist
+                                        </option>
+
+                                        {{-- v2 --}}
+                                        {{-- <option value="GENERAL" @selected(old('GENERAL', $asset->status_asset) == 'GENERAL')>General</option>
+                                        <option value="GOOD" @selected(old('GOOD', $asset->status_asset) == 'GOOD')>GOOD</option>
+                                        <option value="NEED_REPLACEMENT" @selected(old('NEED_REPLACEMENT', $asset->status_asset) == 'NEED_REPLACEMENT')>Need Replacement
+                                        </option>
+                                        <option value="NEED_REPAIR" @selected(old('NEED_REPAIR', $asset->status_asset) == 'NEED_REPAIR')>Need Repair
+                                        </option>
+                                        <option value="DONT_EXIST" @selected(old('DONT_EXIST', $asset->status_asset) == 'DONT_EXIST')>Dont Exist</option> --}}
+
                                     </select>
                                     @error('status_asset')
                                         <label style="color: red">{{ $message }}</label>
@@ -131,11 +151,23 @@
                                         @error('is_used')
                                     is-invalid
                                 @enderror
-                                        name="is_used" required>
-                                        <option value="GENERAL" @selected(old('GENERAL', $asset->is_used) == 'GENERAL')>GENERAL</option>
+                                        id="is_used" name="is_used" required>
+                                        <option value="GENERAL" {{ $asset->is_used == 'GENERAL' ? 'selected' : '' }}>
+                                            General
+                                        </option>
+                                        <option value="DIPAKAI" {{ $asset->is_used == 'DIPAKAI' ? 'selected' : '' }}>
+                                            DIPAKAI
+                                        </option>
+                                        <option value="TIDAK_DIPAKAI"
+                                            {{ $asset->is_used == 'TIDAK_DIPAKAI' ? 'selected' : '' }}>
+                                            TIDAK DIPAKAI
+                                        </option>
+
+                                        {{-- v2 --}}
+                                        {{-- <option value="GENERAL" @selected(old('GENERAL', $asset->is_used) == 'GENERAL')>GENERAL</option>
                                         <option value="DIPAKAI" @selected(old('DIPAKAI', $asset->is_used) == 'DIPAKAI')>DIPAKAI</option>
                                         <option value="TIDAK_DIPAKAI" @selected(old('TIDAK_DIPAKAI', $asset->is_used) == 'TIDAK_DIPAKAI')>TIDAK DIPAKAI
-                                        </option>
+                                        </option> --}}
                                     </select>
                                     @error('is_used')
                                         <label style="color: red">{{ $message }}</label>

@@ -10,6 +10,8 @@ use App\Models\FixedAssets;
 use App\Models\Site;
 use App\Models\User;
 use App\Models\Location;
+use App\Models\LogTransFixedAssets;
+use App\Models\MappingAssetCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,6 +90,16 @@ class FixedAssetController extends Controller
                     return '<span class="badge bg-inverse-success">DIPAKAI</span>';
                 } elseif ($edit_status->is_used == 'TIDAK_DIPAKAI') {
                     return '<span class="badge bg-inverse-danger">TIDAK DIPAKAI</span>';
+                }
+            })
+            ->editColumn('img_asset', function ($data) {
+                if ($data->img_asset) {
+                    return '
+                    <a href="' . asset('storage/' . $data->img_asset) . '"><button type="button" class="btn btn-info btn-sm">Preview Img</button></a>
+                    ';
+                    // <a href="' . asset('storage/' . $data->last_img_condition_stock_take) . '"> ' . asset('storage/' . $data->last_img_condition_stock_take) . ' </a>
+                } else {
+                    return '';
                 }
             })
             ->editColumn('last_img_condition_stock_take', function ($data) {
@@ -190,35 +202,73 @@ class FixedAssetController extends Controller
      * @param  \App\Models\FixedAssets  $fixedAssets
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FixedAssets $fixedAssets, $id)
+    public function update(Request $request, $id)
     {
-        //validate form
-        $this->validate($request, [
-            // 'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'fixed_assets_number'        => 'required',
-            // 'fixed_assets_description'   => 'required',
-            // 'acquisition_date'              => 'required',
-            // 'net_book_value'                => 'required',
-            'status_asset'                  => 'required',
-            'location_id'                   => 'required',
-            'remarks_fixed_assets'          => 'required',
-        ]);
+        DB::beginTransaction();
+        try {
 
-        $asset = FixedAssets::find($id);
+            $ip_saya = request()->ip();
+            //validate form
+            // $this->validate($request, [
+            //     // 'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //     // 'fixed_assets_number'        => 'required',
+            //     // 'fixed_assets_description'   => 'required',
+            //     // 'acquisition_date'              => 'required',
+            //     // 'net_book_value'                => 'required',
+            //     'status_asset'                  => 'required',
+            //     'location_id'                   => 'required',
+            //     'remarks_fixed_assets'          => 'required',
+            // ]);
 
-        $asset->update([
-            // 'acquisition_date'              => $request->acquisition_date,
-            'net_book_value'                => $request->net_book_value,
-            'status_asset'                  => $request->status_asset,
-            'last_update_stock_take_date'   => Today(),
-            'location_id'                   => $request->location_id,
-            'remarks_fixed_assets'          => $request->remarks_fixed_assets,
-            'last_modified_name'            => Auth::user()->username,
-        ]);
+            // IMG CONDITION
+            if ($request->last_img_condition == '') {
+                $update_img = $request->last_img_condition_stock_take;
+            } else {
+                $update_img = $request->file('last_img_condition')->store('stock_take_transaction');
+            }
+            // END IMG CONDITION
 
-        //redirect to index
-        return redirect('fixed_assets')->with(['success' => 'Data Berhasil Diubah!']);
+            $assets = FixedAssets::find($id);
+            $assets->update([
+                // 'acquisition_date'              => $request->acquisition_date,
+                // 'net_book_value'                => $request->net_book_value,
+                'status_asset'                  => $request->status_asset,
+                'is_used'                       => $request->is_used,
+                'last_update_stock_take_date'   => Today(),
+                'location_id'                   => $request->location_id,
+                'asset_category_id'             => $request->asset_category_id,
+                'remarks_fixed_assets'          => $request->remarks_fixed_assets,
+                'last_modified_name'            => Auth::user()->username,
+                'last_img_condition_stock_take' => $update_img,
+            ]);
+
+            //Save Tbl Log Trans Fixed Assets
+            $LogTransFixedAssets = LogTransFixedAssets::create([
+                'log_transdate'                     => Carbon::now(),
+                'remarks_log'                       => $request->remarks_fixed_assets,
+                'last_img_condition_stock_take'     => $update_img,
+                'last_update_name'                  => Auth::user()->username,
+                'ip_user_update'                    => $ip_saya,
+                'type_update'                       => 'FORM EDIT FIXED ASSETS',
+                'status_asset'                      => $request->status_asset,
+                'is_used'                           => $request->is_used,
+                'fixed_asset_id'                    => $id,
+                'location_id'                       => $request->location_id,
+                'user_id'                           => Auth::user()->id,
+            ]);
+
+
+
+            DB::commit();
+            //redirect to index
+            return redirect('fixed_assets')->with(['success' => 'Data Assets ' . $request->fixed_assets_number . ' Berhasil Diubah!']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -282,8 +332,57 @@ class FixedAssetController extends Controller
 
 
 
-    public function form_asset_view()
+    public function form_asset_view(Request $request)
     {
-        return view('fixed_assets.form_asset_pml.view');
+
+        $location = DB::table('locations')
+            ->join('rooms', 'locations.room_id', 'rooms.id')
+            ->join('sites', 'locations.site_id', 'sites.id')
+            ->where('site_id', '=', 'df5116c6-f18c-4cf2-a2b5-8fbc96618719')
+            ->get();
+        // return $location->id;
+
+        foreach ($location as $key => $value) {
+            $parm_loc[] = $value->id;
+            $parm_room[] = $value->room_id;
+            $parm_site[] = $value->site_id;
+        }
+        // return $parm_loc;
+
+        $mapping_asset = DB::table('mapping_asset_categories')
+            ->join('asset_categories', 'mapping_asset_categories.asset_category_id', 'asset_categories.id')
+            ->join('locations', 'mapping_asset_categories.location_id', 'locations.id')
+            ->join('rooms', 'locations.room_id', 'rooms.id')
+            ->join('sites', 'locations.site_id', 'sites.id')
+            // ->select('mapping_asset_categories.*', 'asset_categories.asset_category_name', 'rooms.room_name')
+            ->select('mapping_asset_categories.asset_category_id', 'mapping_asset_categories.location_id', 'locations.room_id', 'asset_categories.asset_category_name', 'sites.site_name', 'rooms.room_name')
+            ->where('site_id', '=', 'df5116c6-f18c-4cf2-a2b5-8fbc96618719')
+            // ->where('rooms', '=', 'df5116c6-f18c-4cf2-a2b5-8fbc96618719')
+            ->get();
+
+        // return $mapping_asset;
+
+        $assets = DB::table('fixed_assets')->get();
+
+        return view('fixed_assets.form_asset_pml.view', compact('mapping_asset', 'location', 'assets'));
     }
+
+
+    // public function get_mapping_assets_json(Request $request)
+    // {
+    //     //
+    //     abort_unless(\Illuminate\Auth\Access\Gate::allows('city_access'), 401);
+
+    //     if (!$request->fixed_assets_id) {
+    //         $html = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+    //     } else {
+    //         $html = '';
+    //         $cities = City::where('fixed_assets_id', $request->fixed_assets_id)->get();
+    //         foreach ($cities as $city) {
+    //             $html .= '<option value="' . $city->id . '">' . $city->name . '</option>';
+    //         }
+    //     }
+
+    //     return response()->json(['html' => $html]);
+    // }
 }
