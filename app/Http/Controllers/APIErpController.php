@@ -499,14 +499,14 @@ class APIErpController extends Controller
         $response = $client->request('GET', $api_site);
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
-        $collectdata = collect($data);
-        $query = $collectdata->all();
+        $query = collect($data);
+        $collectdata = $query->where('Success', '=', 'Yes');
         // dd($collectdata);
 
         $site = Site::all();
         if ($site->isEmpty()) {
             $filtered = $collectdata;
-            $vessIdNotNull = $collectdata->where('VesselId', '!=', null);
+            $vessIdNotNull = $filtered->where('VesselId', '!=', null);
             $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
             $union = $vessIdNotNull->union($cabang);
             // $vessIdnull = $collectdata->where('SiteId', 'like', '7%');
@@ -550,12 +550,13 @@ class APIErpController extends Controller
         $response = $client->request('GET', $api_site);
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
-        $collectdata = collect($data);
+        $query = collect($data);
+        $collectdata = $query->where('Success', '=', 'Yes');
 
         $site = Site::all();
         if ($site->isEmpty()) {
             $filtered = $collectdata;
-            $vessIdNotNull = $collectdata->where('VesselId', '!=', null);
+            $vessIdNotNull = $filtered->where('VesselId', '!=', null);
             $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
             $vessIdnull = $collectdata->where('SiteId', 'LIKE', "7%");
             $union = $vessIdNotNull->union($cabang);
@@ -564,7 +565,7 @@ class APIErpController extends Controller
                 $v[] = $value->site_code;
             }
             $filtered = $collectdata->whereNotIn('SiteId', $v);
-            $vessIdNotNull = $collectdata->where('VesselId', '!=', null);
+            $vessIdNotNull = $filtered->where('VesselId', '!=', null);
             $cabang = $filtered->whereIn('SiteId', ['BJM', 'JKT', 'GNRL', '76872800', '76872801', '76872858', '76872893']);
             $vessIdnull = $collectdata->where('SiteId', 'LIKE', '76872%')->values()->all();
             $union = $vessIdNotNull->union($cabang);
@@ -586,7 +587,9 @@ class APIErpController extends Controller
             // if ($vessId_param !== null) {
             foreach ($vessIdNotNull as $key => $value) {
                 $vessel_parm = Vessel::where('vess_id', $value['VesselId'])->first();
-                // return $vessel_parm;
+                // if (!$vessel_parm) {
+                //     return $value;
+                // }
                 Site::create([
                     'site_code'             => $value['SiteId'],
                     'site_name'             => $value['Name'],
