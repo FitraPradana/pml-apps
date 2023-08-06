@@ -31,7 +31,7 @@ class LocationImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
         $room = Room::where('room_code', $room_id)->first();
 
         // if (!$site) {
-        //     return $site->site_code;
+        //     return $site_id;
         // }
 
         return new Location([

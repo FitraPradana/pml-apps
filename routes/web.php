@@ -296,6 +296,6 @@ Route::get('crew_report_json', [CrewController::class, 'json_report'])->name('cr
 
 
 // Form Asset Kategori Per Kapal
-Route::get('form_asset_view', [FixedAssetController::class, 'form_asset_view'])->name('form_asset_view')->middleware('auth');
+Route::match(['get', 'post'], 'form_asset_view', [FixedAssetController::class, 'form_asset_view'])->name('form_asset_view')->middleware('auth');
 // Route::get('form_asset_view_json', [FixedAssetController::class, 'form_asset_view_json'])->name('form_asset_view_json')->middleware('auth');
 // Route::get('get_mapping_assets_json', [FixedAssetController::class, 'get_mapping_assets_json'])->name('get_mapping_assets_json')->middleware('auth');

@@ -334,11 +334,19 @@ class FixedAssetController extends Controller
 
     public function form_asset_view(Request $request)
     {
+        if (Auth::user()->roles == 'admin') {
+            $sites = Site::all();
+            $site_code = $request->filter_sites;
+        } elseif (Auth::user()->roles == 'vessel') {
+            $sites = Site::where('site_code', Auth::user()->personnel_number)->get();
+            $site_code = Auth::user()->personnel_number;
+        }
 
         $location = DB::table('locations')
             ->join('rooms', 'locations.room_id', 'rooms.id')
             ->join('sites', 'locations.site_id', 'sites.id')
-            ->where('site_id', '=', 'df5116c6-f18c-4cf2-a2b5-8fbc96618719')
+            ->where('site_code', $site_code)
+            // ->where('site_id', '=', 'f745e990-9e2d-437f-a39e-65f6c1076864')
             ->get();
         // return $location->id;
 
@@ -354,35 +362,13 @@ class FixedAssetController extends Controller
             ->join('locations', 'mapping_asset_categories.location_id', 'locations.id')
             ->join('rooms', 'locations.room_id', 'rooms.id')
             ->join('sites', 'locations.site_id', 'sites.id')
-            // ->select('mapping_asset_categories.*', 'asset_categories.asset_category_name', 'rooms.room_name')
             ->select('mapping_asset_categories.asset_category_id', 'mapping_asset_categories.location_id', 'locations.room_id', 'asset_categories.asset_category_name', 'sites.site_name', 'rooms.room_name')
-            ->where('site_id', '=', 'df5116c6-f18c-4cf2-a2b5-8fbc96618719')
-            // ->where('rooms', '=', 'df5116c6-f18c-4cf2-a2b5-8fbc96618719')
+            ->where('site_code', $site_code)
             ->get();
-
         // return $mapping_asset;
 
         $assets = DB::table('fixed_assets')->get();
 
-        return view('fixed_assets.form_asset_pml.view', compact('mapping_asset', 'location', 'assets'));
+        return view('fixed_assets.form_asset_pml.view', compact('mapping_asset', 'location', 'assets', 'sites'));
     }
-
-
-    // public function get_mapping_assets_json(Request $request)
-    // {
-    //     //
-    //     abort_unless(\Illuminate\Auth\Access\Gate::allows('city_access'), 401);
-
-    //     if (!$request->fixed_assets_id) {
-    //         $html = '<option value="">' . trans('global.pleaseSelect') . '</option>';
-    //     } else {
-    //         $html = '';
-    //         $cities = City::where('fixed_assets_id', $request->fixed_assets_id)->get();
-    //         foreach ($cities as $city) {
-    //             $html .= '<option value="' . $city->id . '">' . $city->name . '</option>';
-    //         }
-    //     }
-
-    //     return response()->json(['html' => $html]);
-    // }
 }
