@@ -35,14 +35,14 @@
                     </div>
 
                     <div class="col-auto float-right ml-auto">
-                        <div class="btn-group">
+                        {{-- <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Import Asset Category</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#import_room">Import</a>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Room</button>
@@ -107,13 +107,13 @@
         </div>
         <!-- /Page Content -->
 
-        <!-- Import Room Modal -->
+        <!-- Import Asset Category Modal -->
         {{-- @include('room.import_room') --}}
-        <!-- /Import Room Modal -->
+        <!-- /Import Asset Category Modal -->
 
-        <!-- Add Location Modal -->
-        {{-- @include('room.add_modal') --}}
-        <!-- /Add Location Modal -->
+        <!-- Add Asset Category Modal -->
+        @include('asset_category.add_modal')
+        <!-- /Add Asset Category Modal -->
 
 
     </div>
@@ -137,7 +137,7 @@
                 }
             });
 
-            $('#datatables').DataTable({
+            table = $('#datatables').DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
@@ -179,7 +179,30 @@
                     },
                 ]
             });
+
+
         });
+
+        function deleteData(url) {
+            if (confirm('Yakin ingin menghapus data terpilih?')) {
+                $.post(url, {
+                        '_token': $('[name=csrf-token]').attr('content'),
+                        '_method': 'delete'
+                    })
+                    .done((response) => {
+                        table.ajax.reload();
+                        Swal.fire(
+                            'Data Berhasil di Hapus!',
+                            'You clicked the button!',
+                            'success'
+                        )
+                    })
+                    .fail((errors) => {
+                        alert('Tidak dapat menghapus data');
+                        return;
+                    });
+            }
+        }
     </script>
 
 @endsection

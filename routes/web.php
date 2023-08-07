@@ -285,6 +285,10 @@ Route::get('/ip', function () {
 Route::get('asset_category', [AssetCategoryController::class, 'index'])->middleware('auth');
 Route::get('/asset_category/json', [AssetCategoryController::class, 'json'])->middleware('auth');
 Route::post('asset_category/store', [AssetCategoryController::class, 'store'])->name('asset_category.store')->middleware('auth');
+Route::delete('asset_category/delete/{id}', [AssetCategoryController::class, 'delete'])->name('asset_category.delete')->middleware('auth');
+
+
+// Mapping Asset Category
 Route::match(['get', 'post'], 'map_ast_cat_view', [AssetCategoryController::class, 'map_ast_cat_view'])->name('map_ast_cat_view')->middleware('auth');
 Route::get('getLocationJson/{id}', [AssetCategoryController::class, 'getLocationJson'])->name('getLocationJson')->middleware('auth');
 Route::get('map_ast_cat_view_json', [AssetCategoryController::class, 'map_ast_cat_view_json'])->name('map_ast_cat_view_json')->middleware('auth');

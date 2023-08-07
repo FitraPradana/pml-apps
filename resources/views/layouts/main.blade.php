@@ -194,6 +194,7 @@
 <script src="{{ asset('/') }}assets/js/pdfmake.min.js"></script>
 <script src="{{ asset('/') }}assets/js/vfs_fonts.js"></script>
 
+
 <!-- Select2 JS -->
 <script src="{{ asset('/') }}assets/js/select2.min.js"></script>
 

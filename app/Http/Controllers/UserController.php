@@ -50,11 +50,11 @@ class UserController extends Controller
             })
             ->addColumn('action', function ($data) {
                 return '
-                <div class="form group" align="center">
-                    <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
-                    <button type="button" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                </div>
                 ';
+                // <div class="form group" align="center">
+                //     <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                //     <button type="button" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                // </div>
             })
             ->rawColumns(['action', 'name'])
             ->make(true);
