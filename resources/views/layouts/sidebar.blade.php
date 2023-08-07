@@ -264,7 +264,7 @@
                     </li>
                 @endif
                 {{-- END FILLING DOCUMENT --}}
-                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'vessel')
+                {{-- @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'vessel')
                     <li class="menu-title">
                         <span>Pages</span>
                     </li>
@@ -275,9 +275,9 @@
                             <li><a href="#"> Ganti Password </a></li>
                         </ul>
                     </li>
-                @endif
+                @endif --}}
 
-                @if (Auth::user()->roles == 'admin')
+                {{-- @if (Auth::user()->roles == 'admin')
                     <li>
                         <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>
                     </li>
@@ -292,7 +292,7 @@
                             <li><a href="#"> Lock Screen </a></li>
                         </ul>
                     </li>
-                @endif
+                @endif --}}
 
             </ul>
         </div>
