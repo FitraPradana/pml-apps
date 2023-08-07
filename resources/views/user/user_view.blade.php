@@ -30,11 +30,11 @@
                             <li class="breadcrumb-item active">Users</li>
                         </ul>
                     </div>
-                    <div class="col-auto float-right ml-auto">
+
+                    {{-- <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#add_user"><i
                                 class="fa fa-plus"></i> Add User</a>
                     </div>
-
                     <div class="col-auto float-right ml-auto">
                         <div class="btn-group">
                             <button type="button" class="btn btn-danger btn-rounded dropdown-toggle" data-toggle="dropdown"
@@ -50,10 +50,10 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export User</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('user.export') }}">Export</a>
-                                {{-- <a class="dropdown-item" href="#">Template Export User</a> --}}
+                                <a class="dropdown-item" href="#">Template Export User</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

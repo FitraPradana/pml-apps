@@ -46,12 +46,27 @@
                         </ul>
                     </li>
                 @endif
-                <li class="{{ request()->is('scan') ? 'active' : '' }}">
+                @if (Auth::user()->roles == 'admin')
+                    <li class="submenu">
+                        <a href="#"><i class="las la-tools"></i> <span> Configuration</span> <span
+                                class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url('asset_category') }}"> Asset Category</a></li>
+                            <li><a href="{{ url('rooms') }}">
+                                    Room</a></li>
+                            <li><a href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
+                            <li><a href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
+                            <li><a href="{{ url('locations') }}">
+                                    Location </a></li>
+                            <li><a href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
+
+                        </ul>
+                    </li>
+                @endif
+                {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}">
                     <a href="{{ url('scan_form') }}"><i class="la la-qrcode"></i> <span>Scan
                             Barcode</span></a>
-                    {{-- <a href="{{ url('print_stock_take') }}"><i class="las la-print"></i> <span>Print Asset</span></a> --}}
-                    {{-- <a class="{{ request()->is('cek_api') ? 'active' : '' }}" href="{{ url('cek_api') }}"><i class="las la-link"></i> <span>Cek API</span> </a> --}}
-                </li>
+                </li> --}}
                 @if (Auth::user()->roles == 'vessel')
                     {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}"> --}}
                     {{-- <a href="{{ url('crew_report_data') }}"><i class="la la-book"></i> <span>Report Asset
@@ -214,7 +229,7 @@
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
                                     href="{{ url('stock_takes') }}"> BA Assets / Stock Take </a></li>
                             <li><a class="{{ request()->is('log_trans_fixed_assets') ? 'active' : '' }}"
-                                    href="{{ url('log_trans_fixed_assets') }}"> Log Trans Fixed Assets </a></li>
+                                    href="{{ url('log_trans_asset_view') }}"> Log Trans Fixed Assets </a></li>
                             <li><a class="{{ request()->is('form_asset_view') ? 'active' : '' }}"
                                     href="{{ url('form_asset_view') }}"> Form Vessel</a></li>
                         @endif
@@ -261,23 +276,7 @@
                         </ul>
                     </li>
                 @endif
-                @if (Auth::user()->roles == 'admin')
-                    <li class="submenu">
-                        <a href="#"><i class="las la-tools"></i> <span> Configuration</span> <span
-                                class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="{{ url('asset_category') }}"> Asset Category</a></li>
-                            <li><a href="{{ url('rooms') }}">
-                                    Room</a></li>
-                            <li><a href="{{ url('vessels_stg_index') }}"> Staging Vessel </a></li>
-                            <li><a href="{{ url('sites_stg_index') }}"> Staging Site </a></li>
-                            <li><a href="{{ url('locations') }}">
-                                    Location </a></li>
-                            <li><a href="{{ url('fixed_assets_stg_index') }}"> Staging Assets </a></li>
 
-                        </ul>
-                    </li>
-                @endif
                 @if (Auth::user()->roles == 'admin')
                     <li>
                         <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>

@@ -30,7 +30,7 @@
                             <li class="breadcrumb-item active">Vessel</li>
                         </ul>
                     </div>
-                    <div class="btn-group">
+                    {{-- <div class="btn-group">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_vessel"><i
                                 class="fa fa-plus"></i> Add Vessel</a>
                     </div>
@@ -44,15 +44,15 @@
                                 <a class="dropdown-item" href="#">Template Import Vessel</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="btn-group">
+                    </div> --}}
+                    {{-- <div class="btn-group">
                         <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Export Vessel</button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('vessel.export') }}">Export</a>
                             <a class="dropdown-item" href="#">Template Export Vessel</a>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>
@@ -190,7 +190,16 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     },
-                ]
+                ],
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    'pageLength', 'copy', 'csv', 'excel', 'print'
+                ],
+
             });
         });
     </script>

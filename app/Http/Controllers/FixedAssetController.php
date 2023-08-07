@@ -371,4 +371,86 @@ class FixedAssetController extends Controller
 
         return view('fixed_assets.form_asset_pml.view', compact('mapping_asset', 'location', 'assets', 'sites'));
     }
+
+    public function log_trans_asset_view()
+    {
+        return view('fixed_assets.log_trans_asset.view');
+    }
+
+    public function log_trans_asset_json()
+    {
+        $log_trans_asset = DB::table('log_trans_fixed_assets')
+            ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
+            ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
+            ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+            ->get();
+
+        // return $log_trans_asset;
+
+        return DataTables::of($log_trans_asset)
+            ->addColumn('action', function ($data) {
+                if (Auth::user()->roles == 'admin') {
+                    return '
+                    ';
+                    // <div class="form group" align="center">
+                    // <a href="' . route('print.stock_take', $data->id) . '" target="_blank" class="edit btn btn-xs btn-dark btn-flat btn-sm editAsset"><i class="fa fa-print"></i></a>
+                    // </div>
+                }
+                // <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteDoc"><i class="fa fa-trash"></i></a>
+                // <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">Barcode</a>
+            })
+            ->editColumn('status_asset', function ($edit_status) {
+                if ($edit_status->status_asset == 'GENERAL') {
+                    return '<span class="badge bg-inverse-secondary"> GENERAL</span>';
+                } elseif ($edit_status->status_asset == 'GOOD') {
+                    return '<span class="badge bg-inverse-success">GOOD</span>';
+                } elseif ($edit_status->status_asset == 'NEED_REPLACEMENT') {
+                    return '<span class="badge bg-inverse-warning"> NEED REPLACEMENT</span>';
+                } elseif ($edit_status->status_asset == 'NEED_REPAIR') {
+                    return '<span class="badge bg-inverse-warning"> NEED REPAIR</span>';
+                } elseif ($edit_status->status_asset == 'DONT_EXIST') {
+                    return '<span class="badge bg-inverse-danger">  DONT EXIST</span>';
+                }
+            })
+            ->editColumn('is_used', function ($edit_status) {
+                if ($edit_status->is_used == 'GENERAL') {
+                    return '<span class="badge bg-inverse-secondary">GENERAL</span>';
+                } elseif ($edit_status->is_used == 'DIPAKAI') {
+                    return '<span class="badge bg-inverse-success">DIPAKAI</span>';
+                } elseif ($edit_status->is_used == 'TIDAK_DIPAKAI') {
+                    return '<span class="badge bg-inverse-danger">TIDAK DIPAKAI</span>';
+                }
+            })
+            ->editColumn('last_img_condition_stock_take', function ($data) {
+                if ($data->last_img_condition_stock_take) {
+                    return '
+                    <a href="' . asset('storage/' . $data->last_img_condition_stock_take) . '"><button type="button" class="btn btn-info btn-sm">Preview Img</button></a>
+
+                    ';
+                    // <a href="' . asset('storage/' . $data->last_img_condition_stock_take) . '"> ' . asset('storage/' . $data->last_img_condition_stock_take) . ' </a>
+                } else {
+                    return '';
+                }
+            })
+            ->addColumn('fixed_asset_id', function ($data) {
+                return $data->fixed_assets_number;
+            })
+            ->addColumn('fixed_asset_name', function ($data) {
+                return $data->information3;
+            })
+            ->addColumn('location_id', function ($data) {
+                return $data->location_name;
+            })
+            ->addColumn('created_at', function ($data) {
+                return Carbon::parse($data->created_at)->format('d M Y H:i:s');
+            })
+            ->addColumn('updated_at', function ($data) {
+                return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
+            })
+            ->addColumn('log_transdate', function ($data) {
+                return Carbon::parse($data->log_transdate)->format('d M Y');
+            })
+            ->rawColumns(['action', 'status_asset', 'is_used', 'last_img_condition_stock_take'])
+            ->make(true);
+    }
 }

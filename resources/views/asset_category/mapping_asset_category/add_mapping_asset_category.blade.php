@@ -15,11 +15,22 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Location</label>
-                                <select class="select" id="location_id" name="location_id" required>
-                                    @foreach ($location as $value)
-                                        <option value="{{ $value->id }}">{{ $value->location_name }}</option>
+                                <label>Site</label>
+                                <select class="select" id="site_code" name="site_code" required>
+                                    @foreach ($sites as $value)
+                                        <option value="{{ $value->id }}"> {{ $value->site_code }} -
+                                            {{ $value->site_name }} </option>
                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Room</label>
+                                <select class="select" id="location_id" name="location_id" required>
+                                    {{-- <option value="">Pilih Room</option> --}}
                                 </select>
                             </div>
                         </div>
@@ -36,9 +47,7 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

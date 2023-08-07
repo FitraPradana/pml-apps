@@ -26,6 +26,8 @@
 
     <!-- Datatable CSS -->
     <link rel="stylesheet" href="{{ asset('/') }}assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('/') }}assets/css/buttons.dataTables.min.css">
+
 
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="{{ asset('/') }}assets/css/select2.min.css">
@@ -42,6 +44,7 @@
     {{-- Croppie --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('/') }}assets/css/style.css">
@@ -184,6 +187,12 @@
 <!-- Datatable JS -->
 <script src="{{ asset('/') }}assets/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('/') }}assets/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}assets/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('/') }}assets/js/buttons.html5.min.js"></script>
+<script src="{{ asset('/') }}assets/js/buttons.print.min.js"></script>
+<script src="{{ asset('/') }}assets/js/jszip.min.js"></script>
+<script src="{{ asset('/') }}assets/js/pdfmake.min.js"></script>
+<script src="{{ asset('/') }}assets/js/vfs_fonts.js"></script>
 
 <!-- Select2 JS -->
 <script src="{{ asset('/') }}assets/js/select2.min.js"></script>

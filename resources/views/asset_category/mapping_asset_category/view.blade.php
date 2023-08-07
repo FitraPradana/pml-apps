@@ -139,6 +139,9 @@
             $('#asset_category_id').select2({
                 width: '100%'
             });
+            $('#site_code').select2({
+                width: '100%'
+            });
 
             // GLOBAL SETUP
             $.ajaxSetup({
@@ -188,6 +191,34 @@
                         name: 'updated_at'
                     },
                 ]
+            });
+
+
+            // Change Sites
+            $('#site_code').change(function() {
+                var id = $(this).val();
+
+                $('#location_id').find('option').not(':first').remove();
+
+                $.ajax({
+                    url: 'getLocationJson/' + id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response) {
+                        var len = 0;
+                        if (response.data != null) {
+                            len = response.data.length;
+                        }
+                        if (len > 0) {
+                            for (var i = 0; i < len; i++) {
+                                var id = response.data[i].id;
+                                var name = response.data[i].room_name;
+                                var option = "<option value='" + id + "'>" + name + "</option>";
+                                $("#location_id").append(option);
+                            }
+                        }
+                    }
+                })
             });
 
         });

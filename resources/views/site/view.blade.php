@@ -30,7 +30,7 @@
                             <li class="breadcrumb-item active">Site</li>
                         </ul>
                     </div>
-                    <div class="btn-group">
+                    {{-- <div class="btn-group">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_site"><i
                                 class="fa fa-plus"></i> Add Site</a>
                     </div>
@@ -51,11 +51,11 @@
                                 <a class="dropdown-item" href="{{ route('site.export') }}">Export</a>
                                 <a class="dropdown-item" href="#">Template Export Site</a>
                             </div>
-                        </div>
-                    </div>
-
+                        </div> --}}
                 </div>
+
             </div>
+
             <!-- /Page Header -->
 
 
@@ -185,7 +185,15 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     },
-                ]
+                ],
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    'pageLength', 'copy', 'csv', 'excel', 'print'
+                ],
             });
         });
     </script>

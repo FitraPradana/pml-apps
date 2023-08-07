@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\AssetCategory;
 use App\Models\Location;
 use App\Models\MappingAssetCategory;
+use App\Models\Site;
 use Illuminate\Support\Facades\Auth;
 
 class AssetCategoryController extends Controller
@@ -35,10 +36,10 @@ class AssetCategoryController extends Controller
             ->addColumn('action', function ($data) {
                 if (Auth::user()->roles == 'admin') {
                     return '
-                    <div class="form group" align="center">
-                    <a data-toggle="modal" id="smallButton"  href="' . route('document.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
-                    </div>
                     ';
+                    // <div class="form group" align="center">
+                    // <a data-toggle="modal" id="smallButton"  href="' . route('document.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
+                    // </div>
                 }
                 // <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteDoc"><i class="fa fa-trash"></i></a>
                 // <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">Barcode</a>
@@ -64,11 +65,35 @@ class AssetCategoryController extends Controller
 
 
 
-    public function map_ast_cat_view()
+    public function map_ast_cat_view(Request $request)
     {
-        $asset_category = AssetCategory::all();
+
+        $sites = Site::all();
+
+        $site_code = $request->site_code;
+
         $location = Location::all();
-        return view('asset_category.mapping_asset_category.view', compact('location', 'asset_category'));
+
+
+
+        $asset_category = AssetCategory::all();
+        return view('asset_category.mapping_asset_category.view', compact('location', 'asset_category', 'sites'));
+    }
+
+
+
+    public function getLocationJson($site_code)
+    {
+        //
+        $data = DB::table('locations')
+            ->join('rooms', 'locations.room_id', 'rooms.id')
+            ->select('locations.*', 'rooms.room_name')
+            ->where('site_id', $site_code)
+            ->get();
+
+        // return $data;
+
+        return response()->json(['data' => $data]);
     }
 
     public function map_ast_cat_view_json()
@@ -79,6 +104,7 @@ class AssetCategoryController extends Controller
             ->select('mapping_asset_categories.*', 'asset_categories.asset_category_name', 'locations.location_name')
             ->orderByDesc('mapping_asset_categories.updated_at')
             ->get();
+
         return DataTables::of($mapping_asset_categories)
             ->addColumn('location_id', function ($data) {
                 return $data->location_name;
