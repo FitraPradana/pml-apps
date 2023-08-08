@@ -31,7 +31,7 @@
                         </ul>
                     </div>
 
-                    {{-- <div class="col-auto float-right ml-auto">
+                    <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#add_user"><i
                                 class="fa fa-plus"></i> Add User</a>
                     </div>
@@ -53,7 +53,7 @@
                                 <a class="dropdown-item" href="#">Template Export User</a>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
                 </div>
             </div>
