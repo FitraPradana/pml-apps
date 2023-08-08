@@ -10,7 +10,6 @@
             </div>
             <div class="modal-body">
                 <form action="{{ route('asset_category.store') }}" method="POST" enctype="multipart/form-data">
-                    {{-- <form action=""> --}}
                     @csrf
                     <div class="row">
                         <div class="col-md-12">

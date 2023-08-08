@@ -30,21 +30,21 @@
                             <li class="breadcrumb-item active">Employee</li>
                         </ul>
                     </div>
-                    {{-- <div class="btn-group">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_vendor"><i
-                                class="fa fa-plus"></i> Add Vendor</a>
+                    <div class="btn-group">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i
+                                class="fa fa-plus"></i> Add Employee</a>
                     </div>
                     <div class="col-auto float-right ml-auto">
                         <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Import Vendor</button>
+                                aria-haspopup="true" aria-expanded="false">Import Employee</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#import_vendor">Import</a>
-                                <a class="dropdown-item" href="#">Template Import Vendor</a>
+                                    data-target="#import_emp">Import</a>
+                                <a class="dropdown-item" href="#">Template Import Employee</a>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
                 </div>
             </div>
@@ -95,7 +95,7 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    <th>Department</th>
+                                    <th>User ID</th>
                                     <th>Remarks</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
@@ -115,7 +115,7 @@
         <!-- /Import Site Modal -->
 
         <!-- Add Site Modal -->
-        {{-- @include('site.add_modal') --}}
+        @include('employee.add_modal')
         <!-- /Add Site Modal -->
 
 
@@ -181,14 +181,14 @@
                         data: 'emp_remarks',
                         name: 'emp_remarks'
                     },
-                    {
-                        data: 'department_id',
-                        name: 'department_id'
-                    },
                     // {
-                    //     data: 'user_id',
-                    //     name: 'user_id'
+                    //     data: 'department_id',
+                    //     name: 'department_id'
                     // },
+                    {
+                        data: 'user_id',
+                        name: 'user_id'
+                    },
                     {
                         data: 'created_at',
                         name: 'created_at'
@@ -197,7 +197,15 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     },
-                ]
+                ],
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    'pageLength', 'copy', 'csv', 'excel', 'print'
+                ],
             });
         });
     </script>

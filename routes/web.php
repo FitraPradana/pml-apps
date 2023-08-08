@@ -194,6 +194,7 @@ Route::get('location/insert_general', [LocationController::class, 'insert_genera
 //Employee
 Route::get('employees', [EmployeeController::class, 'index'])->middleware('auth');
 Route::get('employee/json', [EmployeeController::class, 'json'])->middleware('auth');
+Route::post('employee/store', [EmployeeController::class, 'store'])->name('employee.store')->middleware('auth');
 
 //Vendor
 Route::get('vendors', [VendorController::class, 'index'])->middleware('auth');
