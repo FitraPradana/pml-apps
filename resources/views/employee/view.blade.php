@@ -95,8 +95,8 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    <th>User ID</th>
                                     <th>Remarks</th>
+                                    {{-- <th>User ID</th> --}}
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
                                 </tr>
@@ -185,10 +185,10 @@
                     //     data: 'department_id',
                     //     name: 'department_id'
                     // },
-                    {
-                        data: 'user_id',
-                        name: 'user_id'
-                    },
+                    // {
+                    //     data: 'user_id',
+                    //     name: 'user_id'
+                    // },
                     {
                         data: 'created_at',
                         name: 'created_at'

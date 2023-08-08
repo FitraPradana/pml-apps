@@ -80,7 +80,7 @@ class EmployeeController extends Controller
                 // 'department_id'             => 'user',
             ]);
             DB::commit();
-            return redirect('employees')->with(['success' => 'Data Account user dan Employee berhasil di Tambahkan !']);
+            return redirect('employees')->with(['success' => 'Data Account User/Employee berhasil di Tambahkan !']);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
