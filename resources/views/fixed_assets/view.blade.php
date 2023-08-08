@@ -123,11 +123,11 @@
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Is Used</th>
                                     <th>Fixed Asset Number</th>
-                                    <th>Fixed Asset Name</th>
+                                    {{-- <th>Fixed Asset Name</th> --}}
+                                    <th>Information 3</th>
                                     <th>Fixed Asset Group</th>
                                     <th>Fixed Asset Category</th>
                                     <th>Main Fixed Asset</th>
-                                    <th>Information 3</th>
                                     {{-- <th>Vessel ID</th> --}}
                                     <th>Location</th>
                                     <th>Acquisition Date</th>
@@ -136,7 +136,7 @@
                                     <th>PIC</th>
                                     <th>Remarks</th>
                                     <th>Last Modified Name</th>
-                                    <th class="text-center">QR Code</th>
+                                    {{-- <th class="text-center">QR Code</th> --}}
                                     {{-- <th>Image Asset</th> --}}
                                     <th>Last Image Condition</th>
                                     <th>Created at</th>
@@ -217,9 +217,13 @@
                         data: 'fixed_assets_number',
                         name: 'fixed_assets_number'
                     },
+                    // {
+                    //     data: 'fixed_assets_name',
+                    //     name: 'fixed_assets_name'
+                    // },
                     {
-                        data: 'fixed_assets_name',
-                        name: 'fixed_assets_name'
+                        data: 'information3',
+                        name: 'information3'
                     },
                     {
                         data: 'fixed_assets_group',
@@ -233,10 +237,7 @@
                         data: 'main_fixed_assets',
                         name: 'main_fixed_assets'
                     },
-                    {
-                        data: 'information3',
-                        name: 'information3'
-                    },
+
                     // {
                     //     data: 'vessel_id',
                     //     name: 'vessel_id'
@@ -269,12 +270,12 @@
                         data: 'last_modified_name',
                         name: 'last_modified_name'
                     },
-                    {
-                        data: 'qr_code',
-                        name: 'qr_code',
-                        searchable: false,
-                        sortable: false
-                    },
+                    // {
+                    //     data: 'qr_code',
+                    //     name: 'qr_code',
+                    //     searchable: false,
+                    //     sortable: false
+                    // },
                     // {
                     //     data: 'img_asset',
                     //     name: 'img_asset'

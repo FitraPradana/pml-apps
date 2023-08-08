@@ -122,16 +122,18 @@ class FixedAssetController extends Controller
                 return rupiah($data->net_book_value);
             })
             ->addColumn('acquisition_date', function ($data) {
-                return Carbon::parse($data->acquisition_date)->format('d M Y');
+                return $data->acquisition_date;
+                // return Carbon::parse($data->acquisition_date)->format('d M Y');
             })
             ->addColumn('last_update_stock_take_date', function ($data) {
-                return Carbon::parse($data->last_update_stock_take_date)->format('d M Y');
+                return $data->last_update_stock_take_date;
+                // return Carbon::parse($data->last_update_stock_take_date)->format('d M Y');
             })
             ->addColumn('created_at', function ($data) {
-                return Carbon::parse($data->created_at)->format('d M Y H:i:s');
+                return $data->created_at;
             })
             ->addColumn('updated_at', function ($data) {
-                return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
+                return $data->updated_at;
             })
             ->addColumn('action', function ($data) {
                 return '

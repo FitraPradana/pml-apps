@@ -50,10 +50,19 @@ class UserController extends Controller
             })
             ->addColumn('action', function ($data) {
                 return '
+                <div class="dropdown dropdown-action">
+					<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_department"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_department"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#change_password"><i class="fa fa-key m-r-5"></i> Change Password</a>
+                        </div>
+				</div>
                 ';
                 // <div class="form group" align="center">
-                //     <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
-                //     <button type="button" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                //     <button type="button" class="btn btn-sm btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                //     <button type="button" class="btn btn-sm btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                //     <button type="button" class="btn btn-sm btn-success btn-flat"><i class="fa fa-key"></i></button>
                 // </div>
             })
             ->rawColumns(['action', 'name'])
