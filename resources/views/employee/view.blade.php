@@ -34,7 +34,7 @@
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i
                                 class="fa fa-plus"></i> Add Employee</a>
                     </div>
-                    <div class="col-auto float-right ml-auto">
+                    {{-- <div class="col-auto float-right ml-auto">
                         <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Import Employee</button>
@@ -44,7 +44,7 @@
                                 <a class="dropdown-item" href="#">Template Import Employee</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

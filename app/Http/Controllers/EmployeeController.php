@@ -23,7 +23,7 @@ class EmployeeController extends Controller
     {
 
         $Employee = DB::table('employees')
-            ->join('users', 'employees.user_id', 'users.id')
+            ->leftJoin('users', 'employees.user_id', 'users.id')
             ->select('employees.*', 'users.full_name')
             ->orderByDesc('employees.updated_at')
             ->get();
