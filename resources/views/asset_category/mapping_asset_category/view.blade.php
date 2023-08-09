@@ -205,8 +205,9 @@
                     'copy', 'csv',
                     {
                         extend: "excel",
-                        autoFilter: true,
-                        sheetName: 'Exported data'
+                        exportOptions: {
+                            columns: ':visible'
+                        }
                     },
                     'print'
                 ],

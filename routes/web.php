@@ -126,7 +126,7 @@ Route::get('scan_edit_form/{fix_asset}', [ScanController::class, 'show_edit'])->
 Route::post('get_scan_qrcode', [ScanController::class, 'get_scan_qrcode'])->middleware('auth');
 Route::put('update_scan_asset', [ScanController::class, 'update_scan_asset'])->name('update_scan_asset.update')->middleware('auth');
 
-// ROOMaaa
+// ROOM
 Route::get('rooms', [RoomController::class, 'index'])->middleware('auth');
 Route::post('room/store', [RoomController::class, 'store'])->name('room.store')->middleware('auth');
 Route::get('/room/json', [RoomController::class, 'json'])->middleware('auth');

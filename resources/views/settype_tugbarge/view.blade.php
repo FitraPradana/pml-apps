@@ -189,7 +189,28 @@
                         data: 'ip_user_updated',
                         name: 'ip_user_updated'
                     },
-                ]
+                ],
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    'pageLength',
+                    {
+                        "extend": "colvis",
+                        "text": "Show/Hide Columns"
+                    },
+                    'copy', 'csv',
+                    {
+                        extend: "excel",
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'print'
+                ],
+
             });
         });
     </script>

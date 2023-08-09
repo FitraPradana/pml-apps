@@ -204,7 +204,19 @@
                     ['10 rows', '25 rows', '50 rows', 'Show all']
                 ],
                 buttons: [
-                    'pageLength', 'copy', 'csv', 'excel', 'print'
+                    'pageLength',
+                    {
+                        "extend": "colvis",
+                        "text": "Show/Hide Columns"
+                    },
+                    'copy', 'csv',
+                    {
+                        extend: "excel",
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'print'
                 ],
             });
         });
