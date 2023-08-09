@@ -59,7 +59,7 @@
                         <table id="datatables" class="table table-striped custom-table datatable">
                             <thead>
                                 <tr>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                     <th>#</th>
                                     <th>Tanggal</th>
                                     <th>Fixed Assets Number</th>
@@ -108,12 +108,13 @@
                 serverSide: true,
                 destroy: true,
                 ajax: "{{ url('/log_trans_asset_json') }}",
-                columns: [{
-                        data: 'action',
-                        name: 'action',
-                        searchable: false,
-                        sortable: false
-                    },
+                columns: [
+                    // {
+                    //     data: 'action',
+                    //     name: 'action',
+                    //     searchable: false,
+                    //     sortable: false
+                    // },
                     {
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;

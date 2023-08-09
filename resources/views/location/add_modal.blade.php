@@ -17,6 +17,7 @@
                             <div class="form-group">
                                 <label>Site</label>
                                 <select class="select" id="site_id" name="site_id" required>
+                                    <option value="">Pilih Site</option>
                                     @foreach ($site as $value)
                                         <option value="{{ $value->id }}">{{ $value->site_code }} -
                                             {{ $value->site_name }}</option>
@@ -24,16 +25,15 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Employee</label>
-                                <select class="select" id="employee_id" name="employee_id" required></select>
-                                @foreach ($employee as $value)
-                                    <option value="{{ $value->id }}">{{ $value->emp_name }}</option>
-                                @endforeach
+                                <select class="select" id="employee_id" name="employee_id" required>
+                                    @foreach ($employees as $value)
+                                        <option value="{{ $value->id }}">{{ $value->emp_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -47,7 +47,6 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-12">

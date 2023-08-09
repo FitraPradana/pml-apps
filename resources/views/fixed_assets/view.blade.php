@@ -161,11 +161,11 @@
         <!-- /Update NBV Modal -->
 
         <!-- Add Asset Modal -->
-        @include('fixed_assets.modal_add')
+        {{-- @include('fixed_assets.modal_add') --}}
         <!-- /Add Asset Modal -->
 
         <!-- Upload Image Modal -->
-        @include('fixed_assets.upload_image')
+        {{-- @include('fixed_assets.upload_image') --}}
         <!-- /Upload Image Modal -->
 
     </div>

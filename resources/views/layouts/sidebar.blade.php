@@ -40,7 +40,8 @@
                                     href="{{ url('scan') }}">Scan
                                     Vessel</a>
                             </li> --}}
-                            {{-- <li><a class="{{ request()->is('barcode') ? 'active' : '' }}" href="{{ url('barcode') }}">Barcode</a></li> --}}
+                            {{-- <li><a class="{{ request()->is('barcode') ? 'active' : '' }}"
+                                    href="{{ url('barcode') }}">Barcode</a></li> --}}
                             {{-- <li><a href="#">Contacts</a></li> --}}
                             {{-- <li><a href="#">File Manager</a></li> --}}
                         </ul>
@@ -63,10 +64,10 @@
                         </ul>
                     </li>
                 @endif
-                {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}">
+                <li class="{{ request()->is('scan') ? 'active' : '' }}">
                     <a href="{{ url('scan_form') }}"><i class="la la-qrcode"></i> <span>Scan
                             Barcode</span></a>
-                </li> --}}
+                </li>
                 @if (Auth::user()->roles == 'vessel')
                     {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}"> --}}
                     {{-- <a href="{{ url('crew_report_data') }}"><i class="la la-book"></i> <span>Report Asset

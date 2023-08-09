@@ -21,7 +21,7 @@ class LocationController extends Controller
 
         $room = Room::all();
         $site = Site::all();
-        $employee = Employee::all();
+        $employees = Employee::all();
         $location = Location::all();
         if (!$site->isEmpty() and !$room->isEmpty()) {
             if ($location->isEmpty()) {
@@ -39,7 +39,7 @@ class LocationController extends Controller
 
 
 
-        return view('location.view', compact(['room', 'site', 'employee']));
+        return view('location.view', compact(['room', 'site', 'employees']));
     }
 
     public function json()

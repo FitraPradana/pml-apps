@@ -49,6 +49,7 @@
                         <div class="row">
                             <input type="hidden" name="qr_code" value="{{ $asset->qr_code }}">
                             <input type="hidden" name="fixed_asset_id" value="{{ $asset->id }}">
+                            <input type="hidden" name="last_status_asset" value="{{ $asset->status_asset }}">
                             <input type="hidden" name="last_img_condition_stock_take"
                                 value="{{ $asset->last_img_condition_stock_take }}">
                             <div class="col-sm-6">
