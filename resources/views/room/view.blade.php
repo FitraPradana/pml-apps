@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="col-auto float-right ml-auto">
-                        <div class="btn-group">
+                        {{-- <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Import Room</button>
                             <div class="dropdown-menu">
@@ -44,7 +44,7 @@
                                     data-target="#import_room">Import</a>
                                 <a class="dropdown-item" href="#">Template Import Room</a>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Room</button>

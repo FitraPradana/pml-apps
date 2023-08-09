@@ -34,6 +34,7 @@ use App\Helpers\UserSystemInfoHelper;
 use App\Http\Controllers\AssetCategoryController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -310,3 +311,9 @@ Route::match(['get', 'post'], 'form_asset_view', [FixedAssetController::class, '
 // LOG Trans Assets
 Route::get('log_trans_asset_view', [FixedAssetController::class, 'log_trans_asset_view'])->name('log_trans_asset_view')->middleware('auth');
 Route::get('log_trans_asset_json', [FixedAssetController::class, 'log_trans_asset_json'])->name('log_trans_asset_json')->middleware('auth');
+
+
+
+// Reset Password
+Route::get('reset_password', [ResetPasswordController::class, 'index'])->name('reset_password.index');
+Route::post('reset_password_save', [ResetPasswordController::class, 'reset_password_save'])->name('reset_password_save');

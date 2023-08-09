@@ -90,7 +90,7 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    <th>ID Asset Category</th>
+                                    {{-- <th>ID Asset Category</th> --}}
                                     <th>Code Asset Category</th>
                                     <th>Name</th>
                                     <th>Remarks</th>
@@ -153,10 +153,10 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
-                    {
-                        data: 'id',
-                        name: 'id'
-                    },
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'asset_category_code',
                         name: 'asset_category_code'
