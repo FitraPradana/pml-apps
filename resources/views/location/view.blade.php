@@ -34,7 +34,7 @@
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location"><i
                                 class="fa fa-plus"></i> Add Location</a>
                     </div>
-                    <div class="col-auto float-right ml-auto">
+                    {{-- <div class="col-auto float-right ml-auto">
                         <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Import Location</button>
@@ -44,7 +44,7 @@
                                 <a class="dropdown-item" href="#">Template Import Location</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>
@@ -198,7 +198,27 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     },
-                ]
+                ],
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    'pageLength',
+                    {
+                        "extend": "colvis",
+                        "text": "Show/Hide Columns"
+                    },
+                    'copy', 'csv',
+                    {
+                        extend: "excel",
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'print'
+                ],
             });
         });
     </script>

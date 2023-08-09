@@ -193,6 +193,7 @@
 <script src="{{ asset('/') }}assets/js/jszip.min.js"></script>
 <script src="{{ asset('/') }}assets/js/pdfmake.min.js"></script>
 <script src="{{ asset('/') }}assets/js/vfs_fonts.js"></script>
+<script src="{{ asset('/') }}assets/js/buttons.colVis.min.js"></script>
 
 
 <!-- Select2 JS -->

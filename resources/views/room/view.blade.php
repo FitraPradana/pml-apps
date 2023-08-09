@@ -36,15 +36,15 @@
                     </div>
 
                     <div class="col-auto float-right ml-auto">
-                        {{-- <div class="btn-group">
+                        <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Import Room</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#import_room">Import</a>
-                                <a class="dropdown-item" href="#">Template Import Room</a>
+                                <a class="dropdown-item" href="{{ route('room_import_template') }}">Template Import Room</a>
                             </div>
-                        </div> --}}
+                        </div>
                         {{-- <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Room</button>
@@ -61,11 +61,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+
 
                     @if (session()->has('failures'))
                         <div class="alert alert-danger" role="alert">
@@ -73,7 +69,13 @@
                             @foreach (session()->get('failures') as $validasi)
                                 {{ $validasi->values()[$validasi->attribute()] . ',' }}
                             @endforeach
-                            ) is Duplicate
+                            ) is duplicate. Data was not added to the website !
+                        </div>
+                    @endif
+
+                    @if (session()->has('success'))
+                        <div class="alert alert-success" role="alert">
+                            <b>{{ session('success') }}</b>
                         </div>
                     @endif
 
@@ -179,7 +181,15 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     },
-                ]
+                ],
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    'pageLength', 'copy', 'csv', 'excel', 'print'
+                ],
             });
         });
     </script>

@@ -14,10 +14,10 @@ class RoomImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFail
 {
     use Importable, SkipsFailures;
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new Room([

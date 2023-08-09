@@ -177,7 +177,15 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     },
-                ]
+                ],
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    'pageLength', 'copy', 'csv', 'excel', 'print'
+                ],
             });
 
 
@@ -192,8 +200,8 @@
                     .done((response) => {
                         table.ajax.reload();
                         Swal.fire(
-                            'Data Berhasil di Hapus!',
-                            'You clicked the button!',
+                            '' + response.asset_category_code + '',
+                            'has been successfully deleted from the website!',
                             'success'
                         )
                     })

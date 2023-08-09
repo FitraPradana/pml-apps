@@ -61,7 +61,7 @@ class RoomController extends Controller
             'remarks_room'            => $request->remarks_room,
         ]);
 
-        return redirect('rooms')->with(['success' => 'Room Code ' . $request->room_code . ' Berhasil Di Tambah!']);
+        return redirect('rooms')->with('success', 'room code "' . $request->room_code . '" has been successfully added to the website!');
     }
 
     public function import(Request $request)
@@ -69,13 +69,14 @@ class RoomController extends Controller
         $file = $request->file('file')->store('public/import');
 
         $import = new RoomImport();
-        $import->import($file);
+        $ret = $import->import($file);
+        // dd($import);
 
         if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
+            $error = $import->failures();
         }
 
-        return redirect('/rooms')->with('success', 'Data Room Berhasil di Import !!!');
+        return redirect('/rooms')->with('success', 'Data Room has been successfully imported to the website !!!')->withFailures($error);
     }
 
     public function import_room_auto()
@@ -90,6 +91,11 @@ class RoomController extends Controller
         }
 
         return redirect('/rooms')->with('success', 'Data Room Berhasil di Import AUTOMATIC!!!');
+    }
+
+    public function room_import_template()
+    {
+        return Excel::download(new RoomExport, 'Room import template.xlsx');
     }
 
     public function export()

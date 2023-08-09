@@ -64,13 +64,15 @@ class AssetCategoryController extends Controller
 
     public function delete($id)
     {
-        $AssetCategory = AssetCategory::find($id)->delete();
-        // return response()->json([
-        //     "berhasil" => "Data Asset berhasil ditemukan",
-        //     "asset_category_code" => $AssetCategory->asset_category_code,
-        //     "asset_category_name" => $AssetCategory->asset_category_name,
-        // ]);
-        return response(null, 204);
+        $AssetCategory = AssetCategory::find($id);
+
+        $del = $AssetCategory->delete();
+        return response()->json([
+            // "berhasil" => "Data Asset berhasil ditemukan",
+            "asset_category_code" => $AssetCategory->asset_category_code,
+            "asset_category_name" => $AssetCategory->asset_category_name,
+        ]);
+        // return response(null, 204);
     }
 
 

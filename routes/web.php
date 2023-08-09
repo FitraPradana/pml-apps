@@ -131,6 +131,7 @@ Route::get('rooms', [RoomController::class, 'index'])->middleware('auth');
 Route::post('room/store', [RoomController::class, 'store'])->name('room.store')->middleware('auth');
 Route::get('/room/json', [RoomController::class, 'json'])->middleware('auth');
 Route::post('room_import', [RoomController::class, 'import'])->name('room.import')->middleware('auth');
+Route::get('room_import_template', [RoomController::class, 'room_import_template'])->name('room_import_template')->middleware('auth');
 Route::get('room_export', [RoomController::class, 'export'])->name('room.export')->middleware('auth');
 
 // SITE
