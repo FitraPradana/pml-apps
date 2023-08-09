@@ -94,7 +94,7 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    <th>ID Location</th>
+                                    {{-- <th>ID Location</th> --}}
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Site</th>
@@ -162,10 +162,10 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
-                    {
-                        data: 'id',
-                        name: 'id'
-                    },
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'location_code',
                         name: 'location_code'

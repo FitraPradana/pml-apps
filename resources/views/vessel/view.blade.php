@@ -97,7 +97,7 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    <th>ID</th>
+                                    {{-- <th>ID</th> --}}
                                     <th>ID Vessel</th>
                                     <th>Name</th>
                                     <th>Type</th>
@@ -158,10 +158,10 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
-                    {
-                        data: 'id',
-                        name: 'id'
-                    },
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'vess_id',
                         name: 'vess_id'

@@ -92,7 +92,7 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    <th>ID Room</th>
+                                    {{-- <th>ID Room</th> --}}
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Remarks</th>
@@ -155,10 +155,10 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
-                    {
-                        data: 'id',
-                        name: 'id'
-                    },
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'room_code',
                         name: 'room_code'

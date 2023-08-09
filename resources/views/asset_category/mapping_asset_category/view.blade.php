@@ -91,7 +91,7 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    <th>ID Mapping</th>
+                                    {{-- <th>ID Mapping</th> --}}
                                     <th>Asset Category</th>
                                     <th>Location</th>
                                     <th>Remarks</th>
@@ -166,10 +166,10 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
-                    {
-                        data: 'id',
-                        name: 'id'
-                    },
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'asset_category_id',
                         name: 'asset_category_id'

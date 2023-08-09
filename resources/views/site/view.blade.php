@@ -97,7 +97,7 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    <th>ID Site</th>
+                                    {{-- <th>ID Site</th> --}}
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Vessel</th>
@@ -157,10 +157,10 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
-                    {
-                        data: 'id',
-                        name: 'id'
-                    },
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'site_code',
                         name: 'site_code'

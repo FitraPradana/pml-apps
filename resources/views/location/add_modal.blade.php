@@ -30,10 +30,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Employee</label>
-                                <select class="select" id="employee_id" name="employee_id" required>
-                                    @foreach ($employee as $value)
-                                        <option value="{{ $value->id }}">{{ $value->emp_name }}</option>
-                                    @endforeach
+                                <select class="select" id="employee_id" name="employee_id" required></select>
+                                @foreach ($employee as $value)
+                                    <option value="{{ $value->id }}">{{ $value->emp_name }}</option>
+                                @endforeach
                                 </select>
                             </div>
                         </div>
