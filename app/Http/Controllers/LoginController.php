@@ -44,7 +44,8 @@ class LoginController extends Controller
         );
 
         $kredensial = $request->only('email', 'password');
-
+        $user = User::where('email', $request->email)->first();
+        // return $user->email;
         if (Auth::attempt($kredensial)) {
             $request->session()->regenerate();
             $user = Auth::user();
@@ -57,11 +58,17 @@ class LoginController extends Controller
             }
 
             return redirect()->intended('/');
+        } elseif ($user) {
+            if ($request->password != $user->password) {
+                return back()->withErrors([
+                    'password' => 'Incorrect password. Please double-check and try again',
+                ])->onlyInput('password');
+            }
+        } else {
+            return back()->withErrors([
+                'email' => 'Email not found',
+            ])->onlyInput('email');
         }
-
-        return back()->withErrors([
-            'email' => 'Email tidak terdaftar',
-        ])->onlyInput('email');
     }
 
     public function logout(Request $request)
