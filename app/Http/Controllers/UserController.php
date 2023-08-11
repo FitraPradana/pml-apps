@@ -56,8 +56,8 @@ class UserController extends Controller
                 }
             })
             ->editColumn('roles', function ($edit_status) {
-                if ($edit_status->roles == 'employee') {
-                    return '<span class="badge bg-inverse-warning">EMPLOYEE</span>';
+                if ($edit_status->roles == 'user') {
+                    return '<span class="badge bg-inverse-warning">USER</span>';
                 } elseif ($edit_status->roles == 'vessel') {
                     return '<span class="badge bg-inverse-info">VESSEL</span>';
                 } elseif ($edit_status->roles == 'admin') {
