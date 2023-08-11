@@ -58,6 +58,11 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     {{-- @if ($room->isEmpty())
                     <div class="alert alert-danger" role="alert">
                         Data Room Masih KOSONG !!! Harap di Input terlebih dahulu
@@ -96,7 +101,7 @@
                                     <th>Phone</th>
                                     <th>Address</th>
                                     <th>Remarks</th>
-                                    {{-- <th>User ID</th> --}}
+                                    <th>User ID</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
                                 </tr>
@@ -110,13 +115,14 @@
         </div>
         <!-- /Page Content -->
 
-        <!-- Import Site Modal -->
-        {{-- @include('site.import_site') --}}
-        <!-- /Import Site Modal -->
 
-        <!-- Add Site Modal -->
+        <!-- Add Employee Modal -->
         @include('employee.add_modal')
-        <!-- /Add Site Modal -->
+        <!-- /Add Employee Modal -->
+
+        <!-- Add Employee Modal -->
+        @include('employee.edit_modal')
+        <!-- /Add Employee Modal -->
 
 
     </div>
@@ -132,9 +138,12 @@
             // $(document).ready(function () {
 
             // SELECT2
-            // $('#room_id').select2({
-            //     width: '250'
-            // });
+            $('#user_id_update').select2({
+                // width: '100%'
+            });
+            $('#department_id_update').select2({
+                // width: '100%'
+            });
 
             $('#datatables').DataTable({
                 processing: true,
@@ -185,10 +194,10 @@
                     //     data: 'department_id',
                     //     name: 'department_id'
                     // },
-                    // {
-                    //     data: 'user_id',
-                    //     name: 'user_id'
-                    // },
+                    {
+                        data: 'user_id',
+                        name: 'user_id'
+                    },
                     {
                         data: 'created_at',
                         name: 'created_at'

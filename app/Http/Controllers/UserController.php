@@ -48,24 +48,42 @@ class UserController extends Controller
             ->addColumn('updated_at', function ($data) {
                 return Carbon::parse($data->updated_at)->format('d M Y H:i:s');
             })
+            ->editColumn('type', function ($edit_status) {
+                if ($edit_status->type == 'employee') {
+                    return '<span class="badge bg-inverse-warning">EMPLOYEE</span>';
+                } elseif ($edit_status->type == 'vessel') {
+                    return '<span class="badge bg-inverse-info">VESSEL</span>';
+                }
+            })
+            ->editColumn('roles', function ($edit_status) {
+                if ($edit_status->roles == 'employee') {
+                    return '<span class="badge bg-inverse-warning">EMPLOYEE</span>';
+                } elseif ($edit_status->roles == 'vessel') {
+                    return '<span class="badge bg-inverse-info">VESSEL</span>';
+                } elseif ($edit_status->roles == 'admin') {
+                    return '<span class="badge bg-inverse-success">ADMIN</span>';
+                }
+            })
+            ->editColumn('active', function ($edit_status) {
+                if ($edit_status->active == 'yes') {
+                    return '<span class="badge bg-inverse-success">ACTIVE</span>';
+                } elseif ($edit_status->active == 'no') {
+                    return '<span class="badge bg-inverse-danger">NON ACTIVE</span>';
+                }
+            })
             ->addColumn('action', function ($data) {
                 return '
                 <div class="dropdown dropdown-action">
 					<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_department"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_department"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#change_password"><i class="fa fa-key m-r-5"></i> Change Password</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Edit_user' . $data->id . '"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#change_password' . $data->id . '"><i class="fa fa-key m-r-5"></i> Change Password</a>
                         </div>
-				</div>
-                ';
-                // <div class="form group" align="center">
-                //     <button type="button" class="btn btn-sm btn-info btn-flat"><i class="fa fa-pencil"></i></button>
-                //     <button type="button" class="btn btn-sm btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                //     <button type="button" class="btn btn-sm btn-success btn-flat"><i class="fa fa-key"></i></button>
-                // </div>
+                </div>
+                            ';
+                // <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_department"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
             })
-            ->rawColumns(['action', 'name'])
+            ->rawColumns(['action', 'name', 'active', 'type', 'roles'])
             ->make(true);
     }
 
@@ -133,9 +151,30 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user, $id)
     {
-        //
+        // Update Data Users
+        $dataUser = [
+            'username'          => $request->username,
+            'full_name'         => $request->full_name,
+            'roles'             => $request->roles,
+            'remarks_user'      => $request->remarks_user,
+            'active'            => $request->active,
+        ];
+        User::find($id)->update($dataUser);
+
+        return redirect('users')->with(['success' => 'Data User "' . $request->full_name . '" berhasil di Update !']);
+    }
+
+    public function change_password(Request $request, User $user, $id)
+    {
+        // Update Data Fixed Assets
+        $dataUser = [
+            'password'          => Hash::make($request->password),
+        ];
+        User::find($id)->update($dataUser);
+
+        return redirect('users')->with(['success' => 'Password User "' . $request->email . '" has been change !']);
     }
 
     /**

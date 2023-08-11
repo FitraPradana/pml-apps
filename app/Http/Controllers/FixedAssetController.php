@@ -138,9 +138,9 @@ class FixedAssetController extends Controller
             ->addColumn('action', function ($data) {
                 return '
                 <div class="form group" align="center">
-                    <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">Barcode</a>
+                    <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">QR CODE</a>
                     <a href="' . route('fixed_assets.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
-                    </div>
+                </div>
                     ';
                 // <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteAsset"><i class="fa fa-trash"></i></a>
             })

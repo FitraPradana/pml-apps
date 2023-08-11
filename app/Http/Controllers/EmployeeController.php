@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,8 +16,10 @@ class EmployeeController extends Controller
     //
     public function index()
     {
-        //
-        return view('employee.view');
+        $employees = Employee::all();
+        $departments = Department::all();
+        $users = User::all();
+        return view('employee.view', compact('employees', 'departments', 'users'));
     }
 
     public function json()
@@ -32,7 +35,8 @@ class EmployeeController extends Controller
             ->addColumn('action', function ($data) {
                 return '
                 <div class="form group" align="center">
-
+                    <a href="#" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset" data-toggle="modal" data-target="#edit_employee' . $data->id . '"><i class="fa fa-pencil"></i></a>
+                </div>
                 ';
                 // <button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
             })
@@ -54,6 +58,7 @@ class EmployeeController extends Controller
 
         DB::beginTransaction();
         try {
+
             //Save Tbl User
             $userSave = User::create([
                 'personnel_number'  => $request->emp_accountnum,
@@ -82,9 +87,36 @@ class EmployeeController extends Controller
             DB::commit();
             return redirect('employees')->with(['success' => 'Data Account User/Employee berhasil di Tambahkan !']);
         } catch (\Throwable $th) {
+            $empALL = Employee::where('emp_accountnum', $request->emp_accountnum)->first();
+            if ($empALL) {
+                return redirect('employees')->with('error', 'Data Account "' . $request->emp_accountnum . '" already exists !');
+            }
+            $empALL = Employee::where('emp_email', $request->emp_email)->first();
+            if ($empALL) {
+                return redirect('employees')->with('error', 'Data Email "' . $request->emp_email . '" already exists !');
+            }
+
             DB::rollBack();
+
+
             throw $th;
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Update Data Employees
+        $dataEmployee = [
+            'emp_name'          => $request->emp_name,
+            'emp_phone'         => $request->emp_phone,
+            'emp_address'       => $request->emp_address,
+            'emp_remarks'       => $request->emp_remarks,
+            'department_id'     => $request->department_id,
+            'user_id'           => $request->user_id,
+        ];
+        Employee::find($id)->update($dataEmployee);
+
+        return redirect('employees')->with(['success' => 'Data Employee "' . $request->emp_name . '" berhasil di Update !']);
     }
 
     // public function insert_general()

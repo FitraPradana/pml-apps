@@ -46,6 +46,7 @@ class User extends Authenticatable
         'roles',
         'image',
         'remarks_user',
+        'active',
     ];
 
     /**

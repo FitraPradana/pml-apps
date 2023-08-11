@@ -33,8 +33,11 @@
                         <a href="#"><i class="la la-cube"></i> <span> Apps</span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a class="{{ request()->is('scan') ? 'active' : '' }}"
+                            {{-- <li><a class="{{ request()->is('scan') ? 'active' : '' }}"
                                     href="{{ url('scan') }}">Scan</a>
+                            </li> --}}
+                            <li><a class="{{ request()->is('scan_form') ? 'active' : '' }}"
+                                    href="{{ url('scan_form') }}">Scan QR CODE</a>
                             </li>
                             {{-- <li><a class="{{ request()->is('scan_vessel') ? 'active' : '' }}"
                                     href="{{ url('scan') }}">Scan
@@ -64,10 +67,10 @@
                         </ul>
                     </li>
                 @endif
-                <li class="{{ request()->is('scan') ? 'active' : '' }}">
+                {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}">
                     <a href="{{ url('scan_form') }}"><i class="la la-qrcode"></i> <span>Scan
                             Barcode</span></a>
-                </li>
+                </li> --}}
                 @if (Auth::user()->roles == 'vessel')
                     {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}"> --}}
                     {{-- <a href="{{ url('crew_report_data') }}"><i class="la la-book"></i> <span>Report Asset
@@ -265,18 +268,25 @@
                     </li>
                 @endif
                 {{-- END FILLING DOCUMENT --}}
-                {{-- @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'vessel')
+                @if (Auth::user()->roles == 'admin' or Auth::user()->roles == 'user' or Auth::user()->roles == 'vessel')
                     <li class="menu-title">
                         <span>Pages</span>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><i class="la la-user"></i> <span> Profile </span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>
                     </li>
                     <li class="submenu">
                         <a href="#"><i class="la la-key"></i> <span> Authentication </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a href="#"> Ganti Password </a></li>
+                            <li><a class="{{ request()->is('change_password_view') ? 'active' : '' }}"
+                                    href="{{ url('change_password_view') }}"> Ganti Password </a></li>
                         </ul>
                     </li>
-                @endif --}}
+                @endif
 
                 {{-- @if (Auth::user()->roles == 'admin')
                     <li>

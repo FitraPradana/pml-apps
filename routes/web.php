@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FixedAssetsController;
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FixedAssetController;
@@ -17,24 +16,18 @@ use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\ReportVesselController;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\RoomVesselController;
 use App\Http\Controllers\ScanController;
-use App\Http\Controllers\ScanVesselController;
 use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\SetTypeTugBargeController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StockTakeController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VesselController;
-use App\Models\RoomVessel;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Helpers\UserSystemInfoHelper;
 use App\Http\Controllers\AssetCategoryController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +80,8 @@ Route::get('home_manager', [DashboardController::class, 'home_manager']);
 // USER
 Route::resource('users', UserController::class)->middleware('auth');
 Route::get('/user/json', [UserController::class, 'json'])->middleware('auth');
+Route::put('user/update/{id}', [UserController::class, 'update'])->name('user.update')->middleware('auth');
+Route::put('user/change_password/{id}', [UserController::class, 'change_password'])->name('user.change_password')->middleware('auth');
 Route::post('user_import', [UserController::class, 'import'])->name('user.import');
 Route::get('user_export', [UserController::class, 'export'])->name('user.export')->middleware('auth');
 // SETUP IMPORT USER
@@ -197,6 +192,7 @@ Route::get('location/insert_general', [LocationController::class, 'insert_genera
 Route::get('employees', [EmployeeController::class, 'index'])->middleware('auth');
 Route::get('employee/json', [EmployeeController::class, 'json'])->middleware('auth');
 Route::post('employee/store', [EmployeeController::class, 'store'])->name('employee.store')->middleware('auth');
+Route::put('employee/update/{id}', [EmployeeController::class, 'update'])->name('employee.update')->middleware('auth');
 
 //Vendor
 Route::get('vendors', [VendorController::class, 'index'])->middleware('auth');
@@ -315,6 +311,12 @@ Route::get('log_trans_asset_json', [FixedAssetController::class, 'log_trans_asse
 
 
 
-// Reset Password
-Route::get('reset_password', [ResetPasswordController::class, 'index'])->name('reset_password.index');
-Route::post('reset_password_save', [ResetPasswordController::class, 'reset_password_save'])->name('reset_password_save');
+// Password
+Route::get('change_password_view', [PasswordController::class, 'change_password_view'])->name('change_password_view')->middleware('auth');
+Route::put('change_password_update/{id}', [PasswordController::class, 'change_password_update'])->name('change_password_update')->middleware('auth');
+Route::get('reset_password', [PasswordController::class, 'index'])->name('reset_password.index');
+Route::post('reset_password_save', [PasswordController::class, 'reset_password_save'])->name('reset_password_save');
+
+
+// TESTING DATA
+Route::match(['get', 'put'], 'update_userid_employee', [TestController::class, 'update_userid_employee'])->name('update_userid_employee')->middleware('auth');

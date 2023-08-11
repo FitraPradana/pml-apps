@@ -48,11 +48,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Location Code</label>
-                                <input class="form-control" type="text" name="location_code" required>
+                                <input class="form-control" type="text" id="location_code" name="location_code"
+                                    required>
+                                <small class="form-text">
+                                    <button type="button" class="btn btn-secondary btn-sm" id="getLocCode">Get Location
+                                        Code</button>
+                                </small>
                             </div>
                         </div>
                     </div>
@@ -61,9 +66,13 @@
                             <div class="form-group">
                                 <label>Location Name</label>
                                 <input class="form-control" type="text" name="location_name" required>
+                                <small class="form-text">
+                                    <button type="button" class="btn btn-secondary btn-sm" id="getLocName">Get Location
+                                        Name</button>
+                                </small>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

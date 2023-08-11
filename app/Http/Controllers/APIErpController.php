@@ -637,21 +637,17 @@ class APIErpController extends Controller
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
         $collectdata = collect($data);
-        $query = $collectdata->all();
-
-        // dd($collectdata);
-        // return $collectdata;
         $vess = Vessel::all();
         if ($vess->isEmpty()) {
             $filtered = $collectdata;
+            $filter_tug = $filtered->where('VessType', '=', 'TUG');
         } else {
             foreach ($vess as $key => $value) {
                 $v[] = $value->vess_id;
             }
             $filtered = $collectdata->whereNotIn('VessID', $v);
+            $filter_tug = $filtered->where('VessType', '=', 'TUG');
         }
-
-
         return DataTables::of($filtered)
             ->make(true);
     }
@@ -678,16 +674,11 @@ class APIErpController extends Controller
             $filter_tug = $filtered->where('VessType', '=', 'TUG');
         }
 
-        // $filter_tug[] = $filtered->where('VessType', '=', 'TUG');
-        // return $filter_tug;
-
         // Begin Transaction
         DB::beginTransaction();
-
         try {
             foreach ($filtered as $value) {
                 // $vesstype[] = $value['VessType'];
-
                 Vessel::create([
                     'vess_id'               => $value['VessID'],
                     'vess_name'             => $value['VessName'],
@@ -697,11 +688,10 @@ class APIErpController extends Controller
                 ]);
             }
 
-
             // CREATE USER ACCOUNT VESSEL TUG
-            foreach ($filter_tug as $value) {
-                // $vesstype[] = $value['VessType'];
-
+            $q = $filter_tug->where('SiteId', '!=', '');
+            // return $q;
+            foreach ($q as $value) {
                 User::create([
                     'personnel_number'  => $value['SiteId'],
                     'username'          => $value['VessID'],
@@ -717,12 +707,11 @@ class APIErpController extends Controller
 
             // Commit Transaction
             DB::commit();
+            return redirect('vessels')->with(['success' => 'Data Vessel Berhasil Di Generate from ERP !']);
         } catch (\Throwable $th) {
-            //throw $th;
             // Rollback Transaction
             DB::rollback();
+            throw $th;
         }
-
-        return redirect('vessels')->with(['success' => 'Data Vessel Berhasil Di Generate from ERP !']);
     }
 }

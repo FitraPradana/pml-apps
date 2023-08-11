@@ -84,18 +84,44 @@ class LocationController extends Controller
 
     public function store(Request $request)
     {
+        $site = Site::where('id', $request->site_id)->first();
+        $room = Room::where('id', $request->room_id)->first();
+        $employee = Employee::where('id', $request->employee_id)->first();
+
+        if ($room->room_code == 'GNRL') {
+            if ($site->site_name == 'Banjarmasin' or $site->site_name == 'Jakarta') {
+                $locCode = str_replace(' ', '_', strtoupper($site->site_code)) . '-' . str_replace(' ', '_', $employee->emp_name);
+            } else {
+                $locCode = str_replace(' ', '_', strtoupper($site->site_name)) . '-' . str_replace(' ', '_', $employee->emp_name);
+            }
+            $locName = strtoupper($site->site_name) . '-' . $employee->emp_name;
+        } elseif ($employee->emp_accountnum == 'GNRL') {
+            if ($site->site_name == 'Banjarmasin' or $site->site_name == 'Jakarta') {
+                $locCode = str_replace(' ', '_', strtoupper($site->site_code)) . '-' . $room->room_code;
+            } else {
+                $locCode = str_replace(' ', '_', strtoupper($site->site_name)) . '-' . $room->room_code;
+            }
+            $locName = strtoupper($site->site_name) . '-' . $room->room_name;
+        } else {
+            if ($site->site_name == 'Banjarmasin' or $site->site_name == 'Jakarta') {
+                $locCode = str_replace(' ', '_', strtoupper($site->site_code)) . '-' . $room->room_code . '-' . str_replace(' ', '_', $employee->emp_name);
+            } else {
+                $locCode = str_replace(' ', '_', strtoupper($site->site_name)) . '-' . $room->room_code . '-' . str_replace(' ', '_', $employee->emp_name);
+            }
+            $locName = strtoupper($site->site_name) . '-' . $room->room_name . '-' . $employee->emp_name;
+        }
 
         // Insert Location
-        Location::create([
-            'location_code'           => $request->location_code,
-            'location_name'           => $request->location_name,
+        $insertLocation = Location::create([
+            'location_code'           => $locCode,
+            'location_name'           => $locName,
             'location_remarks'        => $request->location_remarks,
             'site_id'                 => $request->site_id,
             'room_id'                 => $request->room_id,
             'employee_id'             => $request->employee_id,
         ]);
 
-        return redirect('locations')->with(['success' => 'Location Code ' . $request->location_code . ' Berhasil Di Tambahkan!']);
+        return redirect('locations')->with('success', 'Location Code "' . $locCode . '" has been successfully added to the website!');
     }
 
     public function import(Request $request)

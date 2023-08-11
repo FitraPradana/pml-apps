@@ -131,6 +131,7 @@
                                     <th>Email</th>
                                     <th>Type</th>
                                     <th>Role</th>
+                                    <th>is Active</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
                                 </tr>
@@ -174,6 +175,14 @@
         <!-- Add USER Modal -->
         @include('user.modal_add')
         <!-- /Add USER Modal -->
+
+        <!-- Edit USER Modal -->
+        @include('user.modal_edit')
+        <!-- /Edit USER Modal -->
+
+        <!-- Change Password Modal -->
+        @include('user.change_password')
+        <!-- /Change Password Modal -->
 
 
     </div>
@@ -225,6 +234,10 @@
                     {
                         data: 'roles',
                         name: 'roles'
+                    },
+                    {
+                        data: 'active',
+                        name: 'active'
                     },
                     {
                         data: 'created_at',

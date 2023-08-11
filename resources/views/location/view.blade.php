@@ -146,6 +146,21 @@
             });
             // END SELECT2
 
+            $("#getLocCode").click(function() {
+                // alert("The paragraph was clicked.");
+                siteVal = $("#room_id").val()
+                roomVal = $("#room_id").val()
+                employeVal = $("#room_id").val()
+                $("#location_code").val(siteVal + '-' + roomVal + employeVal);
+            });
+
+            function getLocationCode() {
+
+                roomVal = document.getElementById('room_id').value
+
+                // alert(txtVal);
+            }
+
             $('#datatables').DataTable({
                 processing: true,
                 serverSide: true,
@@ -220,6 +235,8 @@
                     'print'
                 ],
             });
+
+
         });
     </script>
 

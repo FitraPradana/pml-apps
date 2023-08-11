@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssetCategory;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\FixedAssets;
 use App\Models\Location;
+use App\Models\MappingAssetCategory;
+use App\Models\PengajuanPinjaman;
+use App\Models\Pengembalian;
+use App\Models\Pinjaman;
 use App\Models\Room;
 use App\Models\Site;
+use App\Models\StockTakeTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Vessel;
@@ -26,19 +32,23 @@ class DashboardController extends Controller
 
     public function home_admin()
     {
-        $sumAsset = FixedAssets::count('id');
-        $sumDocument = Document::count('id');
-        $sumUser = User::count('id');
-        $sumEmployee = Employee::count('id');
-        $sumVessel = Vessel::count('id');
-        $sumSite = Site::count('id');
-        $sumRoom = Room::count('id');
-        $sumLocation = Location::count('id');
-        $sumVendor = Vendor::count('id');
-        return view(
-            'dashboard.home_admin',
-            compact('sumAsset', 'sumDocument', 'sumUser', 'sumEmployee', 'sumVendor', 'sumVessel', 'sumSite', 'sumRoom', 'sumLocation')
-        );
+        $data["sumUser"] = User::count('id');
+        $data["sumEmployee"] = Employee::count('id');
+        // $data["sumCustomer"] = '';
+        $data["sumVendor"] = Vendor::count('id');
+        $data["sumVessel"] = Vessel::count('id');
+        $data["sumSite"] = Site::count('id');
+        $data["sumRoom"] = Room::count('id');
+        $data["sumLocation"] = Location::count('id');
+        $data["sumAsset"] = FixedAssets::count('id');
+        $data["sumAssetCategory"] = AssetCategory::count('id');
+        $data["sumMappingAssetCategory"] = MappingAssetCategory::count('id');
+        $data["sumStockTake"] = StockTakeTransaction::count('id');
+        $data["sumDocument"] = Document::count('id');
+        $data["sumPengPinj"] = PengajuanPinjaman::count('id');
+        $data["sumPinj"] = Pinjaman::count('id');
+        $data["sumKembali"] = Pengembalian::count('id');
+        return view('dashboard.home_admin', $data);
     }
 
     public function home_user()

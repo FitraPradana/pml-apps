@@ -13,7 +13,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3 class="page-title">Welcome Admin <u><b style="color:red">{{ Auth::user()->email }}</b></u> !!!
+                        <h3 class="page-title">Welcome <u><b style="color:red">{{ Auth::user()->full_name }}</b></u> !!!
                         </h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item active">Dashboard</li>
@@ -27,7 +27,7 @@
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="la la-user-plus"></i></span>
+                            <span class="dash-widget-icon"><i class="las la-user-circle"></i></span>
                             <div class="dash-widget-info">
                                 <h3>{{ $sumUser }}</h3>
                                 <span>Users</span>
@@ -35,14 +35,13 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="la la-object-ungroup"></i></span>
+                            <span class="dash-widget-icon"><i class="las la-id-card"></i></span>
                             <div class="dash-widget-info">
-                                <h3>{{ $sumAsset }}</h3>
-                                <span>Fixed Assets</span>
+                                <h3>{{ $sumEmployee }}</h3>
+                                <span>Employees</span>
                             </div>
                         </div>
                     </div>
@@ -50,10 +49,10 @@
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="la la-file-text"></i></span>
+                            <span class="dash-widget-icon"><i class="las la-users"></i></span>
                             <div class="dash-widget-info">
-                                <h3>{{ $sumDocument }}</h3>
-                                <span>Documents</span>
+                                <h3>0</h3>
+                                <span>Customers</span>
                             </div>
                         </div>
                     </div>
@@ -69,17 +68,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                    <div class="card dash-widget">
-                        <div class="card-body">
-                            <span class="dash-widget-icon"><i class="la la-user"></i></span>
-                            <div class="dash-widget-info">
-                                <h3>{{ $sumEmployee }}</h3>
-                                <span>Employees</span>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
@@ -120,6 +108,99 @@
                             <div class="dash-widget-info">
                                 <h3>{{ $sumLocation }}</h3>
                                 <span>Locations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="la la-object-ungroup"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumAsset }}</h3>
+                                <span>Fixed Assets</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="las la-biohazard"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumAssetCategory }}</h3>
+                                <span>Asset Category</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="las la-dice-five"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumMappingAssetCategory }}</h3>
+                                <span>Mapping Asset Category</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="la la-qrcode"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumStockTake }}</h3>
+                                <span>BA/Stock Take Fixed Assets</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="la la-file-text"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumDocument }}</h3>
+                                <span>Documents</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="la la-poll"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumPengPinj }}</h3>
+                                <span>Pengajuan Pinjam</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="la la-poll-h"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumPinj }}</h3>
+                                <span>Pinjaman</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body">
+                            <span class="dash-widget-icon"><i class="la la-share-square"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>{{ $sumKembali }}</h3>
+                                <span>Pengembalian</span>
                             </div>
                         </div>
                     </div>
