@@ -112,16 +112,23 @@ class LocationController extends Controller
         }
 
         // Insert Location
-        $insertLocation = Location::create([
+        $dataLocation = [
             'location_code'           => $locCode,
             'location_name'           => $locName,
             'location_remarks'        => $request->location_remarks,
             'site_id'                 => $request->site_id,
             'room_id'                 => $request->room_id,
             'employee_id'             => $request->employee_id,
-        ]);
+        ];
+        $checkLocCode = Location::where('location_code', $dataLocation['location_code'])->first();
+        // return $dataLocation['location_code'];
 
-        return redirect('locations')->with('success', 'Location Code "' . $locCode . '" has been successfully added to the website!');
+        if ($checkLocCode) {
+            return redirect('locations')->withErrors('Location Code "' . $locCode . '" has been already exists!');
+        } else {
+            Location::create($dataLocation);
+            return redirect('locations')->with('success', 'Location Code "' . $locCode . '" has been successfully added to the website!');
+        }
     }
 
     public function import(Request $request)

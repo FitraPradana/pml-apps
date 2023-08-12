@@ -50,10 +50,10 @@
                                     <textarea class="form-control" name="emp_address">{{ $val->emp_address }}</textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label>User Account</label>
-                                    <select class="select" id="user_id_update" name="user_id" required>
+                                    <select class="select" id="user_id_update" name="user_id">
                                         @foreach ($users as $usr)
                                             <option value="{{ $usr->id }}"
                                                 @if (old('user_id_update') == $usr->id || $usr->id == $val->user_id) selected @endif>
@@ -66,7 +66,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Department</label>
-                                    <select class="select" id="department_id_update" name="department_id" required>
+                                    <select class="select" id="department_id_update" name="department_id">
                                         @foreach ($departments as $dept)
                                             <option value="{{ $dept->id }}"
                                                 @if (old('department_id_update') == $dept->id || $dept->id == $val->department_id) selected @endif>
@@ -75,7 +75,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="col-form-label">Remarks</label>

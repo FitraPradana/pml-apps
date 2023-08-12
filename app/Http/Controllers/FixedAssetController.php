@@ -381,13 +381,32 @@ class FixedAssetController extends Controller
 
     public function log_trans_asset_json()
     {
-        $log_trans_asset = DB::table('log_trans_fixed_assets')
-            ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
-            ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
-            ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
-            ->get();
 
-        // return $log_trans_asset;
+        if (Auth::user()->roles == 'admin') {
+            $log_trans_asset = DB::table('log_trans_fixed_assets')
+                ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
+                ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
+                ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+                ->get();
+        } elseif (Auth::user()->roles == 'user') {
+            $log_trans_asset = DB::table('log_trans_fixed_assets')
+                ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
+                ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
+                ->leftJoin('employees', 'locations.employee_id', '=', 'employees.id')
+                ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+                ->where('emp_accountnum', Auth::user()->personnel_number)
+                ->orderByDesc('log_trans_fixed_assets.updated_at')
+                ->get();
+        } elseif (Auth::user()->roles == 'vessel') {
+            $log_trans_asset = DB::table('log_trans_fixed_assets')
+                ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
+                ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
+                ->leftJoin('sites', 'locations.site_id', '=', 'sites.id')
+                ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+                ->where('site_code', Auth::user()->personnel_number)
+                ->orderByDesc('log_trans_fixed_assets.updated_at')
+                ->get();
+        }
 
         return DataTables::of($log_trans_asset)
             ->addColumn('action', function ($data) {

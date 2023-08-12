@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // \App\Http\Middleware\SessionTimeout::class,
         ],
 
         'api' => [
@@ -64,5 +65,11 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cekUserLogin' => \App\Http\Middleware\CekUserLogin::class,
+        'is_Admin' => \App\Http\Middleware\is_Admin::class,
+        'is_User' => \App\Http\Middleware\is_User::class,
+        'is_Vessel' => \App\Http\Middleware\is_Vessel::class,
+        'is_Admin_User' => \App\Http\Middleware\is_Admin_User::class,
+        'is_Admin_Vessel' => \App\Http\Middleware\is_Admin_Vessel::class,
+        'session_timeout' => \App\Http\Middleware\SessionTimeout::class,
     ];
 }

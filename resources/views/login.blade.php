@@ -69,6 +69,11 @@
                                 {{ session('error') }}
                             </div>
                         @endif
+                        @if (session('message'))
+                            <div class="alert alert-warning">
+                                {{ session('message') }}
+                            </div>
+                        @endif
                         <!-- Account Form -->
                         <form action="{{ url('/login/proses') }}" method="post">
                             @csrf

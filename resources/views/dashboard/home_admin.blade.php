@@ -27,10 +27,13 @@
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="las la-user-circle"></i></span>
+                            <a href="{{ url('users') }}">
+                                <span class="dash-widget-icon"><i class="las la-user-circle"></i></span>
+                            </a>
                             <div class="dash-widget-info">
                                 <h3>{{ $sumUser }}</h3>
-                                <span>Users</span>
+                                <span> Users</span>
+
                             </div>
                         </div>
                     </div>

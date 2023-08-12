@@ -23,18 +23,40 @@ class StockTakeController extends Controller
     public function json()
     {
         //
-        // $stock_take = DB::table('stock_take_transactions')
-        //     ->join('fixed_assets', 'stock_take_transactions.fixed_asset_id', '=', 'fixed_assets.id')
-        //     ->join('locations', 'stock_take_transactions.location_id', '=', 'locations.id')
-        //     ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'locations.location_name')
-        //     ->orderByDesc('stock_take_transactions.updated_at')
-        //     ->get();
-
         if (Auth::user()->roles == 'admin') {
-            $stock_take = StockTakeTransaction::with(['location', 'fixed_asset'])->orderBy('stock_take_transactions.updated_at', 'desc')->get();
-        } else {
-            $stock_take = StockTakeTransaction::with(['location', 'fixed_asset'])->where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->get();
+            $stock_take = DB::table('stock_take_transactions')
+                ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id', 'fixed_assets.id')
+                ->leftJoin('locations', 'stock_take_transactions.location_id', 'locations.id')
+                ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+                ->orderByDesc('stock_take_transactions.updated_at')
+                ->get();
+        } elseif (Auth::user()->roles == 'user') {
+            $stock_take = DB::table('stock_take_transactions')
+                ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id', 'fixed_assets.id')
+                ->leftJoin('locations', 'stock_take_transactions.location_id', 'locations.id')
+                ->leftJoin('employees', 'locations.employee_id', '=', 'employees.id')
+                ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+                ->where('emp_accountnum', Auth::user()->personnel_number)
+                ->orderByDesc('stock_take_transactions.updated_at')
+                ->get();
+        } elseif (Auth::user()->roles == 'vessel') {
+            $stock_take = DB::table('stock_take_transactions')
+                ->leftJoin('fixed_assets', 'stock_take_transactions.fixed_asset_id', 'fixed_assets.id')
+                ->leftJoin('locations', 'stock_take_transactions.location_id', 'locations.id')
+                ->leftJoin('sites', 'locations.site_id', '=', 'sites.id')
+                ->select('stock_take_transactions.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+                ->where('site_code', Auth::user()->personnel_number)
+                ->orderByDesc('stock_take_transactions.updated_at')
+                ->get();
         }
+
+
+
+        // if (Auth::user()->roles == 'admin') {
+        //     $stock_take = StockTakeTransaction::with(['location', 'fixed_asset'])->orderBy('stock_take_transactions.updated_at', 'desc')->get();
+        // } else {
+        //     $stock_take = StockTakeTransaction::with(['location', 'fixed_asset'])->where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->get();
+        // }
 
         return DataTables::of($stock_take)
             ->addColumn('action', function ($data) {
@@ -82,13 +104,13 @@ class StockTakeController extends Controller
                 }
             })
             ->addColumn('fixed_asset_id', function ($data) {
-                return $data->fixed_asset->fixed_assets_number;
+                return $data->fixed_assets_number;
             })
             ->addColumn('fixed_asset_name', function ($data) {
-                return $data->fixed_asset->information3;
+                return $data->information3;
             })
             ->addColumn('location_id', function ($data) {
-                return $data->location->location_name;
+                return $data->location_name;
             })
             ->addColumn('created_at', function ($data) {
                 return Carbon::parse($data->created_at)->format('d M Y H:i:s');

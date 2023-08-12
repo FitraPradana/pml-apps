@@ -70,5 +70,12 @@ class User extends Authenticatable
 
     // protected $table = 'users';
 
+    public function hasRole($roles)
+    {
+        if ($this->roles == $roles) {
+            return true;
+        }
 
+        return false;
+    }
 }

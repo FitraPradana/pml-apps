@@ -137,6 +137,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">My Profile</a>
                         <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="{{ url('lock-screen') }}">Lock Screen</a>
                         <a class="dropdown-item" href="{{ url('logout') }}">Logout</a>
                     </div>
                 </li>
@@ -150,7 +151,8 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="#">My Profile</a>
                     <a class="dropdown-item" href="#">Settings</a>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    <a class="dropdown-item" href="{{ url('lock-screen') }}">Lock Screen</a>
+                    <a class="dropdown-item" href="{{ url('logout') }}">Logout</a>
                 </div>
             </div>
             <!-- /Mobile Menu -->

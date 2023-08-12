@@ -29,16 +29,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Employee</label>
-                                <select class="select" id="employee_id" name="employee_id" required>
-                                    @foreach ($employees as $value)
-                                        <option value="{{ $value->id }}">{{ $value->emp_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label>Room</label>
                                 <select class="select" id="room_id" name="room_id" required>
                                     @foreach ($room as $value)
@@ -47,6 +37,17 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee</label>
+                                <select class="select" id="employee_id" name="employee_id" required>
+                                    @foreach ($employees as $value)
+                                        <option value="{{ $value->id }}">{{ $value->emp_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
                     {{-- <div class="row">
                         <div class="col-md-12">

@@ -66,9 +66,9 @@ class UserController extends Controller
             })
             ->editColumn('active', function ($edit_status) {
                 if ($edit_status->active == 'yes') {
-                    return '<span class="badge bg-inverse-success">ACTIVE</span>';
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a>';
                 } elseif ($edit_status->active == 'no') {
-                    return '<span class="badge bg-inverse-danger">NON ACTIVE</span>';
+                    return '<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>';
                 }
             })
             ->addColumn('action', function ($data) {

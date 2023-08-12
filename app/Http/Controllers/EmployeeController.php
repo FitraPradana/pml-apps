@@ -111,8 +111,8 @@ class EmployeeController extends Controller
             'emp_phone'         => $request->emp_phone,
             'emp_address'       => $request->emp_address,
             'emp_remarks'       => $request->emp_remarks,
-            'department_id'     => $request->department_id,
-            'user_id'           => $request->user_id,
+            // 'department_id'     => $request->department_id,
+            // 'user_id'           => $request->user_id,
         ];
         Employee::find($id)->update($dataEmployee);
 

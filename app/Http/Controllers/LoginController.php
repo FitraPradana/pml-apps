@@ -43,6 +43,8 @@ class LoginController extends Controller
             ]
         );
 
+        session(['last_activity' => now()]);
+
         $kredensial = $request->only('email', 'password');
         $user = User::where('email', $request->email)->first();
         // return $user->email;

@@ -22,7 +22,7 @@
             </div>
             <!-- /Page Header -->
 
-            {{-- <div class="row filter-row">
+            <div class="row filter-row">
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-12">
                     <div class="form-group form-focus select-focus">
                         <select class="select floating" id="filter_tug" style="width: 100%" disabled>
@@ -45,81 +45,117 @@
                         <label class="focus-label">Barge</label>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
-            @foreach ($location as $item)
-                <section class="review-section">
-                    <div class="review-header text-center">
-                        <h3 class="review-title">{{ $item->site_name }}</h3>
-                        <p class="text-muted">{{ $item->room_name }}</p>
+            {{-- <div class="row">
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>112</h3>
+                            <span>Projects</span>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>44</h3>
+                            <span>Clients</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>37</h3>
+                            <span>Tasks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>218</h3>
+                            <span>Employees</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
+            <div class="row">
+                <div class="col-md-12 d-flex">
+                    <div class="card card-table flex-fill">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0" id="title_tug">ASSET TUG</h3>
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered review-table mb-0">
+                                <table id="datatables_tug" class="table table-nowrap custom-table mb-0">
                                     <thead>
                                         <tr>
-                                            <th style="width:40px;">#</th>
-                                            <th>QR Code</th>
-                                            <th>Asset Category</th>
-                                            <th>Asset Number</th>
-                                            <th>Asset Description</th>
-                                            <th>Remarks</th>
+                                            <th>No</th>
+                                            <th>Fixed Asset Number</th>
+                                            <th>Fixed Asset Name</th>
+                                            <th>Status</th>
+                                            <th>Is Used</th>
+                                            <th>Location</th>
+                                            <th>Site</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $no = 1; ?>
-                                        @foreach ($mapping_asset as $val)
-                                            @if ($val->room_id === $item->room_id)
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td style="text-align:center">
-                                                        @foreach ($assets as $ast)
-                                                            @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {!! QrCode::size(70)->generate($ast->qr_code) !!}
-                                                            @endif
-                                                        @endforeach
-
-                                                    </td>
-                                                    <td>{{ $val->asset_category_name }}</td>
-                                                    <td>
-                                                        @foreach ($assets as $ast)
-                                                            @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {{ $ast->fixed_assets_number }}
-                                                            @endif
-                                                        @endforeach
-                                                    </td>
-                                                    <td>
-                                                        @foreach ($assets as $ast)
-                                                            @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {{ $ast->information3 }}
-                                                            @endif
-                                                        @endforeach
-                                                    </td>
-                                                    <td>
-                                                        @foreach ($assets as $ast)
-                                                            @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {{ $ast->remarks_fixed_assets }}
-                                                            @endif
-                                                        @endforeach
-                                                    </td>
-
-                                                </tr>
-                                                {{-- @if ($val->asset_category_id->count() == 0)
-                                                    <tr>
-                                                        <td colspan="5" style="text-align: center"> No Data Available
-                                                        </td>
-                                                    </tr>
-                                                @endif --}}
-                                            @endif
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <a href="#">View all asset TUG</a>
+                        </div>
                     </div>
-                </section>
-            @endforeach
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex">
+                    <div class="card card-table flex-fill">
+                        <div class="card-header">
+                            <h3 id="title_barge" class="card-title mb-0">ASSET BARGE</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="datatables_barge" class="table custom-table table-nowrap mb-0 datatables_barge">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Fixed Asset Number</th>
+                                            <th>Fixed Asset Name</th>
+                                            <th>Status</th>
+                                            <th>Is Used</th>
+                                            <th>Location</th>
+                                            <th>Site</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#">View all asset BARGE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 

@@ -33,15 +33,11 @@
                         <a href="#"><i class="la la-cube"></i> <span> Apps</span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            {{-- <li><a class="{{ request()->is('scan') ? 'active' : '' }}"
-                                    href="{{ url('scan') }}">Scan</a>
-                            </li> --}}
                             <li><a class="{{ request()->is('scan_form') ? 'active' : '' }}"
                                     href="{{ url('scan_form') }}">Scan QR CODE</a>
                             </li>
                             {{-- <li><a class="{{ request()->is('scan_vessel') ? 'active' : '' }}"
-                                    href="{{ url('scan') }}">Scan
-                                    Vessel</a>
+                                    href="{{ url('scan') }}">Scan</a>
                             </li> --}}
                             {{-- <li><a class="{{ request()->is('barcode') ? 'active' : '' }}"
                                     href="{{ url('barcode') }}">Barcode</a></li> --}}
@@ -67,11 +63,11 @@
                         </ul>
                     </li>
                 @endif
-                {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}">
-                    <a href="{{ url('scan_form') }}"><i class="la la-qrcode"></i> <span>Scan
-                            Barcode</span></a>
-                </li> --}}
                 @if (Auth::user()->roles == 'vessel')
+                    <li class="{{ request()->is('scan') ? 'active' : '' }}">
+                        <a href="{{ url('scan_form') }}"><i class="la la-qrcode"></i> <span>Scan
+                                QR Code</span></a>
+                    </li>
                     {{-- <li class="{{ request()->is('scan') ? 'active' : '' }}"> --}}
                     {{-- <a href="{{ url('crew_report_data') }}"><i class="la la-book"></i> <span>Report Asset
                                 Vessel</span></a> --}}
@@ -232,12 +228,12 @@
                                     href="{{ url('fixed_assets') }}"> Fixed Assets </a></li>
                             <li><a class="{{ request()->is('stock_takes') ? 'active' : '' }}"
                                     href="{{ url('stock_takes') }}"> BA Assets / Stock Take </a></li>
-                            <li><a class="{{ request()->is('log_trans_fixed_assets') ? 'active' : '' }}"
+                            <li><a class="{{ request()->is('log_trans_asset_view') ? 'active' : '' }}"
                                     href="{{ url('log_trans_asset_view') }}"> Log Trans Fixed Assets </a></li>
-                            <li><a class="{{ request()->is('form_asset_view') ? 'active' : '' }}"
-                                    href="{{ url('form_asset_view') }}"> Form Vessel</a></li>
                         @endif
                         @if (Auth::user()->roles == 'admin')
+                            <li><a class="{{ request()->is('form_asset_view') ? 'active' : '' }}"
+                                    href="{{ url('form_asset_view') }}"> Form Vessel</a></li>
                             <li><a class="{{ request()->is('scan_vessels') ? 'active' : '' }}"
                                     href="{{ url('scan_vessels') }}">Report
                                     Vessel</a>
