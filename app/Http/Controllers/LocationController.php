@@ -90,23 +90,23 @@ class LocationController extends Controller
 
         if ($room->room_code == 'GNRL') {
             if ($site->site_name == 'Banjarmasin' or $site->site_name == 'Jakarta') {
-                $locCode = str_replace(' ', '_', strtoupper($site->site_code)) . '-' . str_replace(' ', '_', $employee->emp_name);
+                $locCode = str_replace(' ', '', strtoupper($site->site_code)) . '-' . str_replace(' ', '_', $employee->emp_name);
             } else {
-                $locCode = str_replace(' ', '_', strtoupper($site->site_name)) . '-' . str_replace(' ', '_', $employee->emp_name);
+                $locCode = str_replace(' ', '', strtoupper($site->site_name)) . '-' . str_replace(' ', '_', $employee->emp_name);
             }
             $locName = strtoupper($site->site_name) . '-' . $employee->emp_name;
         } elseif ($employee->emp_accountnum == 'GNRL') {
             if ($site->site_name == 'Banjarmasin' or $site->site_name == 'Jakarta') {
-                $locCode = str_replace(' ', '_', strtoupper($site->site_code)) . '-' . $room->room_code;
+                $locCode = str_replace(' ', '', strtoupper($site->site_code)) . '-' . $room->room_code;
             } else {
-                $locCode = str_replace(' ', '_', strtoupper($site->site_name)) . '-' . $room->room_code;
+                $locCode = str_replace(' ', '', strtoupper($site->site_name)) . '-' . $room->room_code;
             }
             $locName = strtoupper($site->site_name) . '-' . $room->room_name;
         } else {
             if ($site->site_name == 'Banjarmasin' or $site->site_name == 'Jakarta') {
-                $locCode = str_replace(' ', '_', strtoupper($site->site_code)) . '-' . $room->room_code . '-' . str_replace(' ', '_', $employee->emp_name);
+                $locCode = str_replace(' ', '', strtoupper($site->site_code)) . '-' . $room->room_code . '-' . str_replace(' ', '_', $employee->emp_name);
             } else {
-                $locCode = str_replace(' ', '_', strtoupper($site->site_name)) . '-' . $room->room_code . '-' . str_replace(' ', '_', $employee->emp_name);
+                $locCode = str_replace(' ', '', strtoupper($site->site_name)) . '-' . $room->room_code . '-' . str_replace(' ', '_', $employee->emp_name);
             }
             $locName = strtoupper($site->site_name) . '-' . $room->room_name . '-' . $employee->emp_name;
         }
