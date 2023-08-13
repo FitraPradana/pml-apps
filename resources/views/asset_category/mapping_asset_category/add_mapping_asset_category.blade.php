@@ -17,7 +17,7 @@
                             <div class="form-group">
                                 <label>Site</label>
                                 <select class="select" id="site_code" name="site_code" required>
-                                    <option value="">Pilih Site</option>
+                                    {{-- <option value="">Pilih Site</option> --}}
                                     @foreach ($sites as $value)
                                         <option value="{{ $value->id }}"> {{ $value->site_code }} -
                                             {{ $value->site_name }} </option>

@@ -234,7 +234,7 @@
                                 var id = response.data[i].id;
                                 var name = response.data[i].room_name;
                                 var Locname = response.data[i].location_name;
-                                var option = "<option value='" + id + "'>" + name +
+                                var option = "<option value='" + id + "'>" + Locname +
                                     "</option>";
                                 $("#location_id").append(option);
                             }
