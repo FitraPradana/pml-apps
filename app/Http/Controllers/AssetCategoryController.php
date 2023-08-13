@@ -118,8 +118,7 @@ class AssetCategoryController extends Controller
             ->leftJoin('employees', 'locations.employee_id', 'employees.id')
             ->select('locations.*', 'rooms.room_name')
             ->where('site_id', $site_code)
-            ->where('emp_accountnum', '=', null)
-            ->orWhere('emp_accountnum', '=', 'GNRL')
+            ->where('emp_accountnum', '=', 'GNRL')
             ->get();
 
         // return $data;
