@@ -233,7 +233,9 @@
                             for (var i = 0; i < len; i++) {
                                 var id = response.data[i].id;
                                 var name = response.data[i].room_name;
-                                var option = "<option value='" + id + "'>" + name + "</option>";
+                                var Locname = response.data[i].location_name;
+                                var option = "<option value='" + id + "'>" + name +
+                                    "</option>";
                                 $("#location_id").append(option);
                             }
                         }

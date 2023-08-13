@@ -95,12 +95,8 @@ class AssetCategoryController extends Controller
     public function map_ast_cat_view(Request $request)
     {
 
-        // $sites = Site::all();
-        $sites = DB::table('sites')
-            ->join('locations', 'sites.id', 'locations.site_id')
-            ->select('sites.id', 'sites.site_code', 'sites.site_name')
-            ->distinct('sites.id')
-            ->get();
+        $sites = Site::all();
+
         $site_code = $request->site_code;
 
         $location = Location::all();
@@ -118,8 +114,12 @@ class AssetCategoryController extends Controller
         //
         $data = DB::table('locations')
             ->join('rooms', 'locations.room_id', 'rooms.id')
+            ->join('sites', 'locations.site_id', 'sites.id')
+            ->leftJoin('employees', 'locations.employee_id', 'employees.id')
             ->select('locations.*', 'rooms.room_name')
             ->where('site_id', $site_code)
+            ->where('emp_accountnum', '=', null)
+            ->orWhere('emp_accountnum', '=', 'GNRL')
             ->get();
 
         // return $data;
