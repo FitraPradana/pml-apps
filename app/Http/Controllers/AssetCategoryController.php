@@ -120,7 +120,12 @@ class AssetCategoryController extends Controller
 
         // return $data;
 
-        return response()->json(['data' => $data]);
+        return response()->json([
+            'data' => $data,
+            // 'id' => $data->id,
+            // 'room_name' => $data->room_name,
+            // 'location_name' => $data['location_name'],
+        ]);
     }
 
     public function map_ast_cat_view_json()

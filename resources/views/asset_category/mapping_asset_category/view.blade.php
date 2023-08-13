@@ -215,7 +215,7 @@
 
 
             // Change Sites
-            $('#site_code').change(function() {
+            $('#site_code').on('change', function() {
                 var id = $(this).val();
 
                 $('#location_id').find('option').not(':first').remove();
@@ -234,7 +234,7 @@
                                 var id = response.data[i].id;
                                 var name = response.data[i].room_name;
                                 var Locname = response.data[i].location_name;
-                                var option = "<option value='" + id + "'>" + Locname +
+                                var option = "<option value='" + id + "'>" + name +
                                     "</option>";
                                 $("#location_id").append(option);
                             }
