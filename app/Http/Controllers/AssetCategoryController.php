@@ -95,8 +95,12 @@ class AssetCategoryController extends Controller
     public function map_ast_cat_view(Request $request)
     {
 
-        $sites = Site::all();
-
+        // $sites = Site::all();
+        $sites = DB::table('sites')
+            ->join('locations', 'sites.id', 'locations.site_id')
+            ->select('sites.id', 'sites.site_code', 'sites.site_name')
+            ->distinct('sites.id')
+            ->get();
         $site_code = $request->site_code;
 
         $location = Location::all();

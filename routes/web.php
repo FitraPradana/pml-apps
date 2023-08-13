@@ -167,7 +167,7 @@ Route::group(['middleware' => ['is_Admin']], function () {
     Route::get('fixed_assets_stg_index', [APIErpController::class, 'fixed_assets_stg_index']);
     Route::get('fixed_assets_stg_json', [APIErpController::class, 'fixed_assets_stg_json']);
     Route::get('fixed_assets_stg_save', [APIErpController::class, 'fixed_assets_stg_save']);
-    Route::get('cek_api', [APIErpController::class, 'cek_api']);
+
 
     // Document Staging from ERP
     Route::get('doc_stg_index', [APIErpController::class, 'doc_stg_index']);
@@ -313,7 +313,7 @@ Route::get('/ip', function () {
 Route::get('crew_report_data', [CrewController::class, 'index'])->name('crew_report_data')->middleware('auth');
 Route::get('crew_report_json', [CrewController::class, 'json_report'])->name('crew_report_json')->middleware('auth');
 
-
+Route::get('cek_api', [APIErpController::class, 'cek_api']);
 
 
 
