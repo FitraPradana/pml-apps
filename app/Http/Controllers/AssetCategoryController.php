@@ -147,6 +147,9 @@ class AssetCategoryController extends Controller
             ->addColumn('action', function ($data) {
                 if (Auth::user()->roles == 'admin') {
                     return '
+                    <div class="form group" align="center">
+                    <button type="button" onclick="deleteData(`' . route('map_ast_cat_delete', $data->id) . '`)" class="btn btn-xs btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                    </div>
                     ';
                     // <div class="form group" align="center">
                     //     <a href="' . route('map_ast_cat_delete', $data->id) . '" class="btn btn-xs btn-danger btn-flat btn-sm deleteAssetCategory"><i class="fa fa-trash"></i></a>
@@ -182,7 +185,16 @@ class AssetCategoryController extends Controller
 
     public function map_ast_cat_delete($id)
     {
-        $map_ast_cat = MappingAssetCategory::find($id)->delete();
-        return redirect('/form_asset_view')->with('success', 'Data Mapping Asset Category ' . $map_ast_cat->id . ' Berhasil di Hapus !!!');
+
+        $map_ast_cat = MappingAssetCategory::find($id);
+        // return $map_ast_cat->id;
+
+        $del = $map_ast_cat->delete();
+
+        return response()->json([
+            // "map_ast_cat" => $map_ast_cat,
+            // "asset_category_code" => $map_ast_cat->asset_category_code,
+            // "asset_category_name" => $map_ast_cat->asset_category_name,
+        ]);
     }
 }
