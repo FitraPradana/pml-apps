@@ -81,7 +81,7 @@
                                                     <td style="text-align:center">
                                                         @foreach ($assets as $ast)
                                                             @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {!! QrCode::size(70)->generate($ast->qr_code) !!}
+                                                                {!! QrCode::size(70)->generate($ast->qr_code) !!} <br><br>
                                                             @endif
                                                         @endforeach
 
@@ -90,31 +90,29 @@
                                                     <td>
                                                         @foreach ($assets as $ast)
                                                             @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {{ $ast->fixed_assets_number }}
+                                                                {{ $ast->fixed_assets_number }} <br><br><br><br>
                                                             @endif
                                                         @endforeach
                                                     </td>
                                                     <td>
                                                         @foreach ($assets as $ast)
                                                             @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {{ $ast->information3 }}
+                                                                {{ $ast->information3 }} <br><br><br><br>
                                                             @endif
                                                         @endforeach
                                                     </td>
                                                     <td>
                                                         @foreach ($assets as $ast)
                                                             @if ($ast->asset_category_id === $val->asset_category_id and $ast->location_id === $val->location_id)
-                                                                {{ $ast->remarks_fixed_assets }}
+                                                                {{ $ast->remarks_fixed_assets }} <br><br><br><br>
                                                             @endif
                                                         @endforeach
                                                     </td>
 
                                                 </tr>
-                                                {{-- @if ($val->asset_category_id->count() == 0)
-                                                    <tr>
-                                                        <td colspan="5" style="text-align: center"> No Data Available
-                                                        </td>
-                                                    </tr>
+                                                {{-- @if (count($val) === 0)
+                                                    <td colspan="5" style="text-align: center"> No Data Available
+                                                    </td>
                                                 @endif --}}
                                             @endif
                                         @endforeach
@@ -125,9 +123,6 @@
                     </div>
                 </section>
             @endforeach
-
-
-
 
         </div>
         <!-- /Page Content -->

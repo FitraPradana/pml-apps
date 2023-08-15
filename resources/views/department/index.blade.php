@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Data Asset Category')
+@section('title', 'Data Department')
 
 @section('content')
 
@@ -24,23 +24,26 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Asset Category</h3>
+                        <h3 class="page-title">Department</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Master Asset Category</a></li>
+                            <li class="breadcrumb-item"><a href="#">Master Administration</a></li>
+                            <li class="breadcrumb-item active">Employees</li>
+                            <li class="breadcrumb-item active">Departments</li>
                         </ul>
                     </div>
                     <div class="btn-group">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_asset_category"><i
-                                class="fa fa-plus"></i> Add Asset Category</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_dept"><i
+                                class="fa fa-plus"></i> Add Department</a>
                     </div>
 
                     <div class="col-auto float-right ml-auto">
                         {{-- <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Import Asset Category</button>
+                                aria-haspopup="true" aria-expanded="false">Import Room</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#import_room">Import</a>
+                                <a class="dropdown-item" href="{{ route('room_import_template') }}">Template Import Room</a>
                             </div>
                         </div> --}}
                         {{-- <div class="btn-group">
@@ -59,11 +62,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+
 
                     @if (session()->has('failures'))
                         <div class="alert alert-danger" role="alert">
@@ -71,7 +70,13 @@
                             @foreach (session()->get('failures') as $validasi)
                                 {{ $validasi->values()[$validasi->attribute()] . ',' }}
                             @endforeach
-                            ) is Duplicate
+                            ) is duplicate. Data was not added to the website !
+                        </div>
+                    @endif
+
+                    @if (session()->has('success'))
+                        <div class="alert alert-success" role="alert">
+                            <b>{{ session('success') }}</b>
                         </div>
                     @endif
 
@@ -90,8 +95,8 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    {{-- <th>ID Asset Category</th> --}}
-                                    <th>Code Asset Category</th>
+                                    {{-- <th>ID Dept</th> --}}
+                                    <th>Code</th>
                                     <th>Name</th>
                                     <th>Remarks</th>
                                     <th>Created Date</th>
@@ -107,13 +112,13 @@
         </div>
         <!-- /Page Content -->
 
-        <!-- Import Asset Category Modal -->
-        {{-- @include('room.import_room') --}}
-        <!-- /Import Asset Category Modal -->
+        <!-- Import Room Modal -->
+        {{-- @include('department.import_dept') --}}
+        <!-- /Import Room Modal -->
 
-        <!-- Add Asset Category Modal -->
-        @include('asset_category.add_modal')
-        <!-- /Add Asset Category Modal -->
+        <!-- Add Location Modal -->
+        @include('department.add_modal')
+        <!-- /Add Location Modal -->
 
 
     </div>
@@ -141,7 +146,7 @@
                 processing: true,
                 serverSide: true,
                 destroy: true,
-                ajax: "{{ url('/asset_category/json') }}",
+                ajax: "{{ url('/department/json') }}",
                 columns: [{
                         data: 'action',
                         name: 'action',
@@ -158,16 +163,16 @@
                     //     name: 'id'
                     // },
                     {
-                        data: 'asset_category_code',
-                        name: 'asset_category_code'
+                        data: 'dept_code',
+                        name: 'dept_code'
                     },
                     {
-                        data: 'asset_category_name',
-                        name: 'asset_category_name'
+                        data: 'dept_name',
+                        name: 'dept_name'
                     },
                     {
-                        data: 'remarks_asset_category',
-                        name: 'remarks_asset_category'
+                        data: 'remarks_dept',
+                        name: 'remarks_dept'
                     },
                     {
                         data: 'created_at',
@@ -210,8 +215,8 @@
                     .done((response) => {
                         table.ajax.reload();
                         Swal.fire(
-                            '' + response.asset_category_code + '',
-                            'has been successfully deleted from the website!',
+                            'has been successfully',
+                            'deleted data from the website!',
                             'success'
                         )
                     })

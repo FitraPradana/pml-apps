@@ -25,10 +25,13 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VesselController;
 use App\Http\Controllers\AssetCategoryController;
 use App\Http\Controllers\CrewController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LockScreenController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
+use App\Models\Department;
 
 /*
 |--------------------------------------------------------------------------
@@ -322,3 +325,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('lock-screen', [LockScreenController::class, 'lock_screen'])->name('lock-screen');
     Route::get('unlock', [LockScreenController::class, 'unlock'])->name('unlock');
 });
+
+
+// Update Password User
+Route::match(['get', 'put'], 'update_password_user', [UserController::class, 'update_password_user'])->name('update_password_user');
+
+
+
+// PROFILE
+Route::get('profiles', [ProfileController::class, 'index'])->name('profiles')->middleware('auth');
+
+
+// Department
+Route::get('department', [DepartmentController::class, 'index'])->name('profiles.index');
+Route::get('department/json', [DepartmentController::class, 'json'])->name('department.json');
+Route::match(['get', 'post'], 'department/save', [DepartmentController::class, 'store'])->name('department.store');
+Route::match(['get', 'put'], 'department/update/{id}', [DepartmentController::class, 'update'])->name('department.update');
+Route::delete('department/delete/{id}', [DepartmentController::class, 'delete'])->name('department.delete');

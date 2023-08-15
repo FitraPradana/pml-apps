@@ -228,4 +228,24 @@ class UserController extends Controller
 
         return redirect('login')->with('success', 'Data User Berhasil di Import AUTOMATIC!!!');
     }
+
+
+
+    public function update_password_user()
+    {
+
+        // $updatePassuser = collect(User::where('roles', '=', 'user')->get());
+        $updatePassuser = User::whereIn('roles', '=', 'user')->get();
+        // return $updatePassuser;
+        // foreach ($variable as $key => $value) {
+        //     # code...
+        // }
+        if ($updatePassuser) {
+            $updatePassuser->update([
+                'password'          => Hash::make('PML@user2023'),
+            ]);
+
+            return redirect('users')->with(['success' => 'Password Roles User has been change !']);
+        }
+    }
 }

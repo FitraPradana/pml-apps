@@ -136,12 +136,21 @@ class FixedAssetController extends Controller
                 return $data->updated_at;
             })
             ->addColumn('action', function ($data) {
-                return '
+                if (Auth::user()->roles == 'admin') {
+                    return '
                 <div class="form group" align="center">
-                    <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-success btn-sm">QR CODE</a>
+                    <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-secondary btn-sm">QR CODE</a>
                     <a href="' . route('fixed_assets.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
+
                 </div>
                     ';
+                } else {
+                    return '
+                <div class="form group" align="center">
+                    <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-secondary btn-sm">QR CODE</a>
+                </div>
+                    ';
+                }
                 // <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteAsset"><i class="fa fa-trash"></i></a>
             })
             ->rawColumns(['action', 'status_asset', 'is_used', 'qr_code', 'last_img_condition_stock_take', 'net_book_value'])
@@ -366,6 +375,7 @@ class FixedAssetController extends Controller
             ->join('sites', 'locations.site_id', 'sites.id')
             ->select('mapping_asset_categories.asset_category_id', 'mapping_asset_categories.location_id', 'locations.room_id', 'asset_categories.asset_category_name', 'sites.site_name', 'rooms.room_name')
             ->where('site_code', $site_code)
+            ->orderBy('asset_category_code', 'asc')
             ->get();
         // return $mapping_asset;
 
@@ -387,12 +397,13 @@ class FixedAssetController extends Controller
                 ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
                 ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
                 ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
+                ->orderByDesc('log_trans_fixed_assets.updated_at')
                 ->get();
         } elseif (Auth::user()->roles == 'user') {
             $log_trans_asset = DB::table('log_trans_fixed_assets')
                 ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
                 ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
-                ->leftJoin('employees', 'locations.employee_id', '=', 'employees.id')
+                ->leftJoin('employees', 'locations.employee_id', 'employees.id')
                 ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
                 ->where('emp_accountnum', Auth::user()->personnel_number)
                 ->orderByDesc('log_trans_fixed_assets.updated_at')
@@ -401,7 +412,7 @@ class FixedAssetController extends Controller
             $log_trans_asset = DB::table('log_trans_fixed_assets')
                 ->leftJoin('fixed_assets', 'log_trans_fixed_assets.fixed_asset_id', 'fixed_assets.id')
                 ->leftJoin('locations', 'log_trans_fixed_assets.location_id', 'locations.id')
-                ->leftJoin('sites', 'locations.site_id', '=', 'sites.id')
+                ->leftJoin('sites', 'locations.site_id', 'sites.id')
                 ->select('log_trans_fixed_assets.*', 'fixed_assets.fixed_assets_number', 'fixed_assets.information3', 'locations.location_name')
                 ->where('site_code', Auth::user()->personnel_number)
                 ->orderByDesc('log_trans_fixed_assets.updated_at')

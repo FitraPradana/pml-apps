@@ -78,16 +78,6 @@
                 {{-- <li>
                     <a class="{{ request()->is('barcode') ? 'active' : '' }}" href="{{ url('barcode') }}"><i class="la la-ticket"></i> <span>Barcode</span></a>
                 </li> --}}
-                {{-- <li class="menu-title">
-                    <span>Employees</span>
-                </li>
-                <li class="submenu">
-                    <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
-                    <ul style="display: none;">
-                        <li><a href="employees.html">All Employees</a></li>
-                        <li><a href="departments.html">Departments</a></li>
-                    </ul>
-                </li> --}}
 
                 {{-- <li>
                     <a href="{{ url('barcode') }}"><i class="la la-ticket"></i> <span>Barcode</span></a>
@@ -117,25 +107,9 @@
                         </ul>
                     </li>
                 @endif
-                {{-- <li class="submenu">
-                    <a href="#"><i class="las la-cubes"></i> <span> Master </span> <span class="menu-arrow"></span></a>
-                    <ul style="display: none;">
-                        <li><a class="{{ request()->is('rooms') ? 'active' : '' }}" href="{{ url('rooms') }}"> Room</a></li>
-                        <li><a class="{{ request()->is('sites') ? 'active' : '' }}" href="{{ url('sites') }}"> Site </a></li>
-                        <li><a class="{{ request()->is('locations') ? 'active' : '' }}" href="{{ url('locations') }}"> Location </a></li>
-                        <li><a class="" href="#"> Vessel </a></li>
-                    </ul>
-                </li> --}}
 
 
 
-                {{-- <li class="submenu">
-                    <a href="#"><i class="las la-user-shield"></i> <span> Crew </span> <span class="menu-arrow"></span></a>
-                    <ul style="display: none;">
-                        <li><a class="" href=""> Crew </a></li>
-                        <li><a class="" href=""> Staging Crew </a></li>
-                    </ul>
-                </li> --}}
                 @if (Auth::user()->roles == 'admin')
                     <li class="menu-title">
                         <span>Master Administration</span>
@@ -146,6 +120,8 @@
                         <ul style="display: none;">
                             <li><a class="{{ request()->is('employees') ? 'active' : '' }}"
                                     href="{{ url('employees') }}"> All Employees </a></li>
+                            <li><a class="{{ request()->is('department') ? 'active' : '' }}"
+                                    href="{{ url('department') }}"> Departments </a></li>
                         </ul>
                     </li>
                     {{-- <li class="submenu">
@@ -268,9 +244,11 @@
                     <li class="menu-title">
                         <span>Pages</span>
                     </li>
-                    <li class="submenu">
-                        <a href="#"><i class="la la-user"></i> <span> Profile </span></a>
-                    </li>
+                    @if (Auth::user()->personnel_number != 'administrator' and Auth::user()->personnel_number != 'admin')
+                        <li class="{{ request()->is('profiles') ? 'active' : '' }}">
+                            <a href="{{ url('profiles') }}"><i class="la la-user"></i> <span>Profile</span></a>
+                        </li>
+                    @endif
                     <li>
                         <a href="#"><i class="la la-cog"></i> <span>Settings</span></a>
                     </li>
