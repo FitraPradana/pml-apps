@@ -74,7 +74,7 @@
             <div class="header-left">
                 <a href="#" class="logo">
                     {{-- <img src="{{ asset('/') }}assets/img/synergy.png" width="40" height="40" alt=""> --}}
-                    <img src="{{ asset('/') }}assets/img/people.png" width="40" height="40" alt="">
+                    <img src="{{ asset('/') }}assets/img/logotop.png" width="150" height="50" alt="">
                 </a>
             </div>
             <!-- /Logo -->
@@ -89,7 +89,8 @@
 
             <!-- Header Title -->
             <div class="page-title-box">
-                <h3>Patria Maritime Lines - Apps</h3>
+                {{-- <h3>Patria Maritime Lines - Apps</h3> --}}
+                <h3>Apps</h3>
             </div>
             <!-- /Header Title -->
 

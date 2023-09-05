@@ -29,6 +29,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LockScreenController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
 use App\Models\Department;
@@ -224,7 +225,6 @@ Route::group(['middleware' => ['is_Admin']], function () {
     Route::get('vendors', [VendorController::class, 'index']);
     Route::get('vendor/json', [VendorController::class, 'json']);
 
-
     // ROOM
     Route::get('rooms', [RoomController::class, 'index']);
     Route::post('room/store', [RoomController::class, 'store'])->name('room.store');
@@ -252,7 +252,6 @@ Route::group(['middleware' => ['is_Admin']], function () {
     Route::get('map_ast_cat_view_json', [AssetCategoryController::class, 'map_ast_cat_view_json'])->name('map_ast_cat_view_json');
     Route::post('map_ast_cat_save', [AssetCategoryController::class, 'map_ast_cat_save'])->name('map_ast_cat_save');
     Route::delete('map_ast_cat_delete/{id}', [AssetCategoryController::class, 'map_ast_cat_delete'])->name('map_ast_cat_delete');
-
 
     // TESTING DATA
     Route::match(['get', 'put'], 'update_userid_employee', [TestController::class, 'update_userid_employee'])->name('update_userid_employee');
@@ -303,9 +302,6 @@ Route::get('test_index', [SendMailController::class, 'test_index'])->name('test_
 Route::get('test_send_email', [SendMailController::class, 'ba_status'])->name('test_send_email.sendmail');
 Route::get('ba_status/{id}', [SendMailController::class, 'ba_status'])->name('ba_status.sendmail');
 
-// Recruitment Crew
-Route::get('/recruitment_crew/regist', [RecruitmentController::class, 'recruitment_crew_regist']);
-Route::get('/recruitment_crew', [RecruitmentController::class, 'index']);
 
 
 Route::get('/ip', function () {
@@ -337,8 +333,30 @@ Route::get('profiles', [ProfileController::class, 'index'])->name('profiles')->m
 
 
 // Department
-Route::get('department', [DepartmentController::class, 'index'])->name('profiles.index');
+Route::get('department', [DepartmentController::class, 'index'])->name('department.index');
 Route::get('department/json', [DepartmentController::class, 'json'])->name('department.json');
 Route::match(['get', 'post'], 'department/save', [DepartmentController::class, 'store'])->name('department.store');
 Route::match(['get', 'put'], 'department/update/{id}', [DepartmentController::class, 'update'])->name('department.update');
 Route::delete('department/delete/{id}', [DepartmentController::class, 'delete'])->name('department.delete');
+
+// Position
+Route::get('position', [PositionController::class, 'index'])->name('position.index');
+Route::get('position/json', [PositionController::class, 'json'])->name('position.json');
+Route::match(['get', 'post'], 'position/save', [PositionController::class, 'store'])->name('position.store');
+Route::match(['get', 'put'], 'position/update/{id}', [PositionController::class, 'update'])->name('position.update');
+Route::delete('position/delete/{id}', [PositionController::class, 'delete'])->name('position.delete');
+
+
+// Req Job IT
+Route::get('ticket_it_dashboard', [TestController::class, 'ticket_it_dashboard'])->name('ticket_it_dashboard');
+Route::get('ticket_it_joblist', [TestController::class, 'ticket_it_joblist_view'])->name('ticket_it_joblist');
+Route::get('ticket_it_vendor', [TestController::class, 'ticket_it_vendor_view'])->name('ticket_it_vendor');
+Route::get('ticket_it_customer', [TestController::class, 'ticket_it_customer'])->name('ticket_it_customer');
+
+
+
+
+// Recruitment Crew
+Route::get('/recruitment_crew', [RecruitmentController::class, 'index']);
+Route::get('/recruitment_crew/regist', [RecruitmentController::class, 'recruitment_crew_regist']);
+Route::get('/recruitment_crew_form_regist', [RecruitmentController::class, 'recruitment_crew_form_regist']);

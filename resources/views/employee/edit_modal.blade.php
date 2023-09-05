@@ -50,6 +50,29 @@
                                     <textarea class="form-control" name="emp_address">{{ $val->emp_address }}</textarea>
                                 </div>
                             </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">Position</label>
+                                    <select class="select" id="position_id" name="position_id" required>
+                                        <option value="">Pilih Position</option>
+                                        @foreach ($positions as $value)
+                                            <option value="{{ $value->id }}">{{ $value->dept_name }} -
+                                                {{ $value->position_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Room</label>
+                                    <select class="select" id="room_id" name="room_id" required>
+                                        @foreach ($positions as $value)
+                                            <option value="{{ $value->id }}">{{ $value->dept_name }} -
+                                                {{ $value->position_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label>User Account</label>

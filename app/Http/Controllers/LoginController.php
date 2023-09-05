@@ -57,9 +57,9 @@ class LoginController extends Controller
                 return redirect()->intended('home_user');
             } elseif ($user->roles == 'vessel') {
                 return redirect()->intended('home_crew');
+            } else {
+                return redirect()->intended('/');
             }
-
-            return redirect()->intended('/');
         } elseif ($user) {
             if ($request->password != $user->password) {
                 return back()->withErrors([

@@ -17,9 +17,12 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::all();
-        $departments = Department::all();
+        $positions = DB::table('positions')
+            ->leftJoin('departments', 'positions.department_id', 'departments.id')
+            ->select('positions.*', 'departments.dept_name')
+            ->get();
         $users = User::all();
-        return view('employee.view', compact('employees', 'departments', 'users'));
+        return view('employee.view', compact('employees', 'positions', 'users'));
     }
 
     public function json()
@@ -27,7 +30,9 @@ class EmployeeController extends Controller
 
         $Employee = DB::table('employees')
             ->leftJoin('users', 'employees.user_id', 'users.id')
-            ->select('employees.*', 'users.full_name')
+            ->leftJoin('positions', 'employees.position_id', 'positions.id')
+            ->leftJoin('departments', 'positions.department_id', 'departments.id')
+            ->select('employees.*', 'users.full_name', 'departments.dept_name', 'positions.position_name')
             ->orderByDesc('employees.updated_at')
             ->get();
 

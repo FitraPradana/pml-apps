@@ -17,4 +17,9 @@ class RecruitmentController extends Controller
     {
         return view('recruitment.crew.regist');
     }
+
+    public function recruitment_crew_form_regist()
+    {
+        return view('recruitment.crew.form_regist_crew');
+    }
 }

@@ -24,7 +24,12 @@
                         @elseif (Auth::user()->roles == 'vessel')
                             <li><a class="{{ request()->is('home_crew') ? 'active' : '' }}"
                                     href="{{ url('home_crew') }}">Crew Dashboard</a></li>
+                        @elseif (Auth::user()->roles == 'admin' or Auth::user()->email == 'nina.hasniken@pml.co.id')
+                            <li><a class="{{ request()->is('recruitment_crew_form_regist') ? 'active' : '' }}"
+                                    href="{{ url('recruitment_crew_form_regist') }}">Applicant Dashboard</a></li>
                         @endif
+                        <li><a class="{{ request()->is('recruitment_crew_form_regist') ? 'active' : '' }}"
+                                href="{{ url('recruitment_crew_form_regist') }}">Applicant Dashboard</a></li>
                         {{-- <li><a class="{{ request()->is('home_crew') ? 'active' : '' }}" href="{{ url('home_crew') }}">Crew Dashboard</a></li> --}}
                     </ul>
                 </li>
@@ -122,6 +127,8 @@
                                     href="{{ url('employees') }}"> All Employees </a></li>
                             <li><a class="{{ request()->is('department') ? 'active' : '' }}"
                                     href="{{ url('department') }}"> Departments </a></li>
+                            <li><a class="{{ request()->is('position') ? 'active' : '' }}"
+                                    href="{{ url('position') }}"> Positions </a></li>
                         </ul>
                     </li>
                     {{-- <li class="submenu">

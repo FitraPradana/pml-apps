@@ -38,4 +38,20 @@ class TestController extends Controller
 
     //     return response()->json(['status' => true]);
     // }
+
+
+    public function ticket_it_dashboard()
+    {
+        return view('it_ticketing.view');
+    }
+
+    public function ticket_it_vendor_view()
+    {
+        return view('it_ticketing.vendor.view');
+    }
+
+    public function ticket_it_joblist_view()
+    {
+        return view('it_ticketing.jobs_it.view');
+    }
 }

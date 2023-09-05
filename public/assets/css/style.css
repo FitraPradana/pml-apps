@@ -1330,7 +1330,7 @@ table.dataTable thead > tr > td.sorting {
 	background: -moz-linear-gradient(left, #f43b48 0%, #453a94 100%);
 	background: -webkit-linear-gradient(left, #f43b48 0%, #453a94 100%);
 	background: -ms-linear-gradient(left, #f43b48 0%, #453a94 100%);
-	background: linear-gradient(to right, #f43b48 0%, #453a94 100%);
+	background: linear-gradient(to right, #453a94 0%, #333 100%);
 	border-bottom: 1px solid transparent;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 	height: 60px;
@@ -1357,6 +1357,7 @@ table.dataTable thead > tr > td.sorting {
 .bar-icon {
     display: inline-block;
     width: 21px;
+    padding: 20px 50px;
 }
 .bar-icon span {
     background-color: #fff;

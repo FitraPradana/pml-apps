@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Data Employee')
+@section('title', 'Data Position')
 
 @section('content')
 
@@ -11,10 +11,6 @@
             justify-content: center;
             height: 100%;
             flex: 1 0 100%;
-        }
-
-        .select2-container.select2-container--default.select2-container--open {
-            z-index: 5000;
         }
     </style>
 
@@ -28,27 +24,36 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Employee</h3>
+                        <h3 class="page-title">Position</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Master Administration</a></li>
-                            <li class="breadcrumb-item active">Employee</li>
+                            <li class="breadcrumb-item"><a href="#">Master Administration</a></li>
+                            <li class="breadcrumb-item active">Employees</li>
+                            <li class="breadcrumb-item active">Positions</li>
                         </ul>
                     </div>
                     <div class="btn-group">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i
-                                class="fa fa-plus"></i> Add Employee</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_position"><i
+                                class="fa fa-plus"></i> Add Position</a>
                     </div>
-                    {{-- <div class="col-auto float-right ml-auto">
-                        <div class="btn-group">
+
+                    <div class="col-auto float-right ml-auto">
+                        {{-- <div class="btn-group">
                             <button type="button" class="btn btn-dark btn-rounded dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Import Employee</button>
+                                aria-haspopup="true" aria-expanded="false">Import Room</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#import_emp">Import</a>
-                                <a class="dropdown-item" href="#">Template Import Employee</a>
+                                    data-target="#import_room">Import</a>
+                                <a class="dropdown-item" href="{{ route('room_import_template') }}">Template Import Room</a>
                             </div>
-                        </div>
-                    </div> --}}
+                        </div> --}}
+                        {{-- <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Room</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('room.export') }}">Export</a>
+                            </div>
+                        </div> --}}
+                    </div>
 
                 </div>
             </div>
@@ -57,21 +62,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if (session()->has('error'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-                    {{-- @if ($room->isEmpty())
-                    <div class="alert alert-danger" role="alert">
-                        Data Room Masih KOSONG !!! Harap di Input terlebih dahulu
-                    </div>
-                @endif --}}
+
 
                     @if (session()->has('failures'))
                         <div class="alert alert-danger" role="alert">
@@ -79,7 +70,13 @@
                             @foreach (session()->get('failures') as $validasi)
                                 {{ $validasi->values()[$validasi->attribute()] . ',' }}
                             @endforeach
-                            ) is Duplicate
+                            ) is duplicate. Data was not added to the website !
+                        </div>
+                    @endif
+
+                    @if (session()->has('success'))
+                        <div class="alert alert-success" role="alert">
+                            <b>{{ session('success') }}</b>
                         </div>
                     @endif
 
@@ -98,14 +95,11 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>#</th>
-                                    {{-- <th>ID</th> --}}
-                                    <th>Account Number</th>
-                                    <th>Employee Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
+                                    {{-- <th>ID Dept</th> --}}
+                                    <th>Code</th>
+                                    <th>Name</th>
                                     <th>Remarks</th>
-                                    <th>User ID</th>
+                                    <th>Department</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
                                 </tr>
@@ -119,44 +113,46 @@
         </div>
         <!-- /Page Content -->
 
+        <!-- Import Room Modal -->
+        {{-- @include('department.import_dept') --}}
+        <!-- /Import Room Modal -->
 
-        <!-- Add Employee Modal -->
-        @include('employee.add_modal')
-        <!-- /Add Employee Modal -->
-
-        <!-- Add Employee Modal -->
-        @include('employee.edit_modal')
-        <!-- /Add Employee Modal -->
+        <!-- Add Location Modal -->
+        @include('position.add_modal')
+        <!-- /Add Location Modal -->
 
 
     </div>
     <!-- /Page Wrapper -->
+
+
 @endsection
 
 
 
 @section('under_body')
-    <link rel="stylesheet" href="{{ asset('/') }}assets/css/select2.min.css">
+
     <script type="text/javascript">
         $(function() {
             // $(document).ready(function () {
 
             // SELECT2
-            $('#position_id').select2({
-                // dropdownParent: $('.modalEditEmployee'),
-                // width: '100%'
-                // allowClear: true
+            $('#department_id').select2({
+                width: '100%'
             });
 
-            $('#edit_employee').on('shown.bs.modal', function() {
-                $('#position_id').select2();
+            // GLOBAL SETUP
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
 
-            $('#datatables').DataTable({
+            table = $('#datatables').DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
-                ajax: "{{ url('employee/json') }}",
+                ajax: "{{ url('/position/json') }}",
                 columns: [{
                         data: 'action',
                         name: 'action',
@@ -173,37 +169,21 @@
                     //     name: 'id'
                     // },
                     {
-                        data: 'emp_accountnum',
-                        name: 'emp_accountnum'
+                        data: 'position_code',
+                        name: 'position_code'
                     },
                     {
-                        data: 'emp_name',
-                        name: 'emp_name'
-                    },
-                    {
-                        data: 'emp_email',
-                        name: 'emp_email'
-                    },
-                    {
-                        data: 'emp_phone',
-                        name: 'emp_phone'
-                    },
-                    {
-                        data: 'emp_address',
-                        name: 'emp_address'
+                        data: 'position_name',
+                        name: 'position_name'
                     },
 
                     {
-                        data: 'emp_remarks',
-                        name: 'emp_remarks'
+                        data: 'remarks_position',
+                        name: 'remarks_position'
                     },
-                    // {
-                    //     data: 'department_id',
-                    //     name: 'department_id'
-                    // },
                     {
-                        data: 'user_id',
-                        name: 'user_id'
+                        data: 'department_id',
+                        name: 'department_id'
                     },
                     {
                         data: 'created_at',
@@ -236,6 +216,27 @@
                 ],
             });
         });
+
+        function deleteData(url) {
+            if (confirm('Yakin ingin menghapus data terpilih?')) {
+                $.post(url, {
+                        '_token': $('[name=csrf-token]').attr('content'),
+                        '_method': 'delete'
+                    })
+                    .done((response) => {
+                        table.ajax.reload();
+                        Swal.fire(
+                            'has been successfully',
+                            'deleted data from the website!',
+                            'success'
+                        )
+                    })
+                    .fail((errors) => {
+                        alert('Tidak dapat menghapus data');
+                        return;
+                    });
+            }
+        }
     </script>
 
 @endsection
