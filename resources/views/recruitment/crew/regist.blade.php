@@ -11,7 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://103.146.30.155:82/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="icon"
+        href="{{ asset('/') }}template_recruitment_crew/103.146.30.155:82/assets/img/favicons/favicon.ico">
 
     <title>Registrasi Calon Crew PT. Patria Maritime Lines</title>
 
@@ -19,23 +20,43 @@
     <!-- Bootstrap core CSS
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">     <link href="pricing.css" rel="stylesheet">-->
     <link rel="stylesheet"
-        href="{{ asset('/') }}template_recrutiment_crew/cdn.jsdelivr.net/npm/bootstrap%404.0.0/dist/css/bootstrap.min.css" />
+        href="{{ asset('/') }}template_recruitment_crew/cdn.jsdelivr.net/npm/bootstrap%404.0.0/dist/css/bootstrap.min.css" />
     <!-- Custom styles for this template
     <link href="pricing.css" rel="stylesheet"> -->
     <!-- Bootstrap table-->
     <link rel="stylesheet"
-        href="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/bootstraptable/bootstrap-table.css">
+        href="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/bootstraptable/bootstrap-table.css">
+
+    <!-- Select2 CSS -->
+    {{-- <link rel="stylesheet" href="{{ asset('/') }}assets/css/select2.min.css"> --}}
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
-        href="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/adminlte320/plugins/fontawesome-free/css/all.min.css">
+        href="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/adminlte320/plugins/fontawesome-free/css/all.min.css">
 
     <!-- Bootstrap Core JavaScript -->
 
     <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet"
-        href="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/adminlte320/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        href="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/adminlte320/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <style>
+        table,
+        th {
+            /* text-align: center; */
+        }
+
+        tr {
+            /* text-align: center; */
+        }
+
+        ,
+        ,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            /* text-align: center; */
+        }
+
         body {
             background-image: linear-gradient(180deg, var(--bs-body-secondary-bg), var(--bs-body-bg) 100px, var(--bs-body-bg));
             background-color: #069;
@@ -137,7 +158,7 @@
     <div class="container py-3 putih">
         <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom ban">
             <h5 class="my-0 mr-md-auto font-weight-normal"><img alt="Brand"
-                    src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/img/LOGO_PML2.png"
+                    src="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/img/LOGO_PML2.png"
                     height="80px">
                 <!-- <span style="font-family:sans-serif;font-size:28px;font-weight:bold;">Patria Maritime Lines</span> -->
             </h5>
@@ -319,7 +340,7 @@
                         <div class="row">
                             <div class="col-sm-12"><label for="cmbstatus">Status</label><select name="cmbstatus"
                                     id="cmbstatus" class="form-control">
-                                    <option value="-">-</option>
+                                    {{-- <option value="-">-</option> --}}
                                     <option value="TK0">BELUM MENIKAH</option>
                                     <option value="K0">MENIKAH ANAK 0</option>
                                     <option value="K1">MENIKAH ANAK 1</option>
@@ -328,8 +349,185 @@
                                     <option value="TK1">LAJANG ANAK 1</option>
                                     <option value="TK2">LAJANG ANAK 2</option>
                                     <option value="TK3">LAJANG ANAK 3</option>
+                                    <option value="CERAI">CERAI</option>
                                 </select></div>
+                        </div><br>
+                        {{-- KELUARGA --}}
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-header">Riwayat Pendidikan</div>
+                            <!-- /.panel-heading -->
+                            <div class="card-body">
+                                {{-- <h2>Pendidikan Formal</h2> --}}
+                                <table style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th style="text-align: center">NAMA</th>
+                                            <th style="text-align: center">ALAMAT LENGKAP</th>
+                                            <th style="text-align: center">NO HP/TELP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="choose_ayahkandung">
+                                            <td><b>Ayah Kandung</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="choose_ibukandung">
+                                            <td><b>Ibu Kandung</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="choose_pasangan">
+                                            <td><b>Pasangan</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="choose_anak1">
+                                            <td><b>Anak 1</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="choose_anak2">
+                                            <td><b>Anak 2</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="choose_anak3">
+                                            <td><b>Anak 3</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="choose_anak4">
+                                            <td><b>Anak 4</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="choose_anak5">
+                                            <td><b>Anak 5</b></td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12"><input type="text" name="txtpayrek"
+                                                        id="txtpayrek" class="form-control" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table><br>
+                                <div class="row" align="center">
+                                    <div class="col-sm-12" align="right">Klik Tombol untuk simpan data -&gt;
+                                        <input id="btnsimpanriwayatpendidikan" name="btnsimpanriwayatpendidikan"
+                                            type="button" value="Simpan" class="btn btn-primary" /><br /> Ket :
+                                        Untuk Tambah data lagi, harap
+                                        isi di atas
+                                        kembali
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        {{-- END KELUARGA --}}
+
                         <div class="row">
                             <div class="col-sm-6"><label for="txtktp">No. KTP*</label><input type="text"
                                     name="txtktp" id="txtktp" class="form-control" /></div>
@@ -383,8 +581,13 @@
                                 </select></div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12"><label for="txtalamat">Alamat Sesuai KTP</label>
-                                <textarea name="txtalamat" cols="50" maxlength="250" id="txtalamat" class="form-control"></textarea>
+                            <div class="col-sm-12"><label for="alamat_ktp">Alamat Sesuai KTP</label>
+                                <textarea name="alamat_ktp" cols="50" maxlength="250" id="alamat_ktp" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12"><label for="alamat_domisili">Alamat Domisili</label>
+                                <textarea name="alamat_domisili" cols="50" maxlength="250" id="alamat_domisili" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -405,7 +608,7 @@
             </div>
 
             <!-- /.panel-Ijasah -->
-            <div class="card mb-4 box-shadow">
+            {{-- <div class="card mb-4 box-shadow">
                 <div class="card-header">Keluarga yang bisa dihubungi</div>
                 <!-- /.panel-heading -->
                 <div class="card-body">
@@ -424,7 +627,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- /.panel-Ijasah -->
             <div class="card mb-4 box-shadow">
                 <div class="card-header">Rekening Bank</div>
@@ -447,6 +650,180 @@
                 </div>
             </div>
             <!-- /.panel-Ijasah -->
+
+            {{-- Riwayat Pendidikan --}}
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">Riwayat Pendidikan</div>
+                <!-- /.panel-heading -->
+                <div class="card-body">
+                    {{-- <h2>Pendidikan Formal</h2> --}}
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="text-align: center">NAMA SEKOLAH</th>
+                                <th style="text-align: center">JURUSAN</th>
+                                <th style="text-align: center">TEMPAT</th>
+                                <th style="text-align: center">TAHUN LULUS</th>
+                                <th style="text-align: center">KETERANGAN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>SLTP</b></td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>SLTA</b></td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>AKADEMI</b></td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>UNIV/INST</b></td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>MASTER</b></td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
+                                            class="form-control" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table><br>
+                    <div class="row" align="center">
+                        <div class="col-sm-12" align="right">Klik Tombol untuk simpan data -&gt;
+                            <input id="btnsimpanriwayatpendidikan" name="btnsimpanriwayatpendidikan" type="button"
+                                value="Simpan" class="btn btn-primary" /><br /> Ket : Untuk Tambah data lagi, harap
+                            isi di atas
+                            kembali
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- END Riwayat Pendidikan --}}
+
             <div class="card mb-4 box-shadow">
                 <div class="card-header">Sertifikat COP yang dimiliki<input name="txtsescopid" type="hidden"
                         id="txtsescopid" class="form-control" /></div>
@@ -475,6 +852,7 @@
                                     <option value="402880d13c1e7e7f013c1e7fa86c0016">SDSD</option>
                                     <option value="402880d13c1e7e7f013c1e7fa86c0017">ISM CODE</option>
                                     <option value="402880d13c1e7e7f013c1e7fa86c0018">MCU Standard DEPERLA</option>
+                                    {{-- <option value="402880d13c1e7e7f013c1e7fa86c0019">OTHERS</option> --}}
                                 </select>
                             </div>
                             <div class="col-sm-6"><label for="dttglissuedcop">Issued Date</label>
@@ -512,6 +890,12 @@
                         <div class="row">
                             <div class="col-sm-12"><label for="txtissuedcop">Issued Place</label><input
                                     name="txtissuedcop" type="text" id="txtissuedcop" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12"><label for="txtcertificate_others">Others</label><input
+                                    name="txtcertificate_others" type="text" id="txtcertificate_others"
+                                    class="form-control" />
                             </div>
                         </div>
                         <div class="row" align="center">
@@ -611,6 +995,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-6"><label for="sbg_atasan">Sebagai Atasan</label><input
+                                    name="sbg_atasan" type="text" id="sbg_atasan" class="form-control"
+                                    placeholder="Nama atasan" /></div>
+                            <div class="col-sm-6"><label for="sbg_bawahan">Sebagai Bawahan</label><input
+                                    name="sbg_bawahan" type="text" id="sbg_bawahan" class="form-control"
+                                    placeholder="Nama bawahan" /></div>
+                            <div class="col-sm-12"><label for="salary">Salary</label><input name="salary"
+                                    type="text" id="salary" class="form-control" placeholder="Rp. 00,-" />
+                            </div>
+                        </div>
                         <div class="row" align="center">
                             <div class="col-sm-12" align="right">Klik Tombol untuk simpan data -&gt;
                                 <input id="btnsimpanworkexp" name="btnsimpanworkexp" type="button" value="Simpan"
@@ -647,25 +1042,120 @@
                 </div>
             </div>
 
+
+            <!-- /.panel-Minat Kerja -->
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">Minat Kerja<input name="txtsesworkexpid" type="hidden"
+                        id="txtsesworkexpid" class="form-control" /></div>
+                <!-- /.panel-heading -->
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6"><label for="cmbPosisitionworkApplied">Posisi yang di lamar</label>
+                                <select name="cmbPosisitionworkApplied" id="cmbPosisitionworkApplied"
+                                    class="form-control">
+                                    <option value="MV">MOTHER VESSEL</option>
+                                    <option value="TUGBARGE">TUG & BARGE</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6"><label for="cmbJabatanwork">Jabatan yang di lamar</label>
+                                <select name="cmbJabatanworkApplied" id="cmbJabatanworkApplied_tb"
+                                    class="form-control choose_jbt_tb">
+                                    <option value="NAKH">NAKHODA</option>
+                                    <option value="MUL1">MUALIM I</option>
+                                    <option value="MUL2">MUALIM II</option>
+                                    <option value="KKM">KKM</option>
+                                    <option value="MAS2">MASINIS II</option>
+                                    <option value="MAS3">MASINIS III</option>
+                                    <option value="JM">JURUMUDI</option>
+                                    <option value="KOKI">KOKI</option>
+                                </select>
+                                <select name="cmbJabatanworkApplied" id="cmbJabatanworkApplied_mv"
+                                    class="form-control choose_jbt_mv">
+                                    <option value="NAKH">NAKHODA</option>
+                                    <option value="MUL1">MUALIM I</option>
+                                    <option value="MUL2">MUALIM II</option>
+                                    <option value="MUL3">MUALIM III</option>
+                                    <option value="KKM">KKM</option>
+                                    <option value="MAS2">MASINIS II</option>
+                                    <option value="MAS3">MASINIS III</option>
+                                    <option value="MAS4">MASINIS IV</option>
+                                    <option value="ELEC">ELECTRICIAN</option>
+                                    <option value="BSN">BOSUN</option>
+                                    <option value="MNDR">MANDOR</option>
+                                    <option value="JM">JURUMUDI</option>
+                                    <option value="KL1">KELASI I</option>
+                                    <option value="KL2">KELASI II</option>
+                                    <option value="OIL">JURU MINYAK</option>
+                                    <option value="KOKI">KOKI</option>
+                                    <option value="MB">MESS BOY</option>
+                                    <option value="CD_DECK">CADET DECK</option>
+                                    <option value="CD_MESIN">CADET MESIN</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12"><label for="alasan_melamar">Mengapa anda ingin bekerja di
+                                    Perusahaan kami?</label>
+                                <textarea name="alasan_melamar" cols="50" maxlength="250" id="alasan_melamar" class="form-control"></textarea>
+                            </div>
+                            <div class="col-sm-12"><label for="alasan_melamar">Berapa gaji yang anda
+                                    harapkan?</label>
+                                <textarea name="alasan_melamar" cols="50" maxlength="250" id="alasan_melamar" class="form-control"></textarea>
+                            </div>
+                            <div class="col-sm-12"><label for="alasan_melamar">Apakah ada fasilitas tambahan yang
+                                    anda
+                                    inginkan?</label>
+                                <textarea name="alasan_melamar" cols="50" maxlength="250" id="alasan_melamar" class="form-control"></textarea>
+                            </div>
+                            <div class="col-sm-12"><label for="alasan_melamar">Kapan anda dapat mulai
+                                    bekerja?</label>
+                                <textarea name="alasan_melamar" cols="50" maxlength="250" id="alasan_melamar" class="form-control"></textarea>
+                            </div>
+                            <div class="col-sm-12"><label for="alasan_melamar">Adakah kenalan di perusahaan
+                                    kami?</label>
+                                </select><select name="cmbreferensi" id="cmbreferensi" style="width:150px"
+                                    class="form-control">
+                                    <option value="YA">YA</option>
+                                    <option value="TIDAK">TIDAK</option>
+                                </select><br>
+                                <textarea name="nm_ref" cols="50" maxlength="250" id="nm_ref" class="form-control"
+                                    placeholder="Nama Kenalan"></textarea>
+                            </div>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-sm-12" align="right">Klik Tombol untuk simpan data -&gt;
+                                <input id="btnsimpanworkexp" name="btnsimpanworkexp" type="button"
+                                    value="Simpan" class="btn btn-primary" />
+                                <br /> Ket : Untuk Tambah data lagi, harap isi di atas kembali
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- /.panel-upload cv -->
             <div class="form-group">
                 <label for="uploadFileCv">File CV *</label>
                 <input id="uploadFileCv" type="file" name="uploadFileCv" class="form-control" />
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-sm-12"><label for="txtreferensi">Referensi</label><input name="txtreferensi"
                         type="text" class="form-control" id="txtreferensi" maxlength="10" />
                     (Nama person max:10 karakter)</div>
-            </div>
+            </div> --}}
             <br />
             <!-- /.panel-submit -->
             <div class="form-group" align="center">
                 <p>Dengan mengisi formulir ini,saya menyatakan bahwa data yang saya berikan adalah benar dan dapat
                     dipertanggungjawabkan.</p>
-                <label class="check"><input type="checkbox" class="icheckbox" name="chkok" id="chkok" />
+                <label class="check"><input type="checkbox" class="icheckbox" name="chkok"
+                        id="chkok" />
                     Setuju</label><br />
                 <br />
-                <input id="btnsimpan" name="btnsimpan" type="button" value="Submit" class="btn btn-primary" />
+                <input id="btnsimpan" name="btnsimpan" type="button" value="Submit"
+                    class="btn btn-primary" />
                 <input id="btnbatal" name="btnbatal" type="button" value="Batal" class="btn btn-primary" />
 
             </div>
@@ -693,33 +1183,38 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster <script src="../../assets/js/vendor/popper.min.js"></script>-->
-    <script src="{{ asset('/') }}template_recrutiment_crew/code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="{{ asset('/') }}template_recruitment_crew/code.jquery.com/jquery-3.2.1.js"></script>
 
     <script>
-        window.jQuery || document.write('<script src="../assets/js/vendor/jquery-slim.min.html"><\/script>')
+        window.jQuery || document.write(
+            '<script src="../template_recruitment_crew/103.146.30.155_82/assets/js/vendor/jquery-slim.min.html"><\/script>'
+        )
     </script>
 
 
     <script
-        src="{{ asset('/') }}template_recrutiment_crew/cdn.jsdelivr.net/npm/bootstrap%404.0.0/dist/js/bootstrap.min.js"
+        src="{{ asset('/') }}template_recruitment_crew/cdn.jsdelivr.net/npm/bootstrap%404.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
     <!-- <script src="https://unpkg.com/@popperjs/core@2"></script>-->
-    <script src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/bootstraptable/bootstrap-table.js">
+    <script src="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/bootstraptable/bootstrap-table.js">
     </script>
 
-    <script type="text/javascript"
-        src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/js/ajaxfileupload.js"></script>
+    <!-- Select2 JS -->
+    {{-- <script src="{{ asset('/') }}assets/js/select2.min.js"></script> --}}
 
-    <script src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/js/function.js"></script>
+    <script type="text/javascript"
+        src="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/js/ajaxfileupload.js"></script>
+
+    <script src="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/js/function.js"></script>
     <!-- <script src="http://103.146.30.155:82/assets/js/moment.min.js"></script>-->
     <script
-        src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/adminlte320/plugins/moment/moment.min.js">
+        src="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/adminlte320/plugins/moment/moment.min.js">
     </script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script
-        src="{{ asset('/') }}template_recrutiment_crew/103.146.30.155_82/assets/adminlte320/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+        src="{{ asset('/') }}template_recruitment_crew/103.146.30.155_82/assets/adminlte320/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
     </script>
     <script>
         function operateFormatter(value, row, index) {
@@ -761,6 +1256,131 @@
         };
 
         $(document).ready(function() {
+
+            // $('#cmbijasah').select2({
+            //     width: '100%',
+            //     // height: '100%'
+            // });
+
+            // Validasi Status Pelamar
+            $("#choose_ayahkandung").show();
+            $("#choose_ibukandung").show();
+            $("#choose_pasangan").hide();
+            $("#choose_anak1").hide();
+            $("#choose_anak2").hide();
+            $("#choose_anak3").hide();
+            $("#choose_anak4").hide();
+            $("#choose_anak5").hide();
+            $("#cmbstatus").on('change', function() {
+                if ($(this).val() == "TK0") {
+                    $("#choose_ayahkandung").show();
+                    $("#choose_ibukandung").show();
+                    $("#choose_pasangan").hide();
+                    $("#choose_anak1").hide();
+                    $("#choose_anak2").hide();
+                    $("#choose_anak3").hide();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "K0") {
+                    $("#choose_ayahkandung").hide();
+                    $("#choose_ibukandung").hide();
+                    $("#choose_pasangan").show();
+                    $("#choose_anak1").hide();
+                    $("#choose_anak2").hide();
+                    $("#choose_anak3").hide();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "K1") {
+                    $("#choose_ayahkandung").hide();
+                    $("#choose_ibukandung").hide();
+                    $("#choose_pasangan").show();
+                    $("#choose_anak1").show();
+                    $("#choose_anak2").hide();
+                    $("#choose_anak3").hide();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "K2") {
+                    $("#choose_ayahkandung").hide();
+                    $("#choose_ibukandung").hide();
+                    $("#choose_pasangan").show();
+                    $("#choose_anak1").show();
+                    $("#choose_anak2").show();
+                    $("#choose_anak3").hide();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "K3") {
+                    $("#choose_ayahkandung").hide();
+                    $("#choose_ibukandung").hide();
+                    $("#choose_pasangan").show();
+                    $("#choose_anak1").show();
+                    $("#choose_anak2").show();
+                    $("#choose_anak3").show();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "TK1") {
+                    $("#choose_ayahkandung").show();
+                    $("#choose_ibukandung").show();
+                    $("#choose_pasangan").hide();
+                    $("#choose_anak1").show();
+                    $("#choose_anak2").hide();
+                    $("#choose_anak3").hide();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "TK2") {
+                    $("#choose_ayahkandung").show();
+                    $("#choose_ibukandung").show();
+                    $("#choose_pasangan").hide();
+                    $("#choose_anak1").show();
+                    $("#choose_anak2").show();
+                    $("#choose_anak3").hide();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "TK3") {
+                    $("#choose_ayahkandung").show();
+                    $("#choose_ibukandung").show();
+                    $("#choose_pasangan").hide();
+                    $("#choose_anak1").show();
+                    $("#choose_anak2").show();
+                    $("#choose_anak3").show();
+                    $("#choose_anak4").hide();
+                    $("#choose_anak5").hide();
+                } else if ($(this).val() == "CERAI") {
+                    $("#choose_ayahkandung").show();
+                    $("#choose_ibukandung").show();
+                    $("#choose_pasangan").hide();
+                    $("#choose_anak1").show();
+                    $("#choose_anak2").show();
+                    $("#choose_anak3").show();
+                    $("#choose_anak4").show();
+                    $("#choose_anak5").show();
+                }
+            });
+            // END Validasi Status Pelamar
+
+            // Validasi Applied Posisi
+            $(".choose_jbt_tb").hide();
+            $("#cmbPosisitionworkApplied").on('change', function() {
+                if ($(this).val() == "MV") {
+                    $(".choose_jbt_tb").hide();
+                    $(".choose_jbt_mv").show();
+                    // $("#cmbJabatanworkApplied_tb").hide();
+                } else if ($(this).val() == "TUGBARGE") {
+                    $(".choose_jbt_tb").show();
+                    $(".choose_jbt_mv").hide();
+                    // $("#cmbJabatanworkApplied_mv").hide();
+                }
+            });
+            // END Validasi Applied Posisi
+
+            // validasi referensi
+            $("#cmbreferensi").change(function() {
+                if ($(this).val() == "YA") {
+                    $("#nm_ref").show();
+                } else {
+                    $("#nm_ref").hide();
+                }
+            });
+            // END validasi referensi
 
             var min_exp = 0;
 
@@ -917,6 +1537,7 @@
             $("#btnbatal").click(function() {
                 window.location.href = "{{ url('recruitment_crew') }}";
             });
+
 
 
 
