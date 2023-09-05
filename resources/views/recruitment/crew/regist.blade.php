@@ -189,6 +189,56 @@
                 <div class="card-body">
 
                     <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-sm-12"><label for="txtnama">Nama Lengkap *</label><input name="txtnama"
+                                    type="text" id="txtnama" size="50" class="form-control" />
+                                </select></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6"><label for="cmbPosisitionworkApplied">Posisi yang di lamar</label>
+                                <select name="cmbPosisitionworkApplied" id="cmbPosisitionworkApplied"
+                                    class="form-control">
+                                    <option value="MV">MOTHER VESSEL</option>
+                                    <option value="TUGBARGE">TUG & BARGE</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6"><label for="cmbJabatanwork">Jabatan yang di lamar</label>
+                                <select name="cmbJabatanworkApplied" id="cmbJabatanworkApplied_tb"
+                                    class="form-control choose_jbt_tb">
+                                    <option value="NAKH">NAKHODA</option>
+                                    <option value="MUL1">MUALIM I</option>
+                                    <option value="MUL2">MUALIM II</option>
+                                    <option value="KKM">KKM</option>
+                                    <option value="MAS2">MASINIS II</option>
+                                    <option value="MAS3">MASINIS III</option>
+                                    <option value="JM">JURUMUDI</option>
+                                    <option value="KOKI">KOKI</option>
+                                </select>
+                                <select name="cmbJabatanworkApplied" id="cmbJabatanworkApplied_mv"
+                                    class="form-control choose_jbt_mv">
+                                    <option value="NAKH">NAKHODA</option>
+                                    <option value="MUL1">MUALIM I</option>
+                                    <option value="MUL2">MUALIM II</option>
+                                    <option value="MUL3">MUALIM III</option>
+                                    <option value="KKM">KKM</option>
+                                    <option value="MAS2">MASINIS II</option>
+                                    <option value="MAS3">MASINIS III</option>
+                                    <option value="MAS4">MASINIS IV</option>
+                                    <option value="ELEC">ELECTRICIAN</option>
+                                    <option value="BSN">BOSUN</option>
+                                    <option value="MNDR">MANDOR</option>
+                                    <option value="JM">JURUMUDI</option>
+                                    <option value="KL1">KELASI I</option>
+                                    <option value="KL2">KELASI II</option>
+                                    <option value="OIL">JURU MINYAK</option>
+                                    <option value="KOKI">KOKI</option>
+                                    <option value="MB">MESS BOY</option>
+                                    <option value="CD_DECK">CADET DECK</option>
+                                    <option value="CD_MESIN">CADET MESIN</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-6"><label for="cmbijasah">Pendidikan terakhir*</label>
                                 <select name="cmbijasah" id="cmbijasah" class="form-control">
@@ -257,20 +307,15 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12"><label for="txtnama">Nama Lengkap *</label><input name="txtnama"
-                                    type="text" id="txtnama" size="50" class="form-control" />
-                                </select></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
+                            {{-- <div class="col-sm-6">
                                 <label for="cmbJabatan">Jabatan/Posisi yang di lamar</label>
                                 *
                                 <select name="cmbJabatan" id="cmbJabatan" class="form-control">
                                 </select>
                                 <input name="txtminexp" type="hidden" id="txtminexp" />
                                 <div id="lblminexp" name="lblminexp" style="color:#F66"></div>
-                            </div>
-                            <div class="col-sm-6">
+                            </div> --}}
+                            <div class="col-sm-12">
                                 <label for="txtnodoccoc">No Ijasah*</label>
                                 <input name="txtnodoccoc" type="text" id="txtnodoccoc" class="form-control" />
                             </div>
@@ -670,34 +715,6 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><b>SLTP</b></td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td><b>SLTA</b></td>
                                 <td>
                                     <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
@@ -755,34 +772,6 @@
                             </tr>
                             <tr>
                                 <td><b>UNIV/INST</b></td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
-                                            class="form-control" />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>MASTER</b></td>
                                 <td>
                                     <div class="col-sm-12"><input type="text" name="txtpayrek" id="txtpayrek"
                                             class="form-control" />
@@ -1050,50 +1039,7 @@
                 <!-- /.panel-heading -->
                 <div class="card-body">
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6"><label for="cmbPosisitionworkApplied">Posisi yang di lamar</label>
-                                <select name="cmbPosisitionworkApplied" id="cmbPosisitionworkApplied"
-                                    class="form-control">
-                                    <option value="MV">MOTHER VESSEL</option>
-                                    <option value="TUGBARGE">TUG & BARGE</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-6"><label for="cmbJabatanwork">Jabatan yang di lamar</label>
-                                <select name="cmbJabatanworkApplied" id="cmbJabatanworkApplied_tb"
-                                    class="form-control choose_jbt_tb">
-                                    <option value="NAKH">NAKHODA</option>
-                                    <option value="MUL1">MUALIM I</option>
-                                    <option value="MUL2">MUALIM II</option>
-                                    <option value="KKM">KKM</option>
-                                    <option value="MAS2">MASINIS II</option>
-                                    <option value="MAS3">MASINIS III</option>
-                                    <option value="JM">JURUMUDI</option>
-                                    <option value="KOKI">KOKI</option>
-                                </select>
-                                <select name="cmbJabatanworkApplied" id="cmbJabatanworkApplied_mv"
-                                    class="form-control choose_jbt_mv">
-                                    <option value="NAKH">NAKHODA</option>
-                                    <option value="MUL1">MUALIM I</option>
-                                    <option value="MUL2">MUALIM II</option>
-                                    <option value="MUL3">MUALIM III</option>
-                                    <option value="KKM">KKM</option>
-                                    <option value="MAS2">MASINIS II</option>
-                                    <option value="MAS3">MASINIS III</option>
-                                    <option value="MAS4">MASINIS IV</option>
-                                    <option value="ELEC">ELECTRICIAN</option>
-                                    <option value="BSN">BOSUN</option>
-                                    <option value="MNDR">MANDOR</option>
-                                    <option value="JM">JURUMUDI</option>
-                                    <option value="KL1">KELASI I</option>
-                                    <option value="KL2">KELASI II</option>
-                                    <option value="OIL">JURU MINYAK</option>
-                                    <option value="KOKI">KOKI</option>
-                                    <option value="MB">MESS BOY</option>
-                                    <option value="CD_DECK">CADET DECK</option>
-                                    <option value="CD_MESIN">CADET MESIN</option>
-                                </select>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="col-sm-12"><label for="alasan_melamar">Mengapa anda ingin bekerja di
                                     Perusahaan kami?</label>
@@ -1123,13 +1069,6 @@
                                     placeholder="Nama Kenalan"></textarea>
                             </div>
                         </div>
-                        <div class="row" align="center">
-                            <div class="col-sm-12" align="right">Klik Tombol untuk simpan data -&gt;
-                                <input id="btnsimpanworkexp" name="btnsimpanworkexp" type="button"
-                                    value="Simpan" class="btn btn-primary" />
-                                <br /> Ket : Untuk Tambah data lagi, harap isi di atas kembali
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -1150,12 +1089,10 @@
             <div class="form-group" align="center">
                 <p>Dengan mengisi formulir ini,saya menyatakan bahwa data yang saya berikan adalah benar dan dapat
                     dipertanggungjawabkan.</p>
-                <label class="check"><input type="checkbox" class="icheckbox" name="chkok"
-                        id="chkok" />
+                <label class="check"><input type="checkbox" class="icheckbox" name="chkok" id="chkok" />
                     Setuju</label><br />
                 <br />
-                <input id="btnsimpan" name="btnsimpan" type="button" value="Submit"
-                    class="btn btn-primary" />
+                <input id="btnsimpan" name="btnsimpan" type="button" value="Submit" class="btn btn-primary" />
                 <input id="btnbatal" name="btnbatal" type="button" value="Batal" class="btn btn-primary" />
 
             </div>
