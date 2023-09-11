@@ -139,7 +139,7 @@ class FixedAssetController extends Controller
                 if (Auth::user()->roles == 'admin') {
                     return '
                 <div class="form group" align="center">
-                    <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-secondary btn-sm">QR CODE</a>
+                    <a href="' . route('generate.qr_code', $data->id) . '" class="btn btn-xs btn-danger btn-flat btn-sm">QR CODE</a>
                     <a href="' . route('fixed_assets.edit', $data->id) . '" class="edit btn btn-xs btn-info btn-flat btn-sm editAsset"><i class="fa fa-pencil"></i></a>
 
                 </div>
