@@ -399,7 +399,7 @@
                         </div><br>
                         {{-- KELUARGA --}}
                         <div class="card mb-4 box-shadow">
-                            <div class="card-header">Riwayat Pendidikan</div>
+                            <div class="card-header">Keluarga</div>
                             <!-- /.panel-heading -->
                             <div class="card-body">
                                 {{-- <h2>Pendidikan Formal</h2> --}}

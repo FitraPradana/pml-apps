@@ -71,5 +71,8 @@ class Kernel extends HttpKernel
         'is_Admin_User' => \App\Http\Middleware\is_Admin_User::class,
         'is_Admin_Vessel' => \App\Http\Middleware\is_Admin_Vessel::class,
         'session_timeout' => \App\Http\Middleware\SessionTimeout::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 }

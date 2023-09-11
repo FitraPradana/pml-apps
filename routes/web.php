@@ -31,8 +31,10 @@ use App\Http\Controllers\LockScreenController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TestController;
 use App\Models\Department;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,8 @@ use App\Models\Department;
 Route::get('/', function () {
     return redirect('login');
 });
+
+// Auth::routes();
 
 // CONTROLLER LOGIN
 Route::controller(LoginController::class)->group(function () {
@@ -360,3 +364,12 @@ Route::get('ticket_it_customer', [TestController::class, 'ticket_it_customer'])-
 Route::get('/recruitment_crew', [RecruitmentController::class, 'index']);
 Route::get('/recruitment_crew/regist', [RecruitmentController::class, 'recruitment_crew_regist']);
 Route::get('/recruitment_crew_form_regist', [RecruitmentController::class, 'recruitment_crew_form_regist']);
+
+
+
+// ROLES
+Route::get('roles', [RoleController::class, 'index'])->name('role.index');
+Route::get('role/json', [RoleController::class, 'json'])->name('role.json');
+Route::match(['get', 'post'], 'role/save', [RoleController::class, 'store'])->name('role.store');
+Route::match(['get', 'put'], 'role/update/{id}', [RoleController::class, 'update'])->name('role.update');
+Route::delete('role/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
