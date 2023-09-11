@@ -420,7 +420,7 @@
                 {{-- <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(400)->merge(public_path('pml.jpg'), 0.4, true)->generate($code)) !!} "> --}}
                 <h1 class="row mt-5 center">{{ $data->fixed_assets_number }}</h1>
                 <div class="row mt-2 center">
-                    <div style="width: 40%">
+                    <div style="width: 35%">
                         {{ $data->information3 }}
                     </div>
                 </div>
